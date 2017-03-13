@@ -1,0 +1,12 @@
+Item i1 = new CD("Vivaldi concertos", "Giuliano Carmignola",
+                       12, 60);
+Item i2 = new Video("Seven Samurai", "Akira Kurosawa", 185);
+CD cd2 = new CD("Schubert sonata in A", "Radu Lupu",
+                       4, 35);
+Video v2 = new Video("La Belle et la Bete", "Jean Cocteau", 120);
+
+cd2 = i1;
+cd2 = i2;
+i1 = cd2;
+i1 = v2;
+v2 = cd2;
