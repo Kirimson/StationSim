@@ -1,4 +1,4 @@
-package Model;
+package aston.group17.model;
 
  public interface  Vehicle {
 

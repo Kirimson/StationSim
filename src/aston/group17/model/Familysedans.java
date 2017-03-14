@@ -1,4 +1,4 @@
-package Model;
+package aston.group17.model;
 import java.util.Random;
 
 public class Familysedans implements Vehicle {

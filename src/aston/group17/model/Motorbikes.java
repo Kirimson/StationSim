@@ -1,31 +1,26 @@
-package Model;
+package aston.group17.model;
 import java.util.Random;
 
-
-public class SmallCar implements Vehicle {
+public class Motorbikes implements Vehicle {
 
 	private int gallons;
 	private double unitSpace;
 	private Random rand;
-	
-	
-	public SmallCar(){
-		gallons = 7;
-		unitSpace = 1;
+
+	public Motorbikes(){
+		gallons =5;
+		unitSpace=0.75;
 		rand = new Random();
+	
 	}
-	
-	
 	
 	public void setGallons(int gallons) {
-		int a = rand.nextInt(2 + 1 - 0);
-		gallons = gallons + a;
-		
+		this.gallons = gallons;
 	}
 
 
-/*	public void setUnitSpace(double unitSpace) {
-		
+	/*	public void setUnitSpace(double unitSpace) {
+	
 	} */
 
 
