@@ -1,40 +1,15 @@
 package aston.group17.model;
-import java.util.Random;
 
-public class Motorbikes implements Vehicle {
+public class Motorbikes extends Vehicle {
 
-	private int gallons;
-	private double unitSpace;
-	private Random rand;
+	private static final double UNIT_SIZE = 0.75;
 
 	public Motorbikes(){
-		gallons =5;
-		unitSpace=0.75;
-		rand = new Random();
-	
-	}
-	
-	public void setGallons(int gallons) {
-		this.gallons = gallons;
+		super(5);
 	}
 
-
-	/*	public void setUnitSpace(double unitSpace) {
-	
-	} */
-
-
-
-	
-	public int getGallons() {
-		return gallons;
-	}
-
-
-
-	
 	public double getUnitSpace() {
-		return unitSpace;
+		return UNIT_SIZE;
 	}
 
 }
