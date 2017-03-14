@@ -1,11 +1,11 @@
 package aston.group17.model;
 
-public class Familysedans extends Vehicle {
+public class Sedan extends Vehicle {
 
 	private static final double UNIT_SIZE = 1.5;
 
-	public Familysedans(){
-		super(12,18);
+	public Sedan(){
+		super(7, 12);
 	}
 
 	public double getUnitSpace() {

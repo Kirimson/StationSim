@@ -9,21 +9,26 @@ public class Vehicle {
 	private Random rand;
 	
 	/**
-	 * Constructor for Vehicles with one tankSize (motorbike)
-	 */
-	public Vehicle(int tankSize)
-	{
-		this.tankSize = tankSize;
-	}
-	
-	/**
-	 * Constructor for Vehicles with a variable tankSize
+	 * Constructor for Vehicles, sets their tank size and amount filled on creation
 	 * @param range = range from minimum value to max value (inclusive)
 	 * @param minTank = minimum size of Vehicle tank
 	 */
 	public Vehicle(int range, int minTank)
 	{
+		/*
+		*Example: smallCar| range = 3 & minTank = 7
+		*Generates random number from 0-2 (3 possible values) adds minTank(7) to it
+		*Lowest possible value 7(0+7) highest possible value 9(2+7)
+		*/
+		rand = new Random();
 		tankSize = rand.nextInt(range) + minTank;
+		
+		/*
+		*Generates a possible number for the tank to filled.
+		*Will not be higher or lower than tankSize
+		*random number is between (0)-(tankSize - 1)
+		*/
+		gallonsFilled = tankSize - rand.nextInt(tankSize);
 	}
 	
 	/**
