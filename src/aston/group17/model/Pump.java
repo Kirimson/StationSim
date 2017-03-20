@@ -87,7 +87,6 @@ public class Pump {
 	public void addVehicleToPumpQueue(Vehicle vehicle){
 		vehiclesInQueue.add(vehicle);
 		queue++;
-		
 	}
 	
 	/**
