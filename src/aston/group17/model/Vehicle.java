@@ -7,14 +7,21 @@ public class Vehicle {
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
+<<<<<<< HEAD
 	private double unitSpace;
+=======
+>>>>>>> Kirimson/master
 	
 	/**
 	 * Constructor for Vehicles, sets their tank size and amount filled on creation
 	 * @param range = range from minimum value to max value (inclusive)
 	 * @param minTank = minimum size of Vehicle tank
 	 */
+<<<<<<< HEAD
 	public Vehicle(int range, int minTank, double unitSpace)
+=======
+	public Vehicle(int range, int minTank)
+>>>>>>> Kirimson/master
 	{
 		/*
 		*Example: smallCar| range = 3 & minTank = 7
@@ -30,8 +37,11 @@ public class Vehicle {
 		*random number is between (0)-(tankSize - 1)
 		*/
 		gallonsFilled = tankSize - rand.nextInt(tankSize);
+<<<<<<< HEAD
 		
 		this.unitSpace = unitSpace;
+=======
+>>>>>>> Kirimson/master
 	}
 	
 	/**
@@ -61,6 +71,7 @@ public class Vehicle {
 		 return tankSize;
 	 }
 	 
+<<<<<<< HEAD
 	 public double getUnitSpace(){
 		
 		 return unitSpace;
@@ -68,4 +79,6 @@ public class Vehicle {
 		 
 	 }
 	 
+=======
+>>>>>>> Kirimson/master
 }

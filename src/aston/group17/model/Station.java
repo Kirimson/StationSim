@@ -1,5 +1,6 @@
 package aston.group17.model;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 public class Station {
@@ -55,4 +56,8 @@ public class Station {
 		
 	}
 	
+=======
+public class Station {
+
+>>>>>>> Kirimson/master
 }

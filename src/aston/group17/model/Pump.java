@@ -1,5 +1,6 @@
 package aston.group17.model;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 public class Pump {
@@ -91,4 +92,8 @@ public class Pump {
 		return queue;
 	}
 	
+=======
+public class Pump {
+
+>>>>>>> Kirimson/master
 }
