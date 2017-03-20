@@ -7,6 +7,7 @@ public class Sedan extends Vehicle {
 	public Sedan(){
 		super(7, 12);
 	}
+	
 
 	public double getUnitSpace() {
 		return UNIT_SIZE;

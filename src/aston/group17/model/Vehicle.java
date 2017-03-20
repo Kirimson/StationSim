@@ -2,7 +2,7 @@ package aston.group17.model;
 
 import java.util.Random;
 
-public class Vehicle {
+public abstract class Vehicle {
 	
 	protected int tankSize;
 	private int gallonsFilled;
@@ -58,4 +58,5 @@ public class Vehicle {
 		 return tankSize;
 	 }
 	 
+	 public abstract double getUnitSpace();
 }
