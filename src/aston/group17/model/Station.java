@@ -45,13 +45,12 @@ public class Station {
 	
 	
 	/**
-	* Adds driver to the shortest pump queue.
+	* Adds vehicle to the shortest pump queue.
 	*/
-	public void addDriverToPumpQueue(Driver driver){
-		Vehicle vehicle = driver.getVehicle();
-		getShortestPumpQueue().addVehicleToPump(vehicle);
+	public void addVehicleToPumpQueue(Vehicle vehicle){
+		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
 		
-	}*/
+	}
 	
 	public void addCustomer()
 	{
