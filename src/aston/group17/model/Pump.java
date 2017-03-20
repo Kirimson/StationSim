@@ -11,13 +11,13 @@ public class Pump {
 	private int queue;
 	private static final double MAXQUEUE = 3.0;
 	private Vehicle currentVehicle;
-	private ArrayList<Vehicle> vehiclesInQueue;
+	private ArrayList<Vehicle> vehicleQueue;
 	private static final double PRICEOFFUEL = 1.2;
 	
 	public Pump(){
 		queue = 0;
 		unitSpaceAvailable = 3;
-		vehiclesInQueue = new ArrayList<Vehicle>();
+		vehicleQueue = new ArrayList<Vehicle>();
 		
 	}
 	
@@ -67,7 +67,7 @@ public class Pump {
 	* This means it has entered the queue
 	*/
 	public void decreaseQueueUnit(Vehicle v){
-		unitSpaceAvailable -= currentVehicle.getUnitSpace();
+		unitSpaceAvailable -= v.getUnitSpace();
 	}
 	
 	
@@ -81,12 +81,20 @@ public class Pump {
 	
 	}
 	
+	public void fillFirstVehicle()
+	{
+		vehicleQueue.get(0).FillTank();
+	}
+	
 	/**
 	* Adds a vehicle to the pump
 	*/
 	public void addVehicleToPumpQueue(Vehicle vehicle){
-		vehiclesInQueue.add(vehicle);
+		vehicleQueue.add(vehicle);
 		decreaseQueueUnit(vehicle);
+		vehicle.toggleQueueStatus();
+		
+		
 		queue++;
 	}
 	
@@ -95,7 +103,7 @@ public class Pump {
 	*/
 	
 	public void removeVehicleFromPumpQueue(Vehicle vehicle){
-		vehiclesInQueue.remove(vehicle);
+		vehicleQueue.remove(vehicle);
 		queue--;
 		
 	}
@@ -105,6 +113,14 @@ public class Pump {
 	*/
 	public int getQueue(){
 		return queue;
+	}
+	
+	/**
+	* Returns list of vehicles. mainly used for testing
+	*/
+	public ArrayList<Vehicle> getVehicleQueue()
+	{
+		return vehicleQueue;
 	}
 	
 }

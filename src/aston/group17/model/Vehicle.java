@@ -8,6 +8,8 @@ public abstract class Vehicle {
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
+	protected String vehicleType;
+	private boolean inQueue;
 	
 	/**
 	 * Constructor for Vehicles, sets their tank size and amount filled on creation
@@ -62,6 +64,16 @@ public abstract class Vehicle {
 	 public Driver getDriver()
 	 {
 		 return driver;
+	 }
+	 
+	 public String toString()
+	 {
+		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
+	 }
+	 
+	 public void toggleQueueStatus()
+	 {
+		 inQueue = !inQueue;
 	 }
 	 
 	 public abstract double getUnitSpace();

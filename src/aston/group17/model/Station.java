@@ -5,7 +5,26 @@ import java.util.ArrayList;
 public class Station {
 	private ArrayList<Shop> shops;
 	private ArrayList<Pump> pumps;
-	private Vehicle tempVehicle;
+//	private Vehicle tempVehicle;
+	
+	public Station(int pAmount, int sAmount)
+	{
+		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
+		shops = new ArrayList<Shop>();
+		
+		for(int i = 0; i < sAmount; i++)
+		{
+			shops.add(new Shop());
+		}
+		
+		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
+		pumps = new ArrayList<Pump>();
+		
+		for(int i = 0; i < sAmount; i++)
+		{
+			pumps.add(new Pump());
+		}
+	}
 	
 	/**
 	* Returns the shortest shop queue available
@@ -43,6 +62,10 @@ public class Station {
 		return shortestPump;
 	}
 	
+	public Pump getPump(int pump)
+	{
+		return pumps.get(pump);
+	}
 	
 	/**
 	* Adds vehicle to the shortest pump queue.
