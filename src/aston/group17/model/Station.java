@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Station {
 	private ArrayList<Shop> shops;
 	private ArrayList<Pump> pumps;
-	private ArrayList<Driver> customers;
-	
+	private Vehicle tempVehicle;
 	
 	/**
 	* Returns the shortest shop queue available
@@ -31,7 +30,6 @@ public class Station {
 	}*/
 	
 	
-	
 	/**
 	* Returns the shortest pump queue
 	*/
@@ -47,12 +45,23 @@ public class Station {
 	
 	
 	/**
-	* Adds driver to the shortest pump queue.
+	* Adds vehicle to the shortest pump queue.
 	*/
-	/*public void addDriverToPumpQueue(Driver driver){
-		Vehicle vehicle = driver.getVehicle();
-		getShortestPumpQueue().addVehicleToPump(vehicle);
+	public void addVehicleToPumpQueue(Vehicle vehicle){
+		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
 		
-	}*/
+	}
 	
+	public void addCustomer()
+	{
+		
+		for(Pump p: pumps)
+		{
+			if (!p.isFull(tempVehicle))
+			{
+				p.addVehicleToPumpQueue(tempVehicle);
+			}
+			
+		}
+	}
 }

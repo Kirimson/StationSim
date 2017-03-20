@@ -26,9 +26,6 @@ public class Shop {
 		return noOfCustomers;
 		
 	}
-	
-	
-
 
 	/**
 	* Moves along the queue and returns a driver.
@@ -47,12 +44,6 @@ public class Shop {
 		
 		return moneyTaken;
 	}
-
-
-
-
-
-
 
 
 }
