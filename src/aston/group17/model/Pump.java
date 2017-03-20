@@ -25,9 +25,9 @@ public class Pump {
 	* Checks to see if the pump is currently occupied. If the pump has less than the MAXQUEUE, it is available to use.
 	* Else it is unavailable and the vehicle wouldn't be able to enter the queue.
 	*/
-	public boolean isOccupied(){
+	public boolean isFull(Vehicle v){
 		if (unitSpaceAvailable >= 0 && unitSpaceAvailable <= MAXQUEUE){
-			if(currentVehicle.getUnitSpace() > unitSpaceAvailable){
+			if(v.getUnitSpace() > unitSpaceAvailable){
 			return false;
 			}
 		}
@@ -79,7 +79,7 @@ public class Pump {
 	/**
 	* Adds a vehicle to the pump
 	*/
-	public void addVehicleToPump(Vehicle vehicle){
+	public void addVehicleToPumpQueue(Vehicle vehicle){
 		Vehicles.add(vehicle);
 		queue++;
 		

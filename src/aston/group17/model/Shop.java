@@ -4,10 +4,6 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 public class Shop {
-<<<<<<< HEAD
-	//comment
-}
-=======
 	private int moneyTaken;
 	private Driver currentCustomer;
 	private int currentCustomerPrice;
@@ -30,9 +26,6 @@ public class Shop {
 		return noOfCustomers;
 		
 	}
-	
-	
-
 
 	/**
 	* Moves along the queue and returns a driver.
@@ -53,11 +46,4 @@ public class Shop {
 	}
 
 
-
-
-
-
-
-
 }
->>>>>>> refs/remotes/origin/master
