@@ -4,6 +4,7 @@ import java.util.Random;
 
 public abstract class Vehicle {
 	
+	protected Driver driver;
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
@@ -56,6 +57,11 @@ public abstract class Vehicle {
 	 public int getTankSize()
 	 {
 		 return tankSize;
+	 }
+	 
+	 public Driver getDriver()
+	 {
+		 return driver;
 	 }
 	 
 	 public abstract double getUnitSpace();
