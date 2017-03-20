@@ -52,16 +52,16 @@ public class Station {
 		
 	}
 	
-	public void addCustomer()
-	{
-		
-		for(Pump p: pumps)
-		{
-			if (!p.isFull(tempVehicle))
-			{
-				p.addVehicleToPumpQueue(tempVehicle);
-			}
-			
-		}
-	}
+//	public void addCustomer()
+//	{
+//		
+//		for(Pump p: pumps)
+//		{
+//			if (!p.isFull(tempVehicle))
+//			{
+//				p.addVehicleToPumpQueue(tempVehicle);
+//			}
+//			
+//		}
+//	}
 }

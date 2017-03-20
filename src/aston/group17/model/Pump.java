@@ -64,9 +64,9 @@ public class Pump {
 	
 	/**
 	* Decreases the queue length by the length of the current vehicle.
-	* This means it has left the queue. The next vehicle will use the pump.
+	* This means it has entered the queue
 	*/
-	public void decreaseQueueUnit(){
+	public void decreaseQueueUnit(Vehicle v){
 		unitSpaceAvailable -= currentVehicle.getUnitSpace();
 	}
 	
@@ -86,6 +86,7 @@ public class Pump {
 	*/
 	public void addVehicleToPumpQueue(Vehicle vehicle){
 		vehiclesInQueue.add(vehicle);
+		decreaseQueueUnit(vehicle);
 		queue++;
 	}
 	
