@@ -1,6 +1,5 @@
 package aston.group17.model;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 
 public class Station {
@@ -25,11 +24,11 @@ public class Station {
 	/**
 	* Sends customer to the shortest shop queue
 	*/
-	public void addDriverToShopQueue(Driver driver){
+	/*public void addDriverToShopQueue(Driver driver){
 	
 		getShortestShopQueue().addCustomerToShop(driver);
 		
-	}
+	}*/
 	
 	
 	
@@ -50,14 +49,10 @@ public class Station {
 	/**
 	* Adds driver to the shortest pump queue.
 	*/
-	public void addDriverToPumpQueue(Driver driver){
+	/*public void addDriverToPumpQueue(Driver driver){
 		Vehicle vehicle = driver.getVehicle();
 		getShortestPumpQueue().addVehicleToPump(vehicle);
 		
-	}
+	}*/
 	
-=======
-public class Station {
-
->>>>>>> Kirimson/master
 }

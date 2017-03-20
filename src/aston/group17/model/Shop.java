@@ -1,6 +1,6 @@
 package aston.group17.model;
 
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 
 public class Shop {
@@ -54,9 +54,5 @@ public class Shop {
 
 
 
-
-=======
-public class Shop {
->>>>>>> Kirimson/master
 
 }
