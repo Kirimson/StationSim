@@ -93,7 +93,7 @@ public class Pump {
 	* Adds a vehicle to the pump
 	*/
 	
-	public void removeVehicleToPumpQueue(Vehicle vehicle){
+	public void removeVehicleFromPumpQueue(Vehicle vehicle){
 		vehiclesInQueue.remove(vehicle);
 		queue--;
 		
