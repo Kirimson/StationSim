@@ -47,7 +47,7 @@ public class Station {
 	/**
 	* Adds driver to the shortest pump queue.
 	*/
-	/*public void addDriverToPumpQueue(Driver driver){
+	public void addDriverToPumpQueue(Driver driver){
 		Vehicle vehicle = driver.getVehicle();
 		getShortestPumpQueue().addVehicleToPump(vehicle);
 		

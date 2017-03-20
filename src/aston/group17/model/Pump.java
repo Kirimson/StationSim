@@ -11,13 +11,13 @@ public class Pump {
 	private int queue;
 	private static final double MAXQUEUE = 3.0;
 	private Vehicle currentVehicle;
-	private ArrayList<Vehicle> Vehicles;
+	private ArrayList<Vehicle> vehiclesInQueue;
 	private static final double PRICEOFFUEL = 1.2;
 	
 	public Pump(){
 		queue = 0;
 		unitSpaceAvailable = 3;
-		Vehicles = new ArrayList<Vehicle>();
+		vehiclesInQueue = new ArrayList<Vehicle>();
 		
 	}
 	
@@ -55,12 +55,19 @@ public class Pump {
 	}
 	
 	/**
+	* Increases the queue length by the length of the current vehicle.
+	* This means it has left the queue. The next vehicle will use the pump.
+	*/
+	public void increaseQueueUnit(){
+		unitSpaceAvailable += currentVehicle.getUnitSpace();
+	}
+	
+	/**
 	* Decreases the queue length by the length of the current vehicle.
 	* This means it has left the queue. The next vehicle will use the pump.
 	*/
-	public void decreaseQueue(){
-		unitSpaceAvailable = unitSpaceAvailable - currentVehicle.getUnitSpace();
-		nextVehicle();
+	public void decreaseQueueUnit(){
+		unitSpaceAvailable -= currentVehicle.getUnitSpace();
 	}
 	
 	
@@ -70,18 +77,25 @@ public class Pump {
 	* The next Vehicle in the queue is specified by this method.
 	*/
 	public void nextVehicle(){
-		for (int i = 0; i<Vehicles.size(); i++){
-			currentVehicle = Vehicles.get(i);
-		}
 		
+	
 	}
 	
 	/**
 	* Adds a vehicle to the pump
 	*/
 	public void addVehicleToPumpQueue(Vehicle vehicle){
-		Vehicles.add(vehicle);
+		vehiclesInQueue.add(vehicle);
 		queue++;
+	}
+	
+	/**
+	* Adds a vehicle to the pump
+	*/
+	
+	public void removeVehicleToPumpQueue(Vehicle vehicle){
+		vehiclesInQueue.remove(vehicle);
+		queue--;
 		
 	}
 	
