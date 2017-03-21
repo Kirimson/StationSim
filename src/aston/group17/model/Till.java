@@ -3,7 +3,7 @@ package aston.group17.model;
 
 import java.util.ArrayList;
 
-public class Shop {
+public class Till {
 	private int moneyTaken;
 	private Driver currentCustomer;
 	private int currentCustomerPrice;
@@ -11,7 +11,7 @@ public class Shop {
 	private ArrayList<Driver> idleCustomer;
 	private int noOfCustomers;
 	
-	public Shop(){
+	public Till(){
 		moneyTaken = 0;
 		waitingCustomer = new ArrayList<Driver>();
 		idleCustomer = new ArrayList<Driver>();
@@ -22,7 +22,7 @@ public class Shop {
 	/**
 	* Returns the queue at the till
 	*/
-	public int getQueueShop(){
+	public int getQueueTill(){
 		return noOfCustomers;
 		
 	}

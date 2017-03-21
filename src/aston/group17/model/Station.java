@@ -3,7 +3,7 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 public class Station {
-	private ArrayList<Shop> shops;
+	private ArrayList<Till> tills;
 	private ArrayList<Pump> pumps;
 	
 	private double moneyEarnt;
@@ -12,11 +12,11 @@ public class Station {
 	public Station(int pAmount, int sAmount)
 	{
 		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
-		shops = new ArrayList<Shop>();
+		tills = new ArrayList<Till>();
 		
 		for(int i = 0; i < sAmount; i++)
 		{
-			shops.add(new Shop());
+			tills.add(new Till());
 		}
 		
 		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
@@ -53,11 +53,11 @@ public class Station {
 	/**
 	* Returns the shortest shop queue available
 	*/
-	public Shop getShortestShopQueue(){
-		Shop shortestShop = shops.get(0);
-		for (int i = 1; i<shops.size();i++){
-			if(shops.get(i).getQueueShop() > shortestShop.getQueueShop()){
-				shortestShop = shops.get(i);
+	public Till getShortestShopQueue(){
+		Till shortestShop = tills.get(0);
+		for (int i = 1; i<tills.size();i++){
+			if(tills.get(i).getQueueShop() > shortestShop.getQueueShop()){
+				shortestShop = tills.get(i);
 			}
 		}
 		return shortestShop;
@@ -108,7 +108,7 @@ public class Station {
 			moneyEarnt += p.getMoneyTaken();
 		}
 		
-		for(Shop s : shops)
+		for(Till s : tills)
 		{
 			moneyEarnt += s.getMoneyTaken();
 		}
