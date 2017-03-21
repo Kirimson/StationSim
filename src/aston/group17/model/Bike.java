@@ -6,7 +6,7 @@ public class Bike extends Vehicle {
 
 	public Bike(){
 		super(1,5);
-	
+		vehicleType = "Bike";
 	}
 
 	public double getUnitSpace() {

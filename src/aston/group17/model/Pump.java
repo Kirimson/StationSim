@@ -6,18 +6,22 @@ import java.util.ArrayList;
 public class Pump {
 
 	
-	private static final int GALLONTICK = 10;
+	private static final int GALLONTICK = 1;
 	private double unitSpaceAvailable;
 	private int queue;
 	private static final double MAXQUEUE = 3.0;
 	private Vehicle currentVehicle;
-	private ArrayList<Vehicle> vehiclesInQueue;
+	private ArrayList<Vehicle> vehicleQueue;
 	private static final double PRICEOFFUEL = 1.2;
+	private double moneyTaken;
+	
+	private boolean justArrived, justFilled;
+	private int driverShopping = 0;
 	
 	public Pump(){
 		queue = 0;
 		unitSpaceAvailable = 3;
-		vehiclesInQueue = new ArrayList<Vehicle>();
+		vehicleQueue = new ArrayList<Vehicle>();
 		
 	}
 	
@@ -44,59 +48,65 @@ public class Pump {
 	
 	
 	/**
-	* Fills up the tank of the vehicle and returns the price of the fuel put into the vehicle
+	* Fills up the tank of the vehicle up one tick (1 gallon). If the vehicle has just arrived it wont fill and turn "justArrived" off
 	*/
-	public double vehicleCharge(){
+	public void fillFirstVehicle(){
+		//If the driver hasn't justArrived (second tick of them being there and the tank isn't full yet
+		if(justArrived == false && justFilled == false)
+		{
+			justFilled = vehicleQueue.get(0).FillTankOneTick();
+		}
 		
-		int fillAmount = currentVehicle.FillTank();
-		double price = fillAmount * PRICEOFFUEL;
+		//if driver is waiting before shopping they will now need to shop
+		if(driverShopping == 1)
+		{
+			driverShopping = 2;
+		}
 		
-		return price;
+		//if the car has just filled the vehicle set shopping to 1 (waiting before shopping)
+		if(justFilled == true)
+		{
+			driverShopping = 1;
+		}
+
 	}
 	
 	/**
-	* Increases the queue length by the length of the current vehicle.
+	* Increases the queue length free by the length of the current vehicle.
 	* This means it has left the queue. The next vehicle will use the pump.
 	*/
-	public void increaseQueueUnit(){
-		unitSpaceAvailable += currentVehicle.getUnitSpace();
+	public void freeUpQueue(Vehicle v){
+		queue--;
+		unitSpaceAvailable += v.getUnitSpace();
 	}
 	
 	/**
-	* Decreases the queue length by the length of the current vehicle.
-	* This means it has left the queue. The next vehicle will use the pump.
+	* Decreases the queue length free by the length of the current vehicle.
+	* This means it has entered the queue
 	*/
-	public void decreaseQueueUnit(){
-		unitSpaceAvailable -= currentVehicle.getUnitSpace();
-	}
-	
-	
-	/**
-	* A pump will have several vehicles. NextVehicle method will iterate through those vehicles.
-	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
-	* The next Vehicle in the queue is specified by this method.
-	*/
-	public void nextVehicle(){
-		
-	
+	public void fillUpQueue(Vehicle v){
+		queue++;
+		unitSpaceAvailable -= v.getUnitSpace();
 	}
 	
 	/**
 	* Adds a vehicle to the pump
 	*/
 	public void addVehicleToPumpQueue(Vehicle vehicle){
-		vehiclesInQueue.add(vehicle);
-		queue++;
+		vehicleQueue.add(vehicle);
+		fillUpQueue(vehicle);
+		vehicle.toggleQueueStatus();
 	}
 	
 	/**
-	* Adds a vehicle to the pump
+	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
+	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
+	* The next Vehicle in the queue is specified by this method.
 	*/
 	
-	public void removeVehicleFromPumpQueue(Vehicle vehicle){
-		vehiclesInQueue.remove(vehicle);
-		queue--;
-		
+	public void removeVehicleFromPumpQueue(){
+		vehicleQueue.remove(getFirstVehicle());
+		freeUpQueue(getFirstVehicle());
 	}
 	
 	/**
@@ -104,6 +114,38 @@ public class Pump {
 	*/
 	public int getQueue(){
 		return queue;
+	}
+	
+	/**
+	* Returns list of vehicles. mainly used for testing
+	*/
+	public ArrayList<Vehicle> getVehicleQueue()
+	{
+		return vehicleQueue;
+	}
+	
+	public Vehicle getFirstVehicle()
+	{
+		return vehicleQueue.get(0);
+	}
+	
+	public double getMoneyTaken()
+	{
+		return moneyTaken;
+	}
+	
+	public boolean isdriverShopping()
+	{
+		if(driverShopping == 2)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isJustFilled()
+	{
+		return justFilled;
 	}
 	
 }

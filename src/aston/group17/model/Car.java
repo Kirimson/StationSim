@@ -7,6 +7,7 @@ public class Car extends Vehicle {
 	public Car(){
 
 		super(3, 7);
+		vehicleType = "Car";
 	}
 	
 	public double getUnitSpace() {
