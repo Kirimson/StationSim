@@ -56,7 +56,7 @@ public class Station {
 	public Till getShortestShopQueue(){
 		Till shortestShop = tills.get(0);
 		for (int i = 1; i<tills.size();i++){
-			if(tills.get(i).getQueueShop() > shortestShop.getQueueShop()){
+			if(tills.get(i).getQueueTill() > shortestShop.getQueueTill()){
 				shortestShop = tills.get(i);
 			}
 		}
