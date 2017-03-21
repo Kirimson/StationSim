@@ -8,6 +8,9 @@ public abstract class Vehicle {
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
+	protected String vehicleType;
+	private boolean inQueue;
+	private double moneySpent;
 	
 	/**
 	 * Constructor for Vehicles, sets their tank size and amount filled on creation
@@ -35,12 +38,16 @@ public abstract class Vehicle {
 	/**
 	 * Fills the tank of the vehicle and will return how many gallons were used
 	 */
-	 public int FillTank()
+	 public boolean FillTankOneTick()
 	 {
-		 int fillAmount = tankSize - gallonsFilled;
-		 gallonsFilled = tankSize;
+		 if(gallonsFilled < tankSize)
+		 {
+			 gallonsFilled++;
+		 }
 		 
-		 return fillAmount;
+		 
+		 return true;
+
 	 }
 	 
 	 /**
@@ -62,6 +69,16 @@ public abstract class Vehicle {
 	 public Driver getDriver()
 	 {
 		 return driver;
+	 }
+	 
+	 public String toString()
+	 {
+		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
+	 }
+	 
+	 public void toggleQueueStatus()
+	 {
+		 inQueue = !inQueue;
 	 }
 	 
 	 public abstract double getUnitSpace();
