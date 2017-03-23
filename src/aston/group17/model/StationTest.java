@@ -77,50 +77,73 @@ public class StationTest {
 	@Test
 	public void testFullQueue()
 	{
+		System.out.println("\n CARS");
+		//create new station
 		Station s = new Station(1, 1);
 		
-		Car c1 = new Car();
-		Car c2 = new Car();
-		Car c3 = new Car();
+		//create arraylist of cars
+		ArrayList<Car> cars = new ArrayList<Car>();
 		
-		if(s.addVehicleToPumpQueue(c1))
-		{System.out.println("c1 in");}
-		else
-		{System.out.println("c1 not in");fail();}
+		//add cars to arraylist
+		for(int i = 0; i<3; i++)
+		{
+			cars.add(new Car());
+		}
 		
-		if(s.addVehicleToPumpQueue(c2))
-		{System.out.println("c2 in");}
-		else
-		{System.out.println("c2 not in");fail();}
+		//used to check what car we are on in the for each loop
+		int i = 0;
+		//loop through each car
+		for(Car car : cars)
+		{
+			//try and add car to pump
+			if(s.addVehicleToPumpQueue(car))
+			{System.out.println("c"+i+" in");}
+			else //if any car cant enter the queue, test fails. all 2 cars should be able to enter
+			{System.out.println("c"+i+" not in");fail();}
+			
+			//check what pump the car is in (should always be 0 for this test)
+			System.out.println(findVehicle(s, car));
+			//increment i to keep count of what car we are on
+			i++;
+		}
 		
-		if(s.addVehicleToPumpQueue(c3))
-		{System.out.println("c3 in");}
-		else
-		{System.out.println("c3 not in");fail();}
+		System.out.println("\n SEDANS");
 		
+		//new station
 		Station st2 = new Station(1, 1);
 		
-		Sedan s1 = new Sedan();
-		Sedan s2 = new Sedan();
-		Sedan s3 = new Sedan();
-		
-		if(st2.addVehicleToPumpQueue(s1))
-		{System.out.println("s1 in");}
-		else
-		{System.out.println("s1 not in");fail();}
-		
-		if(st2.addVehicleToPumpQueue(s2))
-		{System.out.println("s2 in");}
-		else
-		{System.out.println("s2 not in");fail();}
-		
-		if(st2.addVehicleToPumpQueue(s3))
-		{System.out.println("s3 in");fail();}
-		else
-		{System.out.println("s3 not in");}
+		//sedans
+		ArrayList<Sedan> sedans = new ArrayList<Sedan>();
 		
 		
+		//add sedans to list
+		for(int i1 = 0; i1 < 3; i1++)
+		{
+			sedans.add(new Sedan());
+		}
 		
+		//second i
+		int i1 = 0;
+		
+		//loop through sedans, adding them to pump
+		for(Sedan sed : sedans)
+		{
+			if(st2.addVehicleToPumpQueue(sed))
+			{
+				System.out.println("s"+i1+" in");
+				//third sedan shouldnt be able to join the queue
+				if(i1 == 2)
+				{
+					fail();
+				}
+			}
+			else
+			{System.out.println("s"+i1+" not in");}
+			
+			System.out.println(findVehicle(st2, sed));
+			
+			i1++;
+		}
 	}
 	
 	@Test
@@ -128,48 +151,35 @@ public class StationTest {
 	{
 		Station s = new Station(2, 1);
 		
-		Sedan s1 = new Sedan();
-		Sedan s2 = new Sedan();
-		Sedan s3 = new Sedan();
-		Sedan s4 = new Sedan();
-		Sedan s5 = new Sedan();
+		ArrayList<Sedan> sedans = new ArrayList<Sedan>();
 		
-		if(s.addVehicleToPumpQueue(s1))
-		{System.out.println("s1 in");}
-		else
-		{System.out.println("s1 not in");fail();}
+		for(int i = 0; i < 5; i++)
+		{
+			sedans.add(new Sedan());
+		}
 		
-		System.out.println(findVehicle(s, s1));
+		int i = 0;
+		for(Sedan sed : sedans)
+		{
+			if(s.addVehicleToPumpQueue(sed))
+			{
+				System.out.println("s"+i+" in");
+				//fith sedan (fourth index) shouldnt be able to join the queue
+				if(i == 4)
+				{
+					fail();
+				}
+			}
+			else
+			{System.out.println("s"+i+" not in");}
+			
+			System.out.println(findVehicle(s, sed));
+			i++;
+		}
 		
-		if(s.addVehicleToPumpQueue(s2))
-		{System.out.println("s2 in");}
-		else
-		{System.out.println("s2 not in");fail();}
-		
-		System.out.println(findVehicle(s, s2));
-		
-		if(s.addVehicleToPumpQueue(s3))
-		{System.out.println("s3 in");}
-		else
-		{System.out.println("s3 not in");fail();}
-		
-		System.out.println(findVehicle(s, s3));
-		
-		if(s.addVehicleToPumpQueue(s4))
-		{System.out.println("s4 in");}
-		else
-		{System.out.println("s4 not in");fail();}
-		
-		System.out.println(findVehicle(s, s4));
-		
-		if(s.addVehicleToPumpQueue(s5))
-		{System.out.println("s5 in");fail();}
-		else
-		{System.out.println("s5 not in");}
-		
-		System.out.println(findVehicle(s, s5));
 	}
 	
+	//checks if a vehicle is in a pump in a station
 	private String findVehicle(Station s, Vehicle v)
 	{
 		int i = 0;
