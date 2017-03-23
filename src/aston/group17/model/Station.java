@@ -19,10 +19,10 @@ public class Station {
 			tills.add(new Till());
 		}
 		
-		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
+		//create new arrayList of Pump and create pumps inside depending on how many pumps were specified in pAmount
 		pumps = new ArrayList<Pump>();
 		
-		for(int i = 0; i < sAmount; i++)
+		for(int i = 0; i < pAmount; i++)
 		{
 			pumps.add(new Pump());
 		}
@@ -75,14 +75,20 @@ public class Station {
 	/**
 	* Returns the shortest pump queue
 	*/
-	public Pump getShortestPumpQueue(){
+	public Pump getShortestPumpQueue(Vehicle v){
 		Pump shortestPump = pumps.get(0);
-		for (int i = 1; i<pumps.size();i++){
-			if(pumps.get(i).getQueueFree() > shortestPump.getQueueFree()){
-				shortestPump = pumps.get(i);
+		for(Pump p : pumps)
+		{
+			if(p.getQueueFree() > shortestPump.getQueueFree())
+			{
+				shortestPump = p;
 			}
 		}
-		return shortestPump;
+		if(shortestPump.willVehicleFit(v))
+		{
+			return shortestPump;
+		}
+		return null;
 	}
 	
 	public Pump getPump(int pump)
@@ -90,11 +96,24 @@ public class Station {
 		return pumps.get(pump);
 	}
 	
+	public ArrayList<Pump> getPumpArray()
+	{
+		return pumps;
+	}
+	
 	/**
 	* Adds vehicle to the shortest pump queue.
 	*/
-	public void addVehicleToPumpQueue(Vehicle vehicle){
-		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
+	public boolean addVehicleToPumpQueue(Vehicle vehicle){
+		Pump shortestPump = getShortestPumpQueue(vehicle);
+		
+		if(shortestPump != null)
+		{
+			shortestPump.addVehicleToPumpQueue(vehicle);
+			
+			return true;
+		}
+		return false;
 	}
 	
 	/*
