@@ -29,13 +29,13 @@ public class Pump {
 	* Checks to see if the pump is currently occupied. If the pump has less than the MAXQUEUE, it is available to use.
 	* Else it is unavailable and the vehicle wouldn't be able to enter the queue.
 	*/
-	public boolean isFull(Vehicle v){
+	public double isFull(Vehicle v){;
 		if (unitSpaceAvailable >= 0 && unitSpaceAvailable <= MAXQUEUE){
-			if(v.getUnitSpace() > unitSpaceAvailable){
-			return false;
+			if(v.getUnitSpace() < unitSpaceAvailable){
+			return unitSpaceAvailable - v.getUnitSpace();
 			}
 		}
-		return true;
+		return 0.0;
 	}
 	
 	
@@ -146,6 +146,15 @@ public class Pump {
 	public boolean isJustFilled()
 	{
 		return justFilled;
+	}
+	
+	public boolean willVehicleFit(Vehicle v)
+	{
+		if(unitSpaceAvailable - v.getUnitSpace() >= 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 }
