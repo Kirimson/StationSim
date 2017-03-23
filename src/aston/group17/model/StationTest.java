@@ -139,25 +139,49 @@ public class StationTest {
 		else
 		{System.out.println("s1 not in");fail();}
 		
+		System.out.println(findVehicle(s, s1));
+		
 		if(s.addVehicleToPumpQueue(s2))
 		{System.out.println("s2 in");}
 		else
 		{System.out.println("s2 not in");fail();}
+		
+		System.out.println(findVehicle(s, s2));
 		
 		if(s.addVehicleToPumpQueue(s3))
 		{System.out.println("s3 in");}
 		else
 		{System.out.println("s3 not in");fail();}
 		
+		System.out.println(findVehicle(s, s3));
+		
 		if(s.addVehicleToPumpQueue(s4))
 		{System.out.println("s4 in");}
 		else
 		{System.out.println("s4 not in");fail();}
 		
+		System.out.println(findVehicle(s, s4));
+		
 		if(s.addVehicleToPumpQueue(s5))
 		{System.out.println("s5 in");fail();}
 		else
 		{System.out.println("s5 not in");}
+		
+		System.out.println(findVehicle(s, s5));
+	}
+	
+	private String findVehicle(Station s, Vehicle v)
+	{
+		int i = 0;
+		for(Pump p : s.getPumpArray())
+		{
+			if(p.getVehicleQueue().contains(v))
+			{
+				return "pump: "+i;
+			}
+			i++;
+		}
+		return "Not in pump";
 	}
 
 }

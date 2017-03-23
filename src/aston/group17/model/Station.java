@@ -19,10 +19,10 @@ public class Station {
 			tills.add(new Till());
 		}
 		
-		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
+		//create new arrayList of Pump and create pumps inside depending on how many pumps were specified in pAmount
 		pumps = new ArrayList<Pump>();
 		
-		for(int i = 0; i < sAmount; i++)
+		for(int i = 0; i < pAmount; i++)
 		{
 			pumps.add(new Pump());
 		}
@@ -79,7 +79,7 @@ public class Station {
 		Pump shortestPump = pumps.get(0);
 		for(Pump p : pumps)
 		{
-			if(p.isFull(v) >= shortestPump.isFull(v))
+			if(p.getQueueFree() > shortestPump.getQueueFree())
 			{
 				shortestPump = p;
 			}
@@ -94,6 +94,11 @@ public class Station {
 	public Pump getPump(int pump)
 	{
 		return pumps.get(pump);
+	}
+	
+	public ArrayList<Pump> getPumpArray()
+	{
+		return pumps;
 	}
 	
 	/**
