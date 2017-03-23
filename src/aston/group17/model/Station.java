@@ -75,14 +75,20 @@ public class Station {
 	/**
 	* Returns the shortest pump queue
 	*/
-	public Pump getShortestPumpQueue(){
+	public Pump getShortestPumpQueue(Vehicle v){
 		Pump shortestPump = pumps.get(0);
-		for (int i = 1; i<pumps.size();i++){
-			if(pumps.get(i).getQueueFree() > shortestPump.getQueueFree()){
-				shortestPump = pumps.get(i);
+		for(Pump p : pumps)
+		{
+			if(p.isFull(v) >= shortestPump.isFull(v))
+			{
+				shortestPump = p;
 			}
 		}
-		return shortestPump;
+		if(shortestPump.willVehicleFit(v))
+		{
+			return shortestPump;
+		}
+		return null;
 	}
 	
 	public Pump getPump(int pump)
@@ -93,8 +99,16 @@ public class Station {
 	/**
 	* Adds vehicle to the shortest pump queue.
 	*/
-	public void addVehicleToPumpQueue(Vehicle vehicle){
-		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
+	public boolean addVehicleToPumpQueue(Vehicle vehicle){
+		Pump shortestPump = getShortestPumpQueue(vehicle);
+		
+		if(shortestPump != null)
+		{
+			shortestPump.addVehicleToPumpQueue(vehicle);
+			
+			return true;
+		}
+		return false;
 	}
 	
 	/*
