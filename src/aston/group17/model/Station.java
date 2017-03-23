@@ -19,10 +19,10 @@ public class Station {
 			tills.add(new Till());
 		}
 		
-		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
+		//create new arrayList of Pump and create pumps inside depending on how many pumps were specified in pAmount
 		pumps = new ArrayList<Pump>();
 		
-		for(int i = 0; i < sAmount; i++)
+		for(int i = 0; i < pAmount; i++)
 		{
 			pumps.add(new Pump());
 		}
@@ -56,7 +56,7 @@ public class Station {
 	public Till getShortestShopQueue(){
 		Till shortestShop = tills.get(0);
 		for (int i = 1; i<tills.size();i++){
-			if(tills.get(i).getQueueShop() > shortestShop.getQueueShop()){
+			if(tills.get(i).getQueueTill() > shortestShop.getQueueTill()){
 				shortestShop = tills.get(i);
 			}
 		}
@@ -75,14 +75,27 @@ public class Station {
 	/**
 	* Returns the shortest pump queue
 	*/
-	public Pump getShortestPumpQueue(){
+	public Pump getShortestPumpQueue(Vehicle v){
+		//create temp pump that will be used to track best pump for vehicle (shortest queue)
 		Pump shortestPump = pumps.get(0);
-		for (int i = 1; i<pumps.size();i++){
-			if(pumps.get(i).getQueueFree() > shortestPump.getQueueFree()){
-				shortestPump = pumps.get(i);
+		//loop through pumps, using p as each pump
+		for(Pump p : pumps)
+		{
+			//compare how much is free in both temp pump and 'p'
+			if(p.getQueueFree() > shortestPump.getQueueFree())
+			{
+				//if 'p' pump is shorter than temp pump, temp pump becomes p
+				shortestPump = p;
 			}
 		}
-		return shortestPump;
+		//checks if vehicle can fit in the shortest pump queue
+		if(shortestPump.willVehicleFit(v))
+		{
+			//if it can, return the pump
+			return shortestPump;
+		}
+		//if not, return null
+		return null;
 	}
 	
 	public Pump getPump(int pump)
@@ -90,11 +103,27 @@ public class Station {
 		return pumps.get(pump);
 	}
 	
+	public ArrayList<Pump> getPumpArray()
+	{
+		return pumps;
+	}
+	
 	/**
 	* Adds vehicle to the shortest pump queue.
 	*/
-	public void addVehicleToPumpQueue(Vehicle vehicle){
-		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
+	public boolean addVehicleToPumpQueue(Vehicle vehicle){
+		//find the shortest pump queue for the vehicle to go in, if there is any
+		Pump shortestPump = getShortestPumpQueue(vehicle);
+		
+		//if there is a pump the vehicle can go into
+		if(shortestPump != null)
+		{
+			//add the vehicle to this pump queue
+			shortestPump.addVehicleToPumpQueue(vehicle);
+			return true;
+		}
+		// return false to the simulator class
+		return false;
 	}
 	
 	/*
