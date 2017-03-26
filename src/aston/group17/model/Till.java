@@ -52,8 +52,4 @@ public class Till {
 	public void setMoneyTaken(double money){
 		moneyTaken += money;
 	}
-	
-	
-
-
 }

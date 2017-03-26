@@ -10,18 +10,13 @@ public class Driver {
 	public Driver()
 	{
 		shopping = false;
+		rnd = new Random();
 	}
 	
-	public void enterShopQueue()
-	{
-		shopping = true;
+	public String getVehicleType(){
+		return "";
 	}
-	
-	public void leaveShopQueue()
-	{
-		shopping = false;
+	public void toggleShopping(){
+		shopping = !shopping;
 	}
-	
-	
-	
 }
