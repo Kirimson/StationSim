@@ -29,12 +29,9 @@ public class Till {
 	/**
 	* Moves along the queue and returns a driver.
 	*/
-	public void getNextDriver(){
-		for (int i = 0; i< waitingCustomer.size(); i++){
-			currentCustomer = waitingCustomer.get(i);
+	public Driver getNextDriver(){
+			return waitingCustomer.get(0);
 		}
-		
-	} 
 
 	/**
 	* Returns the total money taken in from that till
