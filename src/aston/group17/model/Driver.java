@@ -9,20 +9,19 @@ public class Driver {
 	
 	public Driver()
 	{
-		
+		shopping = false;
 	}
 	
 	public void enterShopQueue()
 	{
-		
+		shopping = true;
 	}
 	
 	public void leaveShopQueue()
 	{
-		
+		shopping = false;
 	}
-	/*
-	 * 
-	 * 
-	 */
+	
+	
+	
 }

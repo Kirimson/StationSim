@@ -15,8 +15,7 @@ public class Till {
 		moneyTaken = 0;
 		waitingCustomer = new ArrayList<Driver>();
 		idleCustomer = new ArrayList<Driver>();
-		noOfCustomers = 0;
-		
+		noOfCustomers = 0;	
 	}
 	
 	/**
@@ -41,17 +40,19 @@ public class Till {
 	* Returns the total money taken in from that till
 	*/
 	public double getMoneyTaken(){
-		
+
 		return moneyTaken;
 	}
 	// adds one driver to till queue
 	public void setQueueTill(){
 		noOfCustomers++;
 	}
+	
 	// adds money taken at till to total
 	public void setMoneyTaken(double money){
 		moneyTaken += money;
 	}
+	
 	
 
 
