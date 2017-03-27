@@ -9,7 +9,7 @@ import java.util.Random;
 public class Simulator {
 	private double p;
 	private double q;
-	private double t;
+	private double t; //truck probability
 	
 	private Driver tempDriver;
 	private Station station;
@@ -27,7 +27,6 @@ public class Simulator {
 	public Simulator(int numSteps, int p, int q, int pumps, int tills)
 	{
 		t = 0.02;
-		this.seed = seed;
 		station = new Station(pumps, tills);
 	}
 	
