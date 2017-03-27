@@ -13,7 +13,6 @@ public class Pump {
 	private Vehicle currentVehicle;
 	private ArrayList<Vehicle> vehicleQueue;
 	private static final double PRICEOFFUEL = 1.2;
-	private double moneyTaken;
 	
 	private boolean justArrived, justFilled;
 	private int driverShopping = 0;
@@ -48,27 +47,12 @@ public class Pump {
 	
 	
 	/**
-	* Fills up the tank of the vehicle up one tick (1 gallon). If the vehicle has just arrived it wont fill and turn "justArrived" off
+	* Fills up the tank of the vehicle up one tick (1 gallon).
+	* If the vehicle has just arrived it wont fill and turn "justArrived" off
 	*/
 	public void fillFirstVehicle(){
 		//If the driver hasn't justArrived (second tick of them being there and the tank isn't full yet
-		if(justArrived == false && justFilled == false)
-		{
-			justFilled = vehicleQueue.get(0).FillTankOneTick();
-		}
-		
-		//if driver is waiting before shopping they will now need to shop
-		if(driverShopping == 1)
-		{
-			driverShopping = 2;
-		}
-		
-		//if the car has just filled the vehicle set shopping to 1 (waiting before shopping)
-		if(justFilled == true)
-		{
-			driverShopping = 1;
-		}
-
+		vehicleQueue.get(0).FillTankOneTick();
 	}
 	
 	/**
@@ -92,10 +76,10 @@ public class Pump {
 	/**
 	* Adds a vehicle to the pump
 	*/
-	public void addVehicleToPumpQueue(Vehicle vehicle){
+	public void addToPumpQueue(Driver driver){
+		Vehicle vehicle = driver.getVehicle();
 		vehicleQueue.add(vehicle);
 		fillUpQueue(vehicle);
-		vehicle.toggleQueueStatus();
 	}
 	
 	/**
@@ -127,11 +111,6 @@ public class Pump {
 	public Vehicle getFirstVehicle()
 	{
 		return vehicleQueue.get(0);
-	}
-	
-	public double getMoneyTaken()
-	{
-		return moneyTaken;
 	}
 	
 	public boolean isdriverShopping()
