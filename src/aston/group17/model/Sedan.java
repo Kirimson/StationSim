@@ -28,8 +28,8 @@ public class Sedan extends Vehicle {
 	/**
 	 * This calculates how much a sedan driver could spend shopping 
 	 */
-	public int moneySpent(){
-		int moneySpent = rand.nextInt(8)+8;
+	public double moneySpent(){
+		double moneySpent = rand.nextInt(8)+8;
 		return moneySpent;
 	}
 }
