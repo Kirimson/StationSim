@@ -17,31 +17,31 @@ public class StationTest {
 	public void testJoinQueue() {
 		Station s = new Station(3, 3);
 		
-		Car car = new Car();
+		Driver carDriver = new Driver("Car");
 		
-		s.addVehicleToPumpQueue(car);
+		s.addDriverToPumpQueue(carDriver);
 		
-		ArrayList<Vehicle> vp1 = s.getPump(0).getVehicleQueue();
+		ArrayList<Driver> driverQueue1 = s.getPump(0).getVehicleQueue();
 		
-		System.out.println("c1:"+car.toString());
-		System.out.println("v1:"+vp1.get(0).toString());
+		System.out.println("c1:"+carDriver.getVehicle().toString());
+		System.out.println("v1:"+driverQueue1.get(0).getVehicle().toString());
 		
 		
-		Sedan sedan = new Sedan();
+		Driver sedanDriver = new Driver("Sedan");
 		
-		s.addVehicleToPumpQueue(sedan);
+		s.addDriverToPumpQueue(sedanDriver);
 		
-		ArrayList<Vehicle> vp2 = s.getPump(1).getVehicleQueue();
+		ArrayList<Driver> DriverQueue2 = s.getPump(1).getVehicleQueue();
 		System.out.println();
-		System.out.println("c2:"+sedan.toString());
-		System.out.println("v2:"+vp2.get(0).toString());
+		System.out.println("c2:"+sedanDriver.getVehicle().toString());
+		System.out.println("v2:"+DriverQueue2.get(0).getVehicle().toString());
 		
-		if(!vp1.get(0).toString().equals(car.toString()))
+		if(!driverQueue1.get(0).getVehicle().toString().equals(carDriver.getVehicle().toString()))
 		{
 			fail();
 		}
 		
-		if(!vp2.get(0).toString().equals(sedan.toString()))
+		if(!DriverQueue2.get(0).getVehicle().toString().equals(sedanDriver.getVehicle().toString()))
 		{
 			fail();
 		}
@@ -52,23 +52,27 @@ public class StationTest {
 	public void testFillTank() {
 		Station s = new Station(3, 3);
 		
-		Car car = new Car();
+		Driver carDriver = new Driver("Car");
 		
-		s.addVehicleToPumpQueue(car);
+		s.addDriverToPumpQueue(carDriver);
 		
-		ArrayList<Vehicle> vp1 = s.getPump(0).getVehicleQueue();
+		Driver vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println("v1:"+vp1.get(0).toString());
+		System.out.println("v1:"+vp1.toString());
 		
-		s.getPump(0).fillFirstVehicle();
+		while(s.getPump(0).getFirstDriver().getVehicle().getGallonsFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
+		{
+			s.getPump(0).getFirstDriver().fillTank();
+			System.out.println("v1:"+s.getPump(0).getFirstDriver().toString());
+		}
 		
-		vp1 = s.getPump(0).getVehicleQueue();
+		vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println("v1:"+vp1.get(0).toString());
+		System.out.println("v1:"+vp1.toString());
 		
 		System.out.println("\n");
 		
-		if(vp1.get(0).getGallonsFilled() != vp1.get(0).getTankSize())
+		if(vp1.getVehicle().getGallonsFilled() != vp1.getVehicle().getTankSize())
 		{
 			fail();
 		}
@@ -78,104 +82,69 @@ public class StationTest {
 	public void testFullQueue()
 	{
 		Station s = new Station(1, 1);
+
+		ArrayList<Driver> carDrivers = new ArrayList<Driver>();
 		
-		Car c1 = new Car();
-		Car c2 = new Car();
-		Car c3 = new Car();
+		for(int i = 0; i < 4; i++)
+		{
+			carDrivers.add(new Driver("Car"));
+		}
 		
-		if(s.addVehicleToPumpQueue(c1))
-		{System.out.println("c1 in");}
-		else
-		{System.out.println("c1 not in");fail();}
-		
-		if(s.addVehicleToPumpQueue(c2))
-		{System.out.println("c2 in");}
-		else
-		{System.out.println("c2 not in");fail();}
-		
-		if(s.addVehicleToPumpQueue(c3))
-		{System.out.println("c3 in");}
-		else
-		{System.out.println("c3 not in");fail();}
-		
-		Station st2 = new Station(1, 1);
-		
-		Sedan s1 = new Sedan();
-		Sedan s2 = new Sedan();
-		Sedan s3 = new Sedan();
-		
-		if(st2.addVehicleToPumpQueue(s1))
-		{System.out.println("s1 in");}
-		else
-		{System.out.println("s1 not in");fail();}
-		
-		if(st2.addVehicleToPumpQueue(s2))
-		{System.out.println("s2 in");}
-		else
-		{System.out.println("s2 not in");fail();}
-		
-		if(st2.addVehicleToPumpQueue(s3))
-		{System.out.println("s3 in");fail();}
-		else
-		{System.out.println("s3 not in");}
-		
-		
-		
-	}
+		int p = 0;
+		for(Driver d: carDrivers)
+		{
+			if(s.addDriverToPumpQueue(d))
+			{System.out.println("c"+ p + " in");}
+			else
+			{
+				System.out.println("c"+p +" not in");
+				if(p != 3)
+				{
+					fail();
+				}
+			}
+			System.out.println(findVehicle(s, d));
+			p++;
+			}
+		}
+	
 	
 	@Test
 	public void testMultiplePumpFull()
 	{
 		Station s = new Station(2, 1);
 		
-		Sedan s1 = new Sedan();
-		Sedan s2 = new Sedan();
-		Sedan s3 = new Sedan();
-		Sedan s4 = new Sedan();
-		Sedan s5 = new Sedan();
+		ArrayList<Driver> sedanDrivers = new ArrayList<Driver>();
 		
-		if(s.addVehicleToPumpQueue(s1))
-		{System.out.println("s1 in");}
-		else
-		{System.out.println("s1 not in");fail();}
+		for(int i = 0; i < 5; i++)
+		{
+			sedanDrivers.add(new Driver("Sedan"));
+		}
 		
-		System.out.println(findVehicle(s, s1));
-		
-		if(s.addVehicleToPumpQueue(s2))
-		{System.out.println("s2 in");}
-		else
-		{System.out.println("s2 not in");fail();}
-		
-		System.out.println(findVehicle(s, s2));
-		
-		if(s.addVehicleToPumpQueue(s3))
-		{System.out.println("s3 in");}
-		else
-		{System.out.println("s3 not in");fail();}
-		
-		System.out.println(findVehicle(s, s3));
-		
-		if(s.addVehicleToPumpQueue(s4))
-		{System.out.println("s4 in");}
-		else
-		{System.out.println("s4 not in");fail();}
-		
-		System.out.println(findVehicle(s, s4));
-		
-		if(s.addVehicleToPumpQueue(s5))
-		{System.out.println("s5 in");fail();}
-		else
-		{System.out.println("s5 not in");}
-		
-		System.out.println(findVehicle(s, s5));
-	}
+		int p = 0;
+		for(Driver d: sedanDrivers)
+		{
+			if(s.addDriverToPumpQueue(d))
+			{System.out.println("s"+p +" in");}
+			else
+			{
+				System.out.println("s"+p +" not in");
+				if(p != 4)
+				{
+					fail();
+				}
+			}
+			System.out.println(findVehicle(s, d));
+			p++;
+			}
+		}
 	
-	private String findVehicle(Station s, Vehicle v)
+	private String findVehicle(Station s, Driver d)
 	{
 		int i = 0;
 		for(Pump p : s.getPumpArray())
 		{
-			if(p.getVehicleQueue().contains(v))
+			if(p.getVehicleQueue().contains(d.getVehicle()))
 			{
 				return "pump: "+i;
 			}
@@ -183,5 +152,4 @@ public class StationTest {
 		}
 		return "Not in pump";
 	}
-
 }

@@ -9,47 +9,25 @@ import java.util.Random;
 public class Simulator {
 	private double p;
 	private double q;
-	private double t;
+	private double t; //truck probability
 	
-	private ArrayList<Vehicle> vehicles;
+	private Driver tempDriver;
 	private Station station;
 	private Station updatedStation;
 	private int step, seed;
 	private Random rnd;
 	
-	private SimulatorGUI simGUI;
+	private static SimulatorGUI simGUI;
 	
 	public static void main(String[] args)
-	{	
-		int numSteps = 1; //default amount of steps
-		
-		if(args.length >= 1)
-		{
-			numSteps = Integer.parseInt(args[0]);
-		}
-		
-		if(numSteps <= 0)
-		{
-			numSteps = 1;
-		}
-		
-		int seed = 42;
-		
-		if(args.length >= 2)
-		{
-			seed = Integer.parseInt(args[1]);
-		}
-		
-		Simulator s = new Simulator(seed);
-		
-		s.simulate(numSteps);
+	{
+		simGUI = new SimulatorGUI();
 	}
 	
-	public Simulator(int seed)
+	public Simulator(int numSteps, int p, int q, int pumps, int tills)
 	{
 		t = 0.02;
-		this.seed = seed;
-		simGUI = new SimulatorGUI();
+		station = new Station(pumps, tills);
 	}
 	
 	private void simulate(int numSteps)

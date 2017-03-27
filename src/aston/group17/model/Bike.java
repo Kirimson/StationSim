@@ -9,7 +9,7 @@ public class Bike extends Vehicle {
 		vehicleType = "Bike";
 	}
 
-	public double getUnitSpace() {
+	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
 

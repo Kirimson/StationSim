@@ -7,8 +7,12 @@ public class Station {
 	private ArrayList<Pump> pumps;
 	
 	private double moneyEarnt;
-  	private Vehicle tempVehicle;
+//  	private Driver tempDriver;
 	
+	/*
+	 * @Param: pump amount
+	 * @Param: till amount
+	 */
 	public Station(int pAmount, int sAmount)
 	{
 		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
@@ -32,20 +36,7 @@ public class Station {
 	{
 		for(Pump p : pumps)
 		{
-			//check if the driver is shopping or not
-			if(p.isdriverShopping() == false)
-			{
-				//check if the Driver done filling the vehicle. So they may enter the shop
-				p.fillFirstVehicle();
-			}
-			else if(p.isdriverShopping() == true) //The driver is in the shop and does shop stuff
-			{
-				//do some shop stuff, like set driver in shopping state and entering them into a shop
-			}
-			else //The driver is done and will now leave the pump
-			{
-				p.removeVehicleFromPumpQueue();
-			}
+			
 		
 		}
 	}
@@ -104,29 +95,24 @@ public class Station {
 	/**
 	* Adds vehicle to the shortest pump queue.
 	*/
-	public boolean addVehicleToPumpQueue(Vehicle vehicle){
-		Pump shortestPump = getShortestPumpQueue(vehicle);
+	public boolean addDriverToPumpQueue(Driver driver){
+		Pump shortestPump = getShortestPumpQueue(driver.getVehicle());
 		
 		if(shortestPump != null)
 		{
-			shortestPump.addVehicleToPumpQueue(vehicle);
+			shortestPump.addToPumpQueue(driver);
 			
 			return true;
 		}
 		return false;
 	}
 	
-	/*
+	/**
 	 * adds all money gained from each pump and shop and adds it to moneyEarnt
 	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
 	 */
 	public double countMoney()
-	{
-		for(Pump p : pumps)
-		{
-			moneyEarnt += p.getMoneyTaken();
-		}
-		
+	{	
 		for(Till s : tills)
 		{
 			moneyEarnt += s.getMoneyTaken();

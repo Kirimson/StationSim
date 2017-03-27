@@ -40,12 +40,17 @@ public class Till {
 
 		return moneyTaken;
 	}
-	// adds one driver to till queue
+	/**
+	 *  adds one driver to till queue
+	 */
 	public void setQueueTill(){
 		noOfCustomers++;
 	}
 	
-	// adds money taken at till to total
+	/**
+	 *  adds money taken at till to total
+	 * @param money
+	 */
 	public void setMoneyTaken(double money){
 		moneyTaken += money;
 	}

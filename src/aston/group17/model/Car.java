@@ -13,7 +13,7 @@ public class Car extends Vehicle {
 		rand = new Random();
 	}
 	
-	public double getUnitSpace() {
+	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
 	/**
