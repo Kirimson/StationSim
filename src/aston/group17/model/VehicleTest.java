@@ -14,7 +14,7 @@ public class VehicleTest {
 	@Test
 	public void testUnitSize() {
 		Car carTest = new Car();
-		assertEquals("Check unit space is correct", 1.0, carTest.getUnitSpace(), 0);
+		assertEquals("Check unit space is correct", 1.0, carTest.getUnitSpace(), 1e-4);
 		
 		Sedan sedanTest = new Sedan();
 		assertEquals("Check unit space is correct", 1.5, sedanTest.getUnitSpace(), 0);
