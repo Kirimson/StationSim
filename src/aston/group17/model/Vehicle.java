@@ -44,8 +44,6 @@ public abstract class Vehicle {
 		 {
 			 gallonsFilled++;
 		 }
-		 
-		 
 		 return true;
 
 	 }
@@ -85,7 +83,7 @@ public abstract class Vehicle {
 	 
 	 public abstract int timeSpent();
 
-	 public abstract int moneySpent();
+	 public abstract double moneySpent();
 
 	
 

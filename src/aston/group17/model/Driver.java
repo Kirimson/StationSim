@@ -15,8 +15,6 @@ public class Driver {
 		moneySpent = 0;
 		rnd = new Random();
 		shopping = false;
-		
-		
 	}
 	/**
 	 * This sets a vehicle to each driver. 
@@ -47,7 +45,7 @@ public class Driver {
 	 * This calculates the money a driver could spend shopping.
 	 */
 	
-	public int moneySpent(){
+	public double moneySpent(){
 		moneySpent = vehicle.moneySpent();
 		
 		return moneySpent;
@@ -64,4 +62,14 @@ public class Driver {
 		return totalTime;	
 	}
 	
+	public String getVehicleType(){
+		return "";
+	}
+	public void toggleShopping(){
+		shopping = !shopping;
+	}
+	
+	public int getTotalTime(){
+		return totalTime;
+	}
 }
