@@ -44,8 +44,6 @@ public abstract class Vehicle {
 		 {
 			 gallonsFilled++;
 		 }
-		 
-		 
 		 return true;
 
 	 }

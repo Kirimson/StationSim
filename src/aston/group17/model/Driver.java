@@ -11,6 +11,7 @@ public class Driver {
 	
 	public Driver()
 	{
+<<<<<<< HEAD
 		totalTime = 0;
 		moneySpent = 0;
 		rnd = new Random();
@@ -64,4 +65,20 @@ public class Driver {
 		return totalTime;	
 	}
 	
+=======
+		shopping = false;
+		rnd = new Random();
+	}
+	
+	public String getVehicleType(){
+		return "";
+	}
+	public void toggleShopping(){
+		shopping = !shopping;
+	}
+	
+	public int getTotalTime(){
+		return totalTime;
+	}
+>>>>>>> ca0e20c0b4c689282234ec7616d8c1230e51efeb
 }
