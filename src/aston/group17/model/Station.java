@@ -76,25 +76,18 @@ public class Station {
 	* Returns the shortest pump queue
 	*/
 	public Pump getShortestPumpQueue(Vehicle v){
-		//create temp pump that will be used to track best pump for vehicle (shortest queue)
 		Pump shortestPump = pumps.get(0);
-		//loop through pumps, using p as each pump
 		for(Pump p : pumps)
 		{
-			//compare how much is free in both temp pump and 'p'
 			if(p.getQueueFree() > shortestPump.getQueueFree())
 			{
-				//if 'p' pump is shorter than temp pump, temp pump becomes p
 				shortestPump = p;
 			}
 		}
-		//checks if vehicle can fit in the shortest pump queue
 		if(shortestPump.willVehicleFit(v))
 		{
-			//if it can, return the pump
 			return shortestPump;
 		}
-		//if not, return null
 		return null;
 	}
 	
@@ -112,17 +105,14 @@ public class Station {
 	* Adds vehicle to the shortest pump queue.
 	*/
 	public boolean addVehicleToPumpQueue(Vehicle vehicle){
-		//find the shortest pump queue for the vehicle to go in, if there is any
 		Pump shortestPump = getShortestPumpQueue(vehicle);
 		
-		//if there is a pump the vehicle can go into
 		if(shortestPump != null)
 		{
-			//add the vehicle to this pump queue
 			shortestPump.addVehicleToPumpQueue(vehicle);
+			
 			return true;
 		}
-		// return false to the simulator class
 		return false;
 	}
 	

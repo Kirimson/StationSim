@@ -80,4 +80,11 @@ public abstract class Vehicle {
 	 }
 	 
 	 public abstract double getUnitSpace();
+	 
+	 public abstract int timeSpent();
+
+	 public abstract double moneySpent();
+
+	
+
 }

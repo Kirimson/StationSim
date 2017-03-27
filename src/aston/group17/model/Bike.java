@@ -13,4 +13,15 @@ public class Bike extends Vehicle {
 		return UNIT_SIZE;
 	}
 
+	
+	public int timeSpent() {
+		return 0;
+	}
+
+	
+	public double moneySpent() {
+		return 0;
+	}
+	
+
 }
