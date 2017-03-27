@@ -15,7 +15,7 @@ public class SimulatorGUI {
 		
 		final int blankSpace = 6;  // blank at edge of panels
 
-	// Step 1: create the components
+//	 Step 1: create the components
 		JButton startButton = new JButton();
 		JButton resetButton = new JButton();
 		JButton quitButton = new JButton();
@@ -27,7 +27,7 @@ public class SimulatorGUI {
 		actionList.setPreferredSize(new Dimension(300, 300));
 		actionList.setMinimumSize(new Dimension(200,200));
 		
-	// Step 2: Set the properties of the components
+//	 Step 2: Set the properties of the components
 		startButton.setText("Start");
 		startButton.setToolTipText("Start the simulation");
 		resetButton.setText("Reset");
@@ -35,7 +35,7 @@ public class SimulatorGUI {
 		quitButton.setText("Quit");
 		quitButton.setToolTipText("Quit application");
 		
-	// Step 3: Create containers to hold the components
+//	 Step 3: Create containers to hold the components
 		mainFrame = new JFrame("Fuelling Station Simulator");
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		
@@ -43,7 +43,7 @@ public class SimulatorGUI {
 		JPanel log = new JPanel();
 		JPanel title = new JPanel();
 		
-	// Step 4: Specify LayoutManagers
+//	 Step 4: Specify LayoutManagers
 		mainFrame.setLayout(new BorderLayout());
 		((JPanel)mainFrame.getContentPane()).setBorder(new 
 				EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
@@ -60,7 +60,7 @@ public class SimulatorGUI {
 		title.setBorder(new 
 				EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 		
-	// Step 5: Add components to containers 
+//	 Step 5: Add components to containers 
 		buttons.add(startButton);
 		buttons.add(resetButton);
 		buttons.add(quitButton);
@@ -68,24 +68,31 @@ public class SimulatorGUI {
 		mainFrame.add(actionList, BorderLayout.CENTER);
 		mainFrame.add(titleLabel, BorderLayout.NORTH);
 		
-	// Step 6: Arrange to handle events in the user interface
-		mainFrame.addWindowListener(new WindowAdapter() {
-		public void windowClosing(WindowEvent e) {
-		exitApp();
-		}
-	});    
 		
-		quitButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		exitApp();
-		}
-	});
-	
-		startButton.addActionListener(new ActionListener() { 
-		public void actionPerformed(ActionEvent e) {
-		setParameters();
-		}
-	});
-}
+		
+//	 Step 6: Arrange to handle events in the user interface
+		
+		mainFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+//			exitApp();
+			}
+		});    
+			
+			quitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//			exitApp();
+			}
+		});
+		
+			startButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+//			setParameters();
+			}
+		});
+			
+//	Step 7: Display GUI
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+	}
 }
 
