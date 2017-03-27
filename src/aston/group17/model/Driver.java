@@ -19,4 +19,8 @@ public class Driver {
 	public void toggleShopping(){
 		shopping = !shopping;
 	}
+	
+	public int getTotalTime(){
+		return totalTime;
+	}
 }
