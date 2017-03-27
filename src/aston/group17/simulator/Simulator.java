@@ -24,7 +24,7 @@ public class Simulator {
 		simGUI = new SimulatorGUI();
 	}
 	
-	public Simulator(int seed, int numSteps, int p, int q, int pumps, int tills)
+	public Simulator(int numSteps, int p, int q, int pumps, int tills)
 	{
 		t = 0.02;
 		this.seed = seed;
