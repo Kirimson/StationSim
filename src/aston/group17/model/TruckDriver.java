@@ -6,7 +6,7 @@ public class TruckDriver extends Driver{
 	
 	public TruckDriver()
 	{
-		super();
+		super("Truck");
 		happiness = 0.8;
 		
 	}

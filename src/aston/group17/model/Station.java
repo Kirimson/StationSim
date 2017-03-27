@@ -7,7 +7,7 @@ public class Station {
 	private ArrayList<Pump> pumps;
 	
 	private double moneyEarnt;
-  	private Vehicle tempVehicle;
+//  	private Driver tempDriver;
 	
 	public Station(int pAmount, int sAmount)
 	{
@@ -104,12 +104,12 @@ public class Station {
 	/**
 	* Adds vehicle to the shortest pump queue.
 	*/
-	public boolean addVehicleToPumpQueue(Vehicle vehicle){
-		Pump shortestPump = getShortestPumpQueue(vehicle);
+	public boolean addDriverToPumpQueue(Driver driver){
+		Pump shortestPump = getShortestPumpQueue(driver.getVehicle());
 		
 		if(shortestPump != null)
 		{
-			shortestPump.addVehicleToPumpQueue(vehicle);
+			shortestPump.addToPumpQueue(driver);
 			
 			return true;
 		}
@@ -121,12 +121,7 @@ public class Station {
 	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
 	 */
 	public double countMoney()
-	{
-		for(Pump p : pumps)
-		{
-			moneyEarnt += p.getMoneyTaken();
-		}
-		
+	{	
 		for(Till s : tills)
 		{
 			moneyEarnt += s.getMoneyTaken();

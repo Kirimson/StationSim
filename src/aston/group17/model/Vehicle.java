@@ -4,7 +4,6 @@ import java.util.Random;
 
 public abstract class Vehicle {
 	
-	protected Driver driver;
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
@@ -38,14 +37,12 @@ public abstract class Vehicle {
 	/**
 	 * Fills the tank of the vehicle and will return how many gallons were used
 	 */
-	 public boolean FillTankOneTick()
+	 public void FillTankOneTick()
 	 {
 		 if(gallonsFilled < tankSize)
 		 {
 			 gallonsFilled++;
 		 }
-		 return true;
-
 	 }
 	 
 	 /**
@@ -64,19 +61,9 @@ public abstract class Vehicle {
 		 return tankSize;
 	 }
 	 
-	 public Driver getDriver()
-	 {
-		 return driver;
-	 }
-	 
 	 public String toString()
 	 {
 		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
-	 }
-	 
-	 public void toggleQueueStatus()
-	 {
-		 inQueue = !inQueue;
 	 }
 	 
 	 public abstract double getUnitSpace();
