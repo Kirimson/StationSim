@@ -1,5 +1,5 @@
 package aston.group17.model;
 
-public class Customer {
-	//test
+public class Shop {
+
 }

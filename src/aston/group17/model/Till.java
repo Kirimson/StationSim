@@ -4,7 +4,7 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 public class Till {
-	private int moneyTaken;
+	private double moneyTaken;
 	private Driver currentCustomer;
 	private int currentCustomerPrice;
 	private ArrayList<Driver> waitingCustomer;
@@ -15,8 +15,7 @@ public class Till {
 		moneyTaken = 0;
 		waitingCustomer = new ArrayList<Driver>();
 		idleCustomer = new ArrayList<Driver>();
-		noOfCustomers = 0;
-		
+		noOfCustomers = 0;	
 	}
 	
 	/**
@@ -30,20 +29,24 @@ public class Till {
 	/**
 	* Moves along the queue and returns a driver.
 	*/
-	public void getNextDriver(){
-		for (int i = 0; i< waitingCustomer.size(); i++){
-			currentCustomer = waitingCustomer.get(i);
+	public Driver getNextDriver(){
+			return waitingCustomer.get(0);
 		}
-		
-	} 
 
 	/**
 	* Returns the total money taken in from that till
 	*/
-	public int getMoneyTaken(){
-		
+	public double getMoneyTaken(){
+
 		return moneyTaken;
 	}
-
-
+	// adds one driver to till queue
+	public void setQueueTill(){
+		noOfCustomers++;
+	}
+	
+	// adds money taken at till to total
+	public void setMoneyTaken(double money){
+		moneyTaken += money;
+	}
 }
