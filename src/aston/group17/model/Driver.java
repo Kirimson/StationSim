@@ -47,7 +47,7 @@ public class Driver {
 	 * This calculates the money a driver could spend shopping.
 	 */
 	
-	public int moneySpent(){
+	public double moneySpent(){
 		moneySpent = vehicle.moneySpent();
 		
 		return moneySpent;

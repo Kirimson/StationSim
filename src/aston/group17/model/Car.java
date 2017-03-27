@@ -27,8 +27,8 @@ public class Car extends Vehicle {
 	/**
 	 * This calculates how m a car driver could spend shopping 
 	 */
-	public int moneySpent(){
-		int moneySpent = rand.nextInt(5)+5;
+	public double moneySpent(){
+		double moneySpent = rand.nextInt(5)+5;
 		return moneySpent;
 	}
 
