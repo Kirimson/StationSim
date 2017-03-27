@@ -4,7 +4,7 @@ import java.util.Random;
 public class Driver {
 	private boolean shopping;
 	private int minRefill, minShop, seed, totalTime;
-	private int moneySpent;
+	private double moneySpent;
 	private Random rnd;
 	private Station station;
 	private Vehicle vehicle;
