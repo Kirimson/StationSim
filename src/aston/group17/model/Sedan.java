@@ -13,7 +13,7 @@ public class Sedan extends Vehicle {
 	}
 	
 
-	public double getUnitSpace() {
+	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
 

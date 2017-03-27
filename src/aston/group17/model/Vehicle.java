@@ -37,7 +37,7 @@ public abstract class Vehicle {
 	/**
 	 * Fills the tank of the vehicle and will return how many gallons were used
 	 */
-	 public void FillTankOneTick()
+	 public void fill()
 	 {
 		 if(gallonsFilled < tankSize)
 		 {
@@ -61,17 +61,15 @@ public abstract class Vehicle {
 		 return tankSize;
 	 }
 	 
+	 /*
+	  * generates a string to describe the Vehicle
+	  */
 	 public String toString()
 	 {
 		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
 	 }
 	 
-	 public abstract double getUnitSpace();
+	 public abstract double getUnitSize();
 	 
 	 public abstract int timeSpent();
-
-	 public abstract double moneySpent();
-
-	
-
 }

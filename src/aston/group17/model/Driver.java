@@ -8,6 +8,7 @@ public class Driver {
 	private Random rnd;
 	private Station station;
 	private Vehicle vehicle;
+	private String vehicleType;
 	
 	public Driver(String type)
 	{
@@ -19,27 +20,25 @@ public class Driver {
 		switch(type){
 			case "Car":
 				vehicle = new Car();
+				vehicleType = "Car";
 				break;
 			case "Sedan":
 				vehicle = new Sedan();
+				vehicleType = "Sedan";
 				break;
 			case "Truck":
 				vehicle = new Truck();
+				vehicleType = "Truck";
 				break;
 			case "Bike":
 				vehicle = new Bike();
+				vehicleType = "Bike";
 				break;
 			default:
 				vehicle = new Car();
+				vehicleType = "Car";
 		}
 	}
-	/**
-	 * This sets a vehicle to each driver. 
-	 */
-//	public void setVehicleOfDriver(Vehicle v){
-//		vehicle = v;
-//		
-//	}
 	
 	/**
 	 * This returns the vehicle the driver is driving.
@@ -49,21 +48,10 @@ public class Driver {
 	}
 	
 	/**
-	 * This adds the driver to the station and to the pump initially.
-	 */
-//	public void addVehicleToPump(){
-//		station.addToPumpQueue(vehicle);	
-//	}
-		
-	
-	
-	/**
 	 * This calculates the money a driver could spend shopping.
 	 */
 	
 	public double moneySpent(){
-		moneySpent = vehicle.moneySpent();
-		
 		return moneySpent;
 		
 	}
@@ -86,7 +74,7 @@ public class Driver {
 	}
 	
 	/*
-	 * chnages the driver's shopping state
+	 * changes the driver's shopping state
 	 */
 	public void toggleShopping(){
 		shopping = !shopping;
@@ -97,5 +85,12 @@ public class Driver {
 	 */
 	public int getShoppingTime(){
 		return shoppingTime;
+	}
+
+	/*
+	 * Calls the vehicle fill tank method
+	 */
+	public void fillTank() {
+		vehicle.fill();
 	}
 }

@@ -11,7 +11,7 @@ class Truck extends Vehicle{
 		vehicleType = "Truck";
 	}
 
-	public double getUnitSpace() {
+	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
 

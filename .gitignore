@@ -1,1 +1,9 @@
 *.class
+bin/aston/group17/model/VehicleTest.class
+bin/aston/group17/model/StationTest.class
+bin/aston/group17/model/Bike.class
+bin/aston/group17/model/Pump.class
+bin/aston/group17/model/Till.class
+bin/aston/group17/simulator/Simulator.class
+bin/aston/group17/model/StationTest.class
+bin/aston/group17/model/Driver.class
