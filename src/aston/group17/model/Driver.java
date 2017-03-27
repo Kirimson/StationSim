@@ -66,28 +66,28 @@ public class Driver {
 		return totalTime;	
 	}
 	
-	/*
+	/**
 	 * Returns vehicle type
 	 */
 	public String getVehicleType(){
 		return "";
 	}
 	
-	/*
+	/**
 	 * changes the driver's shopping state
 	 */
 	public void toggleShopping(){
 		shopping = !shopping;
 	}
 	
-	/*
+	/**
 	 * Returns length of shopping in ticks
 	 */
 	public int getShoppingTime(){
 		return shoppingTime;
 	}
 
-	/*
+	/**
 	 * Calls the vehicle fill tank method
 	 */
 	public void fillTank() {

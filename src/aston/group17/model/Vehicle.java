@@ -61,7 +61,7 @@ public abstract class Vehicle {
 		 return tankSize;
 	 }
 	 
-	 /*
+	 /**
 	  * generates a string to describe the Vehicle
 	  */
 	 public String toString()
