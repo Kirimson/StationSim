@@ -9,6 +9,10 @@ public class Station {
 	private double moneyEarnt;
 //  	private Driver tempDriver;
 	
+	/*
+	 * @Param: pump amount
+	 * @Param: till amount
+	 */
 	public Station(int pAmount, int sAmount)
 	{
 		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
