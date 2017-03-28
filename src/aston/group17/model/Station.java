@@ -7,8 +7,14 @@ public class Station {
 	private ArrayList<Pump> pumps;
 	
 	private double moneyEarnt;
-//  	private Driver tempDriver;
 	
+	/**
+	 * Constructs a new Station class
+	 * @param pAmount
+	 * Amount of pumps the Station will have
+	 * @param sAmount
+	 * Amount of shops the Station will have
+	 */
 	public Station(int pAmount, int sAmount)
 	{
 		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
@@ -28,43 +34,35 @@ public class Station {
 		}
 	}
 	
+	/**
+	 * What will happen at the station each tick
+	 */
 	public void act()
 	{
 		for(Pump p : pumps)
 		{
-			//check if the driver is shopping or not
-			if(p.isdriverShopping() == false)
-			{
-				//check if the Driver done filling the vehicle. So they may enter the shop
-				p.fillFirstVehicle();
-			}
-			else if(p.isdriverShopping() == true) //The driver is in the shop and does shop stuff
-			{
-				//do some shop stuff, like set driver in shopping state and entering them into a shop
-			}
-			else //The driver is done and will now leave the pump
-			{
-				p.removeVehicleFromPumpQueue();
-			}
+			
 		
 		}
 	}
 	
 	/**
-	* Returns the shortest shop queue available
+	* Returns a till that is not in use, first till that is free will be used, if any
+	* @return
+	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
-	public Till getShortestShopQueue(){
-		Till shortestShop = tills.get(0);
-		for (int i = 1; i<tills.size();i++){
-			if(tills.get(i).getQueueTill() > shortestShop.getQueueTill()){
-				shortestShop = tills.get(i);
+	public Till getFreeTill(){
+		for(Till t : tills){
+			if(!t.isTillInUse())
+			{
+				return t;
 			}
 		}
-		return shortestShop;
+		return null;
 	}
 	
 	/**
-	* Sends customer to the shortest shop queue
+	* Sends customer to the shortest till queue
 	*/
 	/*public void addDriverToShopQueue(Driver driver){
 	
@@ -73,8 +71,12 @@ public class Station {
 	}*/
 	
 	/**
-	* Returns the shortest pump queue
-	*/
+	 * Returns the shortest pump queue, checks all pumps for the one with the shortest queue, then checks if the vehicle will fit in the shortest queue
+	 * @param v
+	 * a vehicle that will be checked against the queue to see if it can fit in any queue
+	 * @return
+	 * returns the pump object the vehicle will go in to. Returns null if v cannot fit in any pump queue
+	 */
 	public Pump getShortestPumpQueue(Vehicle v){
 		Pump shortestPump = pumps.get(0);
 		for(Pump p : pumps)
@@ -84,26 +86,42 @@ public class Station {
 				shortestPump = p;
 			}
 		}
-		if(shortestPump.willVehicleFit(v))
+		if(shortestPump.willVehicleFit(v.getUnitSize()))
 		{
 			return shortestPump;
 		}
 		return null;
 	}
 	
+	/**
+	 * Gets a specified pump
+	 * @param pump
+	 * the pump number you want to return
+	 * @return
+	 * Pump object
+	 */
 	public Pump getPump(int pump)
 	{
 		return pumps.get(pump);
 	}
 	
+	/**
+	 * Gets the ArrayList of Pump
+	 * @return
+	 * ArrayList of Pump
+	 */
 	public ArrayList<Pump> getPumpArray()
 	{
 		return pumps;
 	}
 	
 	/**
-	* Adds vehicle to the shortest pump queue.
-	*/
+	 * Adds vehicle to the shortest pump queue.
+	 * @param driver
+	 * the driver to be added to the pump queue
+	 * @return
+	 * a true or false value, depending on whether the driver could join a queue or not
+	 */
 	public boolean addDriverToPumpQueue(Driver driver){
 		Pump shortestPump = getShortestPumpQueue(driver.getVehicle());
 		
@@ -116,9 +134,11 @@ public class Station {
 		return false;
 	}
 	
-	/*
+	/**
 	 * adds all money gained from each pump and shop and adds it to moneyEarnt
 	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
+	 * @return
+	 * the amount of money made at all tills as of calling the method
 	 */
 	public double countMoney()
 	{	
