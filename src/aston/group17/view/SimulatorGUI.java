@@ -10,6 +10,7 @@ import javax.swing.border.*;
 public class SimulatorGUI {
 	private JFrame mainFrame;
 	private JTextArea log;
+	private Simulator simulator;
 	
 	public SimulatorGUI() {
 		
@@ -74,19 +75,25 @@ public class SimulatorGUI {
 		
 		mainFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-//			exitApp();
+			exitApp();
 			}
 		});    
 			
 			quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//			exitApp();
+			exitApp();
+			}
+		});
+			
+			resetButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+			resetApp();
 			}
 		});
 		
 			startButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-//			setParameters();
+			setParameters();
 			}
 		});
 			
@@ -94,5 +101,24 @@ public class SimulatorGUI {
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 	}
+	private void exitApp() {
+		int response = JOptionPane.showConfirmDialog(mainFrame, 
+				"Do you wish to quit the application?",
+				"Quit?",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+		if (response == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+	}
+
+	private void resetApp(){
+		setParameters();
+		
+	}
+	private void setParameters(){
+		
+	}
 }
+
 
