@@ -2,16 +2,14 @@ package aston.group17.model;
 import java.util.Random;
 
 public class Driver {
-	private boolean shopping;
-	private int minRefill, minShop, seed, totalTime, shoppingTime;
+	private boolean shopping, wait, queueing;
+	private int  totalTime, shoppingTime, minShoppingTime;
 	private double moneySpent;
-	private Random rnd;
-	private Station station;
 	private Vehicle vehicle;
 	private String vehicleType;
 	
 	/**
-	 * constructs a new Driver class
+	 * constructs a new Driver object
 	 * @param type
 	 * the type of vehicle the Driver owns: "Car", "Sedan", "Bike", "Truck"
 	 */
@@ -19,8 +17,9 @@ public class Driver {
 	{
 		totalTime = 0;
 		moneySpent = 0;
-		rnd = new Random();
 		shopping = false;
+		wait = true;
+		queueing = true;
 		
 		switch(type){
 			case "Car":
@@ -43,6 +42,52 @@ public class Driver {
 				vehicle = new Car();
 				vehicleType = "Car";
 		}
+	}
+	
+	/**
+	 * What the driver will do each tick
+	 */
+	public void act()
+	{
+		if(wait)
+		{
+			wait = !wait;
+		}
+		else if(!shopping)
+		{
+			if(!queueing)
+			{
+				if(!getVehicle().isFull())
+				{
+						fillTank();
+				}
+				else
+				{
+					shopping = true;
+					wait = true;
+					minShoppingTime = getShoppingTime();
+				}
+			}
+		}
+//		else
+//		{
+//			//shopping code
+//			if(!queueing)
+//			{
+//				if(!(shoppingTime < minShoppingTime))
+//				{
+//					shoppingTime++;
+//				}
+//				else
+//				{
+//					toggleQueueing();
+//				}
+//			}
+//			else
+//			{
+//				
+//			}
+//		}
 	}
 	
 	/**
@@ -74,7 +119,63 @@ public class Driver {
 		
 		totalTime = vehicle.timeToSpendShopping();
 		
-		return totalTime;	
+		return totalTime;
+	}
+	
+	/**
+	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
+	 * @return
+	 * Boolean
+	 */
+	public boolean wantsToShop()
+	{
+		if(!wait && shopping)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns if the Driver is queueing or not
+	 * @return
+	 * Boolean queueing
+	 */
+	public boolean isQueueing()
+	{
+		return queueing;
+	}
+	
+	/**
+	 * Returns true if the Driver is still shopping
+	 * @return
+	 * Boolean
+	 */
+	public boolean stillShopping()
+	{
+		if(shoppingTime < minShoppingTime)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns if the Driver is in the Shop
+	 * @return
+	 * Boolean shopping
+	 */
+	public boolean isInShop()
+	{
+		return shopping;
+	}
+	
+	/**
+	 * The driver shops, incrementing shoppingTime
+	 */
+	public void shop()
+	{
+		shoppingTime++;
 	}
 	
 	/**
@@ -94,6 +195,14 @@ public class Driver {
 	}
 	
 	/**
+	 * Changes the Driver's queueing state
+	 */
+	public void toggleQueueing()
+	{
+		queueing = !queueing;
+	}
+	
+	/**
 	 * Returns length of shopping in ticks
 	 * @return
 	 * shoppingTime
@@ -107,5 +216,15 @@ public class Driver {
 	 */
 	public void fillTank() {
 		vehicle.fill();
+	}
+	
+	/**
+	 * Returns a text representation of Driver
+	 * @return
+	 * Text representation of Driver
+	 */
+	public String toString()
+	{
+		return vehicle.toString();
 	}
 }

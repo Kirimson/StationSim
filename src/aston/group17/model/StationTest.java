@@ -50,7 +50,7 @@ public class StationTest {
 	
 	@Test
 	public void testFillTank() {
-		Station s = new Station(3, 3);
+		Station s = new Station(1, 3);
 		
 		Driver carDriver = new Driver("Car");
 		
@@ -58,17 +58,17 @@ public class StationTest {
 		
 		Driver vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println("v1:"+vp1.toString());
+		System.out.println(vp1.toString());
 		
 		while(s.getPump(0).getFirstDriver().getVehicle().getGallonsFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
 		{
-			s.getPump(0).getFirstDriver().fillTank();
-			System.out.println("v1:"+s.getPump(0).getFirstDriver().toString());
+			s.act();
+			System.out.println(s.getPump(0).getFirstDriver().toString());
 		}
 		
 		vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println("v1:"+vp1.toString());
+		System.out.println(vp1.toString());
 		
 		System.out.println("\n");
 		
