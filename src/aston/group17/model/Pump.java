@@ -52,6 +52,8 @@ public class Pump {
 	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
 	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
 	* The next Vehicle in the queue is specified by this method.
+	* 
+	* A
 	*/
 	public void removeVehicleFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
@@ -67,7 +69,9 @@ public class Pump {
 	}
 	
 	/**
-	* Returns list of vehicles. mainly used for testing
+	* Returns list of vehicles in the pumps queue
+	* @return
+	* returns the queue
 	*/
 	public ArrayList<Driver> getVehicleQueue()
 	{
@@ -76,6 +80,8 @@ public class Pump {
 	
 	/**
 	 * Returns the first driver in the pump queue (the one at the pump itself)
+	 * @return
+	 * returns the first driver in queue
 	 */
 	public Driver getFirstDriver()
 	{
@@ -84,6 +90,8 @@ public class Pump {
 	
 	/**
 	 * Checks if the vehicle will fit inside the queue
+	 * @return
+	 * returns boolean, true if vehicle can fit in pump queue, false if not
 	 */
 	public boolean willVehicleFit(Vehicle v)
 	{

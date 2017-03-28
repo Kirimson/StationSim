@@ -1,55 +1,61 @@
 package aston.group17.model;
 
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Till {
 	private double moneyTaken;
 	private Driver currentCustomer;
 	private int currentCustomerPrice;
-	private ArrayList<Driver> waitingCustomer;
-	private ArrayList<Driver> idleCustomer;
-	private int noOfCustomers;
+//	private ArrayList<Driver> shoppingCustomer;
+//	private ArrayList<Driver> idleCustomer;
+	private boolean tillInUse;
 	
 	public Till(){
 		moneyTaken = 0;
-		waitingCustomer = new ArrayList<Driver>();
-		idleCustomer = new ArrayList<Driver>();
-		noOfCustomers = 0;	
+//		shoppingCustomer = new ArrayList<Driver>();
+//		idleCustomer = new ArrayList<Driver>();
+		tillInUse = false;	
 	}
 	
 	/**
 	* Returns the queue at the till
+	* @return
+	* returns a boolean of the till status
 	*/
-	public int getQueueTill(){
-		return noOfCustomers;
-		
+	public boolean isTillInUse(){
+		return tillInUse;
 	}
 
 	/**
 	* Moves along the queue and returns a driver.
+	* @return
+	* 
 	*/
-	public Driver getNextDriver(){
-			return waitingCustomer.get(0);
-		}
+//	public Driver getShoppingDrivers(){
+//			return shoppingCustomer.get(0);
+//		}
 
 	/**
 	* Returns the total money taken in from that till
+	* @return
+	* returns the amount of money the till has taken
 	*/
 	public double getMoneyTaken(){
 
 		return moneyTaken;
 	}
 	/**
-	 *  adds one driver to till queue
+	 *  Toggles the status of the till, wither in use or free
 	 */
-	public void setQueueTill(){
-		noOfCustomers++;
+	public void toggleTillInUse(){
+		tillInUse = !tillInUse;
 	}
 	
 	/**
 	 *  adds money taken at till to total
 	 * @param money
+	 * the amount of money the driver gives the till, includes both shop purchase and pump purchase
 	 */
 	public void setMoneyTaken(double money){
 		moneyTaken += money;
