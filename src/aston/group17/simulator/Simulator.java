@@ -35,7 +35,7 @@ public class Simulator {
 
 	}
 	
-	private void simulate(int numSteps)
+	public void simulate(int numSteps)
 	{
 		for(int i = 0; i < numSteps; i++)
 		{
