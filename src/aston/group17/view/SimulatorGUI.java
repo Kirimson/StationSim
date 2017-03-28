@@ -154,11 +154,7 @@ public class SimulatorGUI {
 		
 			startButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 			setParameters();
-=======
-				
->>>>>>> refs/remotes/origin/pr/42
 			}
 		});
 			
@@ -168,9 +164,8 @@ public class SimulatorGUI {
 		
 	
 	}
-<<<<<<< HEAD
 	private void exitApp() {
-		int response = JOptionPane.showConfirmDialog(mainFrame, 
+		int response = JOptionPane.showConfirmDialog(menuFrame, 
 				"Do you wish to quit the application?",
 				"Quit?",
 				JOptionPane.YES_NO_OPTION,
@@ -187,11 +182,6 @@ public class SimulatorGUI {
 	private void setParameters(){
 		
 	}
-=======
-	
-	
-	
->>>>>>> refs/remotes/origin/pr/42
 }
 
 
