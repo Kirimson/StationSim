@@ -19,7 +19,7 @@ public class Car extends Vehicle {
 	
 	public int timeToSpendShopping(){
 		int timeSpent = rand.nextInt(2)+2;
-		return timeSpent;
+		return timeSpent * 6;
 	}
 	
 	public double moneySpent(){

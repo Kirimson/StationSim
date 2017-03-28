@@ -3,27 +3,20 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 public class Station {
-	private ArrayList<Till> tills;
+	private Shop shop;
 	private ArrayList<Pump> pumps;
-	
-	private double moneyEarnt;
 	
 	/**
 	 * Constructs a new Station class
 	 * @param pAmount
 	 * Amount of pumps the Station will have
-	 * @param sAmount
+	 * @param tAmount
 	 * Amount of shops the Station will have
 	 */
-	public Station(int pAmount, int sAmount)
+	public Station(int pAmount, int tAmount)
 	{
-		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
-		tills = new ArrayList<Till>();
-		
-		for(int i = 0; i < sAmount; i++)
-		{
-			tills.add(new Till());
-		}
+		//create a Shop and create tills inside depending on how many tills were specified in tAmount
+		shop = new Shop(tAmount);
 		
 		//create new arrayList of Pump and create pumps inside depending on how many pumps were specified in pAmount
 		pumps = new ArrayList<Pump>();
@@ -41,34 +34,24 @@ public class Station {
 	{
 		for(Pump p : pumps)
 		{
-			
-		
-		}
-	}
-	
-	/**
-	* Returns a till that is not in use, first till that is free will be used, if any
-	* @return
-	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
-	*/
-	public Till getFreeTill(){
-		for(Till t : tills){
-			if(!t.isTillInUse())
+			if(!p.getFirstDriver().wantsToShop())
 			{
-				return t;
+				p.act();
+			}
+			else
+			{
+				addDriverToShop(p.getFirstDriver());
 			}
 		}
-		return null;
+		shop.act();
 	}
 	
 	/**
 	* Sends customer to the shortest till queue
 	*/
-	/*public void addDriverToShopQueue(Driver driver){
-	
-		getShortestShopQueue().addCustomerToShop(driver);
-		
-	}*/
+	public void addDriverToShop(Driver driver){
+		shop.addNewDriver(driver);
+	}
 	
 	/**
 	 * Returns the shortest pump queue, checks all pumps for the one with the shortest queue, then checks if the vehicle will fit in the shortest queue
@@ -135,31 +118,12 @@ public class Station {
 	}
 	
 	/**
-	 * adds all money gained from each pump and shop and adds it to moneyEarnt
-	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
+	 * Gets the Station's Shop
 	 * @return
-	 * the amount of money made at all tills as of calling the method
+	 * Shop
 	 */
-	public double countMoney()
-	{	
-		for(Till s : tills)
-		{
-			moneyEarnt += s.getMoneyTaken();
-		}
-		
-		return moneyEarnt;
+	public Shop getShop()
+	{
+		return shop;
 	}
-	
-//	public void addCustomer()
-//	{
-//		
-//		for(Pump p: pumps)
-//		{
-//			if (!p.isFull(tempVehicle))
-//			{
-//				p.addVehicleToPumpQueue(tempVehicle);
-//			}
-//			
-//		}
-//	}
 }

@@ -86,6 +86,15 @@ public abstract class Vehicle {
 		 timeWaiting++;
 	 }
 	 
+	 public boolean isFull()
+	 {
+		 if(gallonsFilled == tankSize)
+		 {
+			 return true;
+		 }
+		 return false;
+	 }
+	 
 	 /**
 	 * Returns the unitSize of the vehicle
 	 * @return

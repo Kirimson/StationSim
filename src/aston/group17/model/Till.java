@@ -1,20 +1,13 @@
 package aston.group17.model;
 
-
-//import java.util.ArrayList;
-
 public class Till {
 	private double moneyTaken;
 	private Driver currentDriver;
-//	private ArrayList<Driver> shoppingCustomer;
-//	private ArrayList<Driver> idleCustomer;
 	private boolean tillInUse;
 	
 	public Till(){
 		moneyTaken = 0;
-//		shoppingCustomer = new ArrayList<Driver>();
-//		idleCustomer = new ArrayList<Driver>();
-		tillInUse = false;	
+		tillInUse = false;
 	}
 	
 	/**
@@ -26,6 +19,18 @@ public class Till {
 		return tillInUse;
 	}
 
+	
+	/**
+	 * Adds a Driver to the Till
+	 * @param d
+	 * Driver to be added to the Till
+	 */
+	public void addDriver(Driver d)
+	{
+		currentDriver = d;
+		toggleTillInUse();
+	}
+	
 	/**
 	* Gets the current shopping Driver
 	* @return
