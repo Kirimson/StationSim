@@ -7,11 +7,13 @@ public class Station {
 	private ArrayList<Pump> pumps;
 	
 	private double moneyEarnt;
-//  	private Driver tempDriver;
 	
-	/*
-	 * @Param: pump amount
-	 * @Param: till amount
+	/**
+	 * Constructs a new Station class
+	 * @param pAmount
+	 * Amount of pumps the Station will have
+	 * @param sAmount
+	 * Amount of shops the Station will have
 	 */
 	public Station(int pAmount, int sAmount)
 	{
@@ -32,6 +34,9 @@ public class Station {
 		}
 	}
 	
+	/**
+	 * What will happen at the station each tick
+	 */
 	public void act()
 	{
 		for(Pump p : pumps)
@@ -47,7 +52,6 @@ public class Station {
 	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
 	public Till getFreeTill(){
-		Till freeTill = tills.get(0);
 		for(Till t : tills){
 			if(!t.isTillInUse())
 			{
@@ -82,18 +86,30 @@ public class Station {
 				shortestPump = p;
 			}
 		}
-		if(shortestPump.willVehicleFit(v))
+		if(shortestPump.willVehicleFit(v.getUnitSize()))
 		{
 			return shortestPump;
 		}
 		return null;
 	}
 	
+	/**
+	 * Gets a specified pump
+	 * @param pump
+	 * the pump number you want to return
+	 * @return
+	 * Pump object
+	 */
 	public Pump getPump(int pump)
 	{
 		return pumps.get(pump);
 	}
 	
+	/**
+	 * Gets the ArrayList of Pump
+	 * @return
+	 * ArrayList of Pump
+	 */
 	public ArrayList<Pump> getPumpArray()
 	{
 		return pumps;
