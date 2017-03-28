@@ -27,7 +27,7 @@ public class Simulator {
 		t = 0.02;
 		this.p = p;
 		this.q = q;
-		this.numSteps = numsteps;
+		this.numSteps = numSteps;
 		this.pumps = pumps;
 		this.tills = tills;
 		station = new Station(pumps, tills);
