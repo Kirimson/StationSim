@@ -5,131 +5,121 @@ import java.util.ArrayList;
 
 public class Pump {
 
-	
-	private static final int GALLONTICK = 1;
+	private static final int GALLON_TICK = 1;
 	private double unitSpaceAvailable;
-	private int queue;
-	private static final double MAXQUEUE = 3.0;
-	private Vehicle currentVehicle;
-	private ArrayList<Vehicle> vehicleQueue;
-	private static final double PRICEOFFUEL = 1.2;
-	
-	private boolean justArrived, justFilled;
-	private int driverShopping = 0;
+	private int queueSize;
+	private static final double MAX_QUEUE = 3.0;
+	private ArrayList<Driver> queue;
+	private double priceOfFuel = 1.2;
 	
 	public Pump(){
-		queue = 0;
+		queueSize = 0;
 		unitSpaceAvailable = 3;
-		vehicleQueue = new ArrayList<Vehicle>();
-		
+		queue = new ArrayList<Driver>();
 	}
 	
 	/**
-	* Checks to see if the pump is currently occupied. If the pump has less than the MAXQUEUE, it is available to use.
-	* Else it is unavailable and the vehicle wouldn't be able to enter the queue.
+	 * What the pump will do each tick
+	 */
+	public void act()
+	{
+		getFirstDriver().act();
+	}
+	
+	/**
+	* Checks if the pump is occupied. If unitSpaceAvailable is less then MAXQUEUE, it is available.
+	* Otherwise it is unavailable and the vehicle can't enter the queue.
+	* @param size
+	* Size of the Vehicle that is being compared against the queue
+	* @return
+	* Size of the queue if the Vehicle entered it. returns 0.0 if Vehicle will not fit
 	*/
-	public double isFull(Vehicle v){;
-		if (unitSpaceAvailable >= 0 && unitSpaceAvailable <= MAXQUEUE){
-			if(v.getUnitSpace() < unitSpaceAvailable){
-			return unitSpaceAvailable - v.getUnitSpace();
+	public double isFull(double size){;
+		if (unitSpaceAvailable >= 0 && unitSpaceAvailable <= MAX_QUEUE){
+			if(size < unitSpaceAvailable){
+			return unitSpaceAvailable - size;
 			}
 		}
 		return 0.0;
 	}
 	
-	
 	/**
 	* Returns the number of spaces in the queue.
+	* @return
+	* unitSpaceAvailable
 	*/
 	public double getQueueFree(){
 		return unitSpaceAvailable;
 	}
 	
-	
 	/**
-	* Fills up the tank of the vehicle up one tick (1 gallon).
-	* If the vehicle has just arrived it wont fill and turn "justArrived" off
-	*/
-	public void fillFirstVehicle(){
-		//If the driver hasn't justArrived (second tick of them being there and the tank isn't full yet
-		vehicleQueue.get(0).FillTankOneTick();
-	}
-	
-	/**
-	* Increases the queue length free by the length of the current vehicle.
-	* This means it has left the queue. The next vehicle will use the pump.
-	*/
-	public void freeUpQueue(Vehicle v){
-		queue--;
-		unitSpaceAvailable += v.getUnitSpace();
-	}
-	
-	/**
-	* Decreases the queue length free by the length of the current vehicle.
-	* This means it has entered the queue
-	*/
-	public void fillUpQueue(Vehicle v){
-		queue++;
-		unitSpaceAvailable -= v.getUnitSpace();
-	}
-	
-	/**
-	* Adds a vehicle to the pump
-	*/
+	 * Adds a driver to the pump queue
+	 * @param driver 
+	 * The driver to be added
+	 */
 	public void addToPumpQueue(Driver driver){
-		Vehicle vehicle = driver.getVehicle();
-		vehicleQueue.add(vehicle);
-		fillUpQueue(vehicle);
+		queue.add(driver);
+		queueSize++;
+		unitSpaceAvailable -= driver.getVehicle().getUnitSize();
+		if(driver.equals(getFirstDriver()))
+		{
+			getFirstDriver().toggleQueueing();
+		}
 	}
 	
 	/**
 	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
 	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
 	* The next Vehicle in the queue is specified by this method.
+	* 
+	* A
 	*/
-	
 	public void removeVehicleFromPumpQueue(){
-		vehicleQueue.remove(getFirstVehicle());
-		freeUpQueue(getFirstVehicle());
+		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
+		queue.remove(getFirstDriver());
+		queueSize--;
+		getFirstDriver().toggleQueueing();
 	}
 	
 	/**
-	* Returns queue
+	* Returns the pump's queue
+	* @return
+	* queueSize
 	*/
 	public int getQueue(){
+		return queueSize;
+	}
+	
+	/**
+	* Returns list of vehicles in the pumps queue
+	* @return
+	* Queue field, containing ArrayList of Drivers
+	*/
+	public ArrayList<Driver> getVehicleQueue()
+	{
 		return queue;
 	}
 	
 	/**
-	* Returns list of vehicles. mainly used for testing
-	*/
-	public ArrayList<Vehicle> getVehicleQueue()
+	 * Returns the first driver in the pump queue (the one at the pump itself)
+	 * @return
+	 * First driver in queue
+	 */
+	public Driver getFirstDriver()
 	{
-		return vehicleQueue;
+		return queue.get(0);
 	}
 	
-	public Vehicle getFirstVehicle()
+	/**
+	 * Checks if the vehicle will fit inside the queue
+	 * @param size
+	 * Vehicle size that will be compared against the queue
+	 * @return
+	 * Boolean which is true if vehicle can fit in pump queue, false if not
+	 */
+	public boolean willVehicleFit(double size)
 	{
-		return vehicleQueue.get(0);
-	}
-	
-	public boolean isdriverShopping()
-	{
-		if(driverShopping == 2)
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isJustFilled()
-	{
-		return justFilled;
-	}
-	
-	public boolean willVehicleFit(Vehicle v)
-	{
-		if(unitSpaceAvailable - v.getUnitSpace() >= 0)
+		if(unitSpaceAvailable - size >= 0)
 		{
 			return true;
 		}

@@ -21,27 +21,27 @@ public class StationTest {
 		
 		s.addDriverToPumpQueue(carDriver);
 		
-		ArrayList<Vehicle> vp1 = s.getPump(0).getVehicleQueue();
+		ArrayList<Driver> driverQueue1 = s.getPump(0).getVehicleQueue();
 		
 		System.out.println("c1:"+carDriver.getVehicle().toString());
-		System.out.println("v1:"+vp1.get(0).toString());
+		System.out.println("v1:"+driverQueue1.get(0).getVehicle().toString());
 		
 		
 		Driver sedanDriver = new Driver("Sedan");
 		
 		s.addDriverToPumpQueue(sedanDriver);
 		
-		ArrayList<Vehicle> vp2 = s.getPump(1).getVehicleQueue();
+		ArrayList<Driver> DriverQueue2 = s.getPump(1).getVehicleQueue();
 		System.out.println();
 		System.out.println("c2:"+sedanDriver.getVehicle().toString());
-		System.out.println("v2:"+vp2.get(0).toString());
+		System.out.println("v2:"+DriverQueue2.get(0).getVehicle().toString());
 		
-		if(!vp1.get(0).toString().equals(carDriver.getVehicle().toString()))
+		if(!driverQueue1.get(0).getVehicle().toString().equals(carDriver.getVehicle().toString()))
 		{
 			fail();
 		}
 		
-		if(!vp2.get(0).toString().equals(sedanDriver.getVehicle().toString()))
+		if(!DriverQueue2.get(0).getVehicle().toString().equals(sedanDriver.getVehicle().toString()))
 		{
 			fail();
 		}
@@ -50,28 +50,29 @@ public class StationTest {
 	
 	@Test
 	public void testFillTank() {
-		Station s = new Station(3, 3);
+		Station s = new Station(1, 3);
 		
 		Driver carDriver = new Driver("Car");
 		
 		s.addDriverToPumpQueue(carDriver);
 		
-		Vehicle vp1 = s.getPump(0).getFirstVehicle();
+		Driver vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println("v1:"+vp1.toString());
+		System.out.println(vp1.toString());
 		
-		while(s.getPump(0).getFirstVehicle().getGallonsFilled() < s.getPump(0).getFirstVehicle().getTankSize())
+		while(s.getPump(0).getFirstDriver().getVehicle().getGallonsFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
 		{
-			s.getPump(0).fillFirstVehicle();
-			System.out.println("v1:"+s.getPump(0).getFirstVehicle().toString());
+			s.act();
+			System.out.println(s.getPump(0).getFirstDriver().toString());
 		}
-		vp1 = s.getPump(0).getFirstVehicle();
 		
-		System.out.println("v1:"+vp1.toString());
+		vp1 = s.getPump(0).getFirstDriver();
+		
+		System.out.println(vp1.toString());
 		
 		System.out.println("\n");
 		
-		if(vp1.getGallonsFilled() != vp1.getTankSize())
+		if(vp1.getVehicle().getGallonsFilled() != vp1.getVehicle().getTankSize())
 		{
 			fail();
 		}

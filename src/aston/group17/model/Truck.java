@@ -11,13 +11,13 @@ class Truck extends Vehicle{
 		vehicleType = "Truck";
 	}
 
-	public double getUnitSpace() {
+	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
 
-	public int timeSpent() {
+	public int timeToSpendShopping() {
 		int timeSpent = rand.nextInt(2)+4;
-		return timeSpent;
+		return timeSpent * 6;
 	}
 
 	public double moneySpent() {
