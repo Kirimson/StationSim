@@ -17,7 +17,7 @@ class Truck extends Vehicle{
 
 	public int timeToSpendShopping() {
 		int timeSpent = rand.nextInt(2)+4;
-		return timeSpent;
+		return timeSpent * 6;
 	}
 
 	public double moneySpent() {

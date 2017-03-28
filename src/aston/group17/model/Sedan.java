@@ -19,7 +19,7 @@ public class Sedan extends Vehicle {
 
 	public int timeToSpendShopping(){
 		int timeSpent = rand.nextInt(4)+2;
-		return timeSpent;	
+		return timeSpent * 6;	
 	}
 	
 	public double moneySpent(){
