@@ -9,7 +9,6 @@ public class Pump {
 	private double unitSpaceAvailable;
 	private int queueSize;
 	private static final double MAX_QUEUE = 3.0;
-	private Vehicle currentVehicle;
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
 	
@@ -17,6 +16,14 @@ public class Pump {
 		queueSize = 0;
 		unitSpaceAvailable = 3;
 		queue = new ArrayList<Driver>();
+	}
+	
+	/**
+	 * What the pump will do each tick
+	 */
+	public void act()
+	{
+		getFirstDriver().act();
 	}
 	
 	/**
@@ -54,6 +61,10 @@ public class Pump {
 		queue.add(driver);
 		queueSize++;
 		unitSpaceAvailable -= driver.getVehicle().getUnitSize();
+		if(driver.equals(getFirstDriver()))
+		{
+			getFirstDriver().toggleQueueing();
+		}
 	}
 	
 	/**
@@ -67,6 +78,7 @@ public class Pump {
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
 		queueSize--;
+		getFirstDriver().toggleQueueing();
 	}
 	
 	/**
