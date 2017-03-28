@@ -15,7 +15,7 @@ class Truck extends Vehicle{
 		return UNIT_SIZE;
 	}
 
-	public int timeSpent() {
+	public int timeToSpendShopping() {
 		int timeSpent = rand.nextInt(2)+4;
 		return timeSpent;
 	}

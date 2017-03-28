@@ -68,11 +68,11 @@ public class Driver {
 	/**
 	 * This calculates the time a driver could potentially spend shopping.
 	 * @return
-	 * returns the amount of time the driver would spend shopping
+	 * returns int of the amount of time the driver would spend shopping
 	 */
 	public int shoppingTime(){
 		
-		totalTime = vehicle.timeSpent();
+		totalTime = vehicle.timeToSpendShopping();
 		
 		return totalTime;	
 	}
@@ -87,7 +87,7 @@ public class Driver {
 	}
 	
 	/**
-	 * changes the driver's shopping state
+	 * Changes the driver's shopping state
 	 */
 	public void toggleShopping(){
 		shopping = !shopping;
@@ -95,6 +95,8 @@ public class Driver {
 	
 	/**
 	 * Returns length of shopping in ticks
+	 * @return
+	 * shoppingTime
 	 */
 	public int getShoppingTime(){
 		return shoppingTime;

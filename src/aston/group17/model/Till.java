@@ -5,8 +5,7 @@ package aston.group17.model;
 
 public class Till {
 	private double moneyTaken;
-	private Driver currentCustomer;
-	private int currentCustomerPrice;
+	private Driver currentDriver;
 //	private ArrayList<Driver> shoppingCustomer;
 //	private ArrayList<Driver> idleCustomer;
 	private boolean tillInUse;
@@ -28,13 +27,13 @@ public class Till {
 	}
 
 	/**
-	* Moves along the queue and returns a driver.
+	* Gets the current shopping Driver
 	* @return
-	* 
+	* Driver object
 	*/
-//	public Driver getShoppingDrivers(){
-//			return shoppingCustomer.get(0);
-//		}
+	public Driver getShoppingDriver(){
+			return currentDriver;
+		}
 
 	/**
 	* Returns the total money taken in from that till
@@ -53,11 +52,11 @@ public class Till {
 	}
 	
 	/**
-	 *  adds money taken at till to total
+	 * Adds money taken at till to total
 	 * @param money
-	 * the amount of money the driver gives the till, includes both shop purchase and pump purchase
+	 * The amount of money the driver gives the till, includes both shop purchase and pump purchase
 	 */
-	public void setMoneyTaken(double money){
+	public void addMoneyTaken(double money){
 		moneyTaken += money;
 	}
 }
