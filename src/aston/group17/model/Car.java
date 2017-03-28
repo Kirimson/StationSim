@@ -16,17 +16,12 @@ public class Car extends Vehicle {
 	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
-	/**
-	 * This calculates how long a car driver could spend shopping 
-	 */
-	public int timeSpent(){
+	
+	public int timeToSpendShopping(){
 		int timeSpent = rand.nextInt(2)+2;
 		return timeSpent;
 	}
 	
-	/**
-	 * This calculates how m a car driver could spend shopping 
-	 */
 	public double moneySpent(){
 		double moneySpent = rand.nextInt(5)+5;
 		return moneySpent;

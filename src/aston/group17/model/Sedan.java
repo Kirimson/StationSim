@@ -17,17 +17,11 @@ public class Sedan extends Vehicle {
 		return UNIT_SIZE;
 	}
 
-	/**
-	 * This calculates how long a sedan driver could spend shopping 
-	 */
-	public int timeSpent(){
+	public int timeToSpendShopping(){
 		int timeSpent = rand.nextInt(4)+2;
 		return timeSpent;	
 	}
 	
-	/**
-	 * This calculates how much a sedan driver could spend shopping 
-	 */
 	public double moneySpent(){
 		double moneySpent = rand.nextInt(9)+8;
 		return moneySpent;

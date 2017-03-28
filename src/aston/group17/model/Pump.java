@@ -20,8 +20,12 @@ public class Pump {
 	}
 	
 	/**
-	* Checks to see if the pump is currently occupied. If the pump has less than the MAXQUEUE, it is available to use.
-	* Else it is unavailable and the vehicle wouldn't be able to enter the queue.
+	* Checks if the pump is occupied. If unitSpaceAvailable is less then MAXQUEUE, it is available.
+	* Otherwise it is unavailable and the vehicle can't enter the queue.
+	* @param size
+	* Size of the Vehicle that is being compared against the queue
+	* @return
+	* Size of the queue if the Vehicle entered it. returns 0.0 if Vehicle will not fit
 	*/
 	public double isFull(double size){;
 		if (unitSpaceAvailable >= 0 && unitSpaceAvailable <= MAX_QUEUE){
@@ -34,14 +38,18 @@ public class Pump {
 	
 	/**
 	* Returns the number of spaces in the queue.
+	* @return
+	* unitSpaceAvailable
 	*/
 	public double getQueueFree(){
 		return unitSpaceAvailable;
 	}
 	
 	/**
-	* Adds a vehicle to the pump
-	*/
+	 * Adds a driver to the pump queue
+	 * @param driver 
+	 * The driver to be added
+	 */
 	public void addToPumpQueue(Driver driver){
 		queue.add(driver);
 		queueSize++;
@@ -52,6 +60,8 @@ public class Pump {
 	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
 	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
 	* The next Vehicle in the queue is specified by this method.
+	* 
+	* A
 	*/
 	public void removeVehicleFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
@@ -60,14 +70,18 @@ public class Pump {
 	}
 	
 	/**
-	* Returns queue
+	* Returns the pump's queue
+	* @return
+	* queueSize
 	*/
 	public int getQueue(){
 		return queueSize;
 	}
 	
 	/**
-	* Returns list of vehicles. mainly used for testing
+	* Returns list of vehicles in the pumps queue
+	* @return
+	* Queue field, containing ArrayList of Drivers
 	*/
 	public ArrayList<Driver> getVehicleQueue()
 	{
@@ -76,6 +90,8 @@ public class Pump {
 	
 	/**
 	 * Returns the first driver in the pump queue (the one at the pump itself)
+	 * @return
+	 * First driver in queue
 	 */
 	public Driver getFirstDriver()
 	{
@@ -84,10 +100,14 @@ public class Pump {
 	
 	/**
 	 * Checks if the vehicle will fit inside the queue
+	 * @param size
+	 * Vehicle size that will be compared against the queue
+	 * @return
+	 * Boolean which is true if vehicle can fit in pump queue, false if not
 	 */
-	public boolean willVehicleFit(Vehicle v)
+	public boolean willVehicleFit(double size)
 	{
-		if(unitSpaceAvailable - v.getUnitSize() >= 0)
+		if(unitSpaceAvailable - size >= 0)
 		{
 			return true;
 		}
