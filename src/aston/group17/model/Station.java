@@ -3,129 +3,127 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 public class Station {
-	private ArrayList<Till> tills;
+	private Shop shop;
 	private ArrayList<Pump> pumps;
 	
-	private double moneyEarnt;
-  	private Vehicle tempVehicle;
-	
-	public Station(int pAmount, int sAmount)
+	/**
+	 * Constructs a new Station class
+	 * @param pAmount
+	 * Amount of pumps the Station will have
+	 * @param tAmount
+	 * Amount of shops the Station will have
+	 */
+	public Station(int pAmount, int tAmount)
 	{
-		//create new arrayList of Shop and create shops inside depending on how many shops were specified in sAmount
-		tills = new ArrayList<Till>();
+		//create a Shop and create tills inside depending on how many tills were specified in tAmount
+		shop = new Shop(tAmount);
 		
-		for(int i = 0; i < sAmount; i++)
-		{
-			tills.add(new Till());
-		}
-		
-		//create new arrayList of Pump and create pumos inside depending on how many pumps were specified in pAmount
+		//create new arrayList of Pump and create pumps inside depending on how many pumps were specified in pAmount
 		pumps = new ArrayList<Pump>();
 		
-		for(int i = 0; i < sAmount; i++)
+		for(int i = 0; i < pAmount; i++)
 		{
 			pumps.add(new Pump());
 		}
 	}
 	
+	/**
+	 * What will happen at the station each tick
+	 */
 	public void act()
 	{
 		for(Pump p : pumps)
 		{
-			//check if the driver is shopping or not
-			if(p.isdriverShopping() == false)
+			if(!p.getFirstDriver().wantsToShop())
 			{
-				//check if the Driver done filling the vehicle. So they may enter the shop
-				p.fillFirstVehicle();
+				p.act();
 			}
-			else if(p.isdriverShopping() == true) //The driver is in the shop and does shop stuff
+			else
 			{
-				//do some shop stuff, like set driver in shopping state and entering them into a shop
+				addDriverToShop(p.getFirstDriver());
 			}
-			else //The driver is done and will now leave the pump
-			{
-				p.removeVehicleFromPumpQueue();
-			}
-		
 		}
+		shop.act();
 	}
 	
 	/**
-	* Returns the shortest shop queue available
+	* Sends customer to the shortest till queue
 	*/
-	public Till getShortestShopQueue(){
-		Till shortestShop = tills.get(0);
-		for (int i = 1; i<tills.size();i++){
-			if(tills.get(i).getQueueTill() > shortestShop.getQueueTill()){
-				shortestShop = tills.get(i);
-			}
-		}
-		return shortestShop;
+	public void addDriverToShop(Driver driver){
+		shop.addNewDriver(driver);
 	}
 	
 	/**
-	* Sends customer to the shortest shop queue
-	*/
-	/*public void addDriverToShopQueue(Driver driver){
-	
-		getShortestShopQueue().addCustomerToShop(driver);
-		
-	}*/
-	
-	/**
-	* Returns the shortest pump queue
-	*/
-	public Pump getShortestPumpQueue(){
+	 * Returns the shortest pump queue, checks all pumps for the one with the shortest queue, then checks if the vehicle will fit in the shortest queue
+	 * @param v
+	 * a vehicle that will be checked against the queue to see if it can fit in any queue
+	 * @return
+	 * returns the pump object the vehicle will go in to. Returns null if v cannot fit in any pump queue
+	 */
+	public Pump getShortestPumpQueue(Vehicle v){
 		Pump shortestPump = pumps.get(0);
-		for (int i = 1; i<pumps.size();i++){
-			if(pumps.get(i).getQueueFree() > shortestPump.getQueueFree()){
-				shortestPump = pumps.get(i);
+		for(Pump p : pumps)
+		{
+			if(p.getQueueFree() > shortestPump.getQueueFree())
+			{
+				shortestPump = p;
 			}
 		}
-		return shortestPump;
+		if(shortestPump.willVehicleFit(v.getUnitSize()))
+		{
+			return shortestPump;
+		}
+		return null;
 	}
 	
+	/**
+	 * Gets a specified pump
+	 * @param pump
+	 * the pump number you want to return
+	 * @return
+	 * Pump object
+	 */
 	public Pump getPump(int pump)
 	{
 		return pumps.get(pump);
 	}
 	
 	/**
-	* Adds vehicle to the shortest pump queue.
-	*/
-	public void addVehicleToPumpQueue(Vehicle vehicle){
-		getShortestPumpQueue().addVehicleToPumpQueue(vehicle);
-	}
-	
-	/*
-	 * adds all money gained from each pump and shop and adds it to moneyEarnt
-	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
+	 * Gets the ArrayList of Pump
+	 * @return
+	 * ArrayList of Pump
 	 */
-	public double countMoney()
+	public ArrayList<Pump> getPumpArray()
 	{
-		for(Pump p : pumps)
-		{
-			moneyEarnt += p.getMoneyTaken();
-		}
-		
-		for(Till s : tills)
-		{
-			moneyEarnt += s.getMoneyTaken();
-		}
-		
-		return moneyEarnt;
+		return pumps;
 	}
 	
-//	public void addCustomer()
-//	{
-//		
-//		for(Pump p: pumps)
-//		{
-//			if (!p.isFull(tempVehicle))
-//			{
-//				p.addVehicleToPumpQueue(tempVehicle);
-//			}
-//			
-//		}
-//	}
+	/**
+	 * Adds vehicle to the shortest pump queue.
+	 * @param driver
+	 * the driver to be added to the pump queue
+	 * @return
+	 * a true or false value, depending on whether the driver could join a queue or not
+	 */
+	public boolean addDriverToPumpQueue(Driver driver){
+		Pump shortestPump = getShortestPumpQueue(driver.getVehicle());
+		
+		if(shortestPump != null)
+		{
+			shortestPump.addToPumpQueue(driver);
+			
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Gets the Station's Shop
+	 * @return
+	 * Shop
+	 */
+	public Shop getShop()
+	{
+		return shop;
+	}
 }

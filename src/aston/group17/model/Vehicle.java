@@ -4,18 +4,20 @@ import java.util.Random;
 
 public abstract class Vehicle {
 	
-	protected Driver driver;
 	protected int tankSize;
 	private int gallonsFilled;
 	private Random rand;
 	protected String vehicleType;
 	private boolean inQueue;
 	private double moneySpent;
+	private int timeWaiting;
 	
 	/**
 	 * Constructor for Vehicles, sets their tank size and amount filled on creation
-	 * @param range = range from minimum value to max value (inclusive)
-	 * @param minTank = minimum size of Vehicle tank
+	 * @param range
+	 * range from minimum value to max value (inclusive)
+	 * @param minTank
+	 * minimum size of Vehicle tank
 	 */
 	public Vehicle(int range, int minTank)
 	{
@@ -36,22 +38,20 @@ public abstract class Vehicle {
 	}
 	
 	/**
-	 * Fills the tank of the vehicle and will return how many gallons were used
+	 * Fills the tank of the vehicle by one, once per tick
 	 */
-	 public boolean FillTankOneTick()
+	 public void fill()
 	 {
 		 if(gallonsFilled < tankSize)
 		 {
 			 gallonsFilled++;
 		 }
-		 
-		 
-		 return true;
-
 	 }
 	 
 	 /**
-	 * Returns the value of gallonsFilled (how much of the vehicle's tank is currently filled)
+	 * Returns how much of the tank is filled
+	 * @return
+	 * gallonsFilled of the Vehicle
 	 */
 	 public int getGallonsFilled()
 	 {
@@ -59,27 +59,60 @@ public abstract class Vehicle {
 	 }
 	 
 	 /**
-	 * Returns the value of tankSize (size of vehicle tank)
+	 * Returns the size of the Vehicle's tank
+	 * @return
+	 * tankSize of the Vehicle
 	 */
 	 public int getTankSize()
 	 {
 		 return tankSize;
 	 }
 	 
-	 public Driver getDriver()
-	 {
-		 return driver;
-	 }
-	 
+	 /**
+	  * Generates a string to describe the Vehicle
+	  * @return
+	  * String description of Vehicle
+	  */
 	 public String toString()
 	 {
 		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
 	 }
 	 
-	 public void toggleQueueStatus()
+	 /**
+	  * Increments the timeWaiting field by one. the vehicle has waited for an extra tick
+	  */
+	 public void incrementWaiting()
 	 {
-		 inQueue = !inQueue;
+		 timeWaiting++;
 	 }
 	 
-	 public abstract double getUnitSpace();
+	 public boolean isFull()
+	 {
+		 if(gallonsFilled == tankSize)
+		 {
+			 return true;
+		 }
+		 return false;
+	 }
+	 
+	 /**
+	 * Returns the unitSize of the vehicle
+	 * @return
+	 * Vehicle's UNIT_SIZE
+	 */
+	 public abstract double getUnitSize();
+	 
+	 /**
+	 * returns how many ticks the driver of this vehicle will spend shopping
+	 * @return
+	 * Vehicle's time to spend shopping
+	 */
+	 public abstract int timeToSpendShopping();
+	 
+	 /**
+	 * returns how much the driver of this vehicle will spend in the shop
+	 * @return
+	 * Vehicle's amount of money to spend in Shop
+	 */
+	 public abstract double moneySpent();
 }

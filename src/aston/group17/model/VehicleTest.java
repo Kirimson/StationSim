@@ -14,13 +14,13 @@ public class VehicleTest {
 	@Test
 	public void testUnitSize() {
 		Car carTest = new Car();
-		assertEquals("Check unit space is correct", 1.0, carTest.getUnitSpace(), 0);
+		assertEquals("Check unit space is correct", 1.0, carTest.getUnitSize(), 1e-4);
 		
 		Sedan sedanTest = new Sedan();
-		assertEquals("Check unit space is correct", 1.5, sedanTest.getUnitSpace(), 0);
+		assertEquals("Check unit space is correct", 1.5, sedanTest.getUnitSize(), 0);
 		
 		Bike bikeTest = new Bike();
-		assertEquals("Check unit space is correct", 0.75, bikeTest.getUnitSpace(), 0);
+		assertEquals("Check unit space is correct", 0.75, bikeTest.getUnitSize(), 0);
 	}
 	
 	@Test
