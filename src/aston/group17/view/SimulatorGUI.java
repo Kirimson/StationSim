@@ -313,7 +313,7 @@ public class SimulatorGUI {
 		int d = pumpSlider.getValue();
 		int e = tillSlider.getValue();
 		int f = periodTime.getValue();
-		Simulator simulator = new Simulator (f,a,b,d,e);
+		simulator = new Simulator (f,a,b,d,e);
 	}
 }
 
