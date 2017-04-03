@@ -11,6 +11,12 @@ public class SimulatorGUI {
 	
 	private JFrame menuFrame;
 	private Simulator s;
+	private LabelledSlider pSlider;
+	private LabelledSlider qSlider;
+	private LabelledSlider priceSlider;
+	private LabelledSlider pumpSlider;
+	private LabelledSlider tillSlider;
+	private LabelledSlider periodTime;
 	private JTextArea log;
 	private Simulator simulator;
 	
@@ -131,14 +137,21 @@ public class SimulatorGUI {
 		priceSlider = new LabelledSlider("Set price ", 0, 2, 0);
 		priceSlider.setMajorTickSpacing(1);
 		
-		periodTime = new JTextField();
-		periodTime.setPreferredSize(new Dimension(100,20));
+		pumpSlider = new LabelledSlider("Set the number of pumps ", 0, 10, 0);
+		pumpSlider.setMajorTickSpacing(1);
+		
+		tillSlider = new LabelledSlider("Set the number of tills ", 0, 10, 0);
+		tillSlider.setMajorTickSpacing(1);
+		
+		periodTime = new LabelledSlider("Set the time period of ticks ", 0, 1440, 0);
+		tillSlider.setMajorTickSpacing(140);
 		
 		JLabel sliderLabel1 = new JLabel();
 		JLabel sliderLabel2 = new JLabel();
 		JLabel sliderLabel3 = new JLabel();
 		JLabel timeLabel= new JLabel();
 //		 Step 2: Set the properties of the components
+	
 		startButton.setText("Start");
 		startButton.setToolTipText("Start the simulation");
 		resetButton.setText("Reset");
@@ -157,7 +170,7 @@ public class SimulatorGUI {
 //	Step 3: Create containers to hold the components
 		menuFrame = new JFrame("Fuelling Station Simulator");
 		menuFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		menuFrame.setSize(1000, 800);
+		menuFrame.setSize(600, 400);
 		JPanel sliders = new JPanel();
 		JPanel textArea = new JPanel();
 		JPanel buttons = new JPanel();
@@ -165,6 +178,11 @@ public class SimulatorGUI {
 		JPanel individualSlider1 = new JPanel();
 		JPanel individualSlider2 = new JPanel();
 		JPanel individualSlider3 = new JPanel();
+		JPanel individualSlider4 = new JPanel();
+		JPanel individualSlider5 = new JPanel();
+		JPanel individualSlider6 = new JPanel();
+
+
 
 //	 Step 4: Specify LayoutManagers
 	
@@ -180,7 +198,7 @@ public class SimulatorGUI {
 		
 		
 		
-		sliders.setLayout(new GridLayout(3,2));
+		sliders.setLayout(new GridLayout(6,1));
 	
 		
 		
@@ -191,6 +209,10 @@ public class SimulatorGUI {
 		individualSlider1.setLayout(new FlowLayout());
 		individualSlider2.setLayout(new FlowLayout());
 		individualSlider3.setLayout(new FlowLayout());
+		individualSlider4.setLayout(new FlowLayout());
+		individualSlider5.setLayout(new FlowLayout());
+		individualSlider6.setLayout(new FlowLayout());
+
 		
 		
 //	 Step 5: Add components to containers 
@@ -206,23 +228,35 @@ public class SimulatorGUI {
 		buttons.add(resetButton);
 		buttons.add(quitButton);
 		individualSlider1.add(sliderLabel1);
+		individualSlider1.add(sliderLabel1);
 		individualSlider2.add(sliderLabel2);
 		individualSlider3.add(sliderLabel3);
 
 		individualSlider1.add(pSlider);
 		individualSlider2.add(qSlider);
 		individualSlider3.add(priceSlider);
+		individualSlider4.add(pumpSlider);
+		individualSlider5.add(tillSlider);
+		individualSlider5.add(periodTime);
+
 		
 		
 		
 		sliders.add(pSlider);
 		sliders.add(qSlider);
 		sliders.add(priceSlider);
-		menuFrame.add(buttons, BorderLayout.SOUTH);
+		sliders.add(pumpSlider);
+		sliders.add(tillSlider);
+		sliders.add(periodTime);
+
 		menuFrame.add(sliders, BorderLayout.NORTH);
+		menuFrame.add(buttons, BorderLayout.SOUTH);
+	
 		
-		textArea.add(periodTime);
-		menuFrame.add(periodTime,BorderLayout.WEST);
+		//textArea.add(timeLabel);
+		//textArea.add(periodTime);
+		
+		//menuFrame.add(textArea,BorderLayout.WEST);
 		
 		
 //	 Step 6: Arrange to handle events in the user interface
@@ -266,6 +300,20 @@ public class SimulatorGUI {
 		if (response == JOptionPane.YES_OPTION) {
 			System.exit(0);
 		}
+	}
+
+	private void resetApp(){
+		setParameters();
+		
+	}
+	private void setParameters(){
+		double a = pSlider.getValue()/10;
+		double b = qSlider.getValue()/10;
+		int c = priceSlider.getValue();
+		int d = pumpSlider.getValue();
+		int e = tillSlider.getValue();
+		int f = periodTime.getValue();
+		simulator = new Simulator (f,a,b,d,e);
 	}
 }
 
