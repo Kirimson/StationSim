@@ -10,7 +10,6 @@ import javax.swing.border.*;
 public class SimulatorGUI {
 	
 	private JFrame menuFrame;
-	private Simulator s;
 	private LabeledSlider pSlider;
 	private LabeledSlider qSlider;
 	private LabeledSlider priceSlider;
@@ -117,18 +116,16 @@ public class SimulatorGUI {
 	private void setParameters(){
 		
 		final int blankSpace = 6;  // blank at edge of panels
-
-
+		
 		LabeledSlider pSlider; 
 		LabeledSlider qSlider;
 		LabeledSlider priceSlider;
 		LabeledSlider periodTime;
 	
-		
 //	Step 1: create the components for the 
-		JButton startButton = new JButton();
+		JButton runButton = new JButton();
 		JButton resetButton = new JButton();
-		JButton quitButton = new JButton();
+		JButton closeWindowButton = new JButton();
 		
 		pSlider = new LabeledSlider("Set probability of P ", 0, 5, 0);
 		pSlider.setMajorTickSpacing(1);
@@ -154,20 +151,15 @@ public class SimulatorGUI {
 		JLabel timeLabel= new JLabel();
 //		 Step 2: Set the properties of the components
 	
-		startButton.setText("Start");
-		startButton.setToolTipText("Start the simulation");
-		resetButton.setText("Reset");
-		resetButton.setToolTipText("Reset the simulation");
-		quitButton.setText("Quit");
-		quitButton.setToolTipText("Quit application");
+		runButton.setText("Run");
+		runButton.setToolTipText("Run the simulation");
+		closeWindowButton.setText("Close");
+		closeWindowButton.setToolTipText("Close window");
 		
 		sliderLabel1.setText("Set probability of P ");
 		sliderLabel2.setText("Set probability of Q ");
 		sliderLabel3.setText("Set Price");
 		timeLabel.setText("Set the time");
-//	 Step 3: Create containers to hold the components
-		
-		
 		
 //	Step 3: Create containers to hold the components
 		menuFrame = new JFrame("Fuelling Station Simulator");
@@ -184,26 +176,16 @@ public class SimulatorGUI {
 		JPanel individualSlider5 = new JPanel();
 		JPanel individualSlider6 = new JPanel();
 
-
-
-//	 Step 4: Specify LayoutManagers
-	
-				
 //	 Step 4: Specify LayoutManagers
 		menuFrame.setLayout(new BorderLayout());
 		((JPanel)menuFrame.getContentPane()).setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 		
-		
 		buttons.setLayout(new FlowLayout());
 		buttons.setBorder(new 
 				EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
-		
-		
-		
+			
 		sliders.setLayout(new GridLayout(6,1));
 	
-		
-		
 		textArea.setLayout(new FlowLayout());
 		textArea.setBorder(new 
 				EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
@@ -215,21 +197,12 @@ public class SimulatorGUI {
 		individualSlider5.setLayout(new FlowLayout());
 		individualSlider6.setLayout(new FlowLayout());
 
-		
-		
 //	 Step 5: Add components to containers 
-		buttons.add(startButton);
-		buttons.add(resetButton);
-		buttons.add(quitButton);
-		/*mainFrame.add(buttons, BorderLayout.SOUTH);
-		mainFrame.add(actionList, BorderLayout.CENTER);
-		mainFrame.add(titleLabel, BorderLayout.NORTH);*/
-		
-//	  Step 5: Add components to containers 		
-		buttons.add(startButton);
-		buttons.add(resetButton);
-		buttons.add(quitButton);
-		individualSlider1.add(sliderLabel1);
+		buttons.add(runButton);
+		buttons.add(closeWindowButton);
+
+		buttons.add(runButton);
+		buttons.add(closeWindowButton);
 		individualSlider1.add(sliderLabel1);
 		individualSlider2.add(sliderLabel2);
 		individualSlider3.add(sliderLabel3);
@@ -239,10 +212,7 @@ public class SimulatorGUI {
 		individualSlider3.add(priceSlider);
 		individualSlider4.add(pumpSlider);
 		individualSlider5.add(tillSlider);
-		individualSlider5.add(periodTime);
-
-		
-		
+		individualSlider6.add(periodTime);
 		
 		sliders.add(pSlider);
 		sliders.add(qSlider);
@@ -254,45 +224,36 @@ public class SimulatorGUI {
 		menuFrame.add(sliders, BorderLayout.NORTH);
 		menuFrame.add(buttons, BorderLayout.SOUTH);
 	
-		
 		//textArea.add(timeLabel);
 		//textArea.add(periodTime);
 		
 		//menuFrame.add(textArea,BorderLayout.WEST);
-		
-		
+				
 //	 Step 6: Arrange to handle events in the user interface
 		
-		menuFrame.addWindowListener(new WindowAdapter() {
+			menuFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-			exitApp();
+			closeWindow();
 			}
 		});    
 			
-			quitButton.addActionListener(new ActionListener() {
+			closeWindowButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			exitApp();
-			}
-		});
-			
-			resetButton.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) {
-			resetApp();
+			closeWindow();
 			}
 		});
 		
-			startButton.addActionListener(new ActionListener() { 
+			runButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			setParameters();
+			startSimulation();
 			}
 		});
 			
 //	Step 7: Display GUI
 		menuFrame.pack();
 		menuFrame.setVisible(true);
-		
-	
 	}
+	
 	private void exitApp() {
 		int response = JOptionPane.showConfirmDialog(menuFrame, 
 				"Do you wish to quit the application?",
@@ -303,20 +264,25 @@ public class SimulatorGUI {
 			System.exit(0);
 		}
 	}
+	
+	private void closeWindow() {
+			menuFrame.dispose();
+		}
 
 	private void resetApp(){
 		setParameters();
-		
 	}
-//	private void setParameters(){
-//		double a = pSlider.getValue()/10;
-//		double b = qSlider.getValue()/10;
-//		int c = priceSlider.getValue();
-//		int d = pumpSlider.getValue();
-//		int e = tillSlider.getValue();
-//		int f = periodTime.getValue();
-//		simulator = new Simulator (f,a,b,d,e);
-//	}
+	
+	
+	private void startSimulation(){
+//		double p = pSlider.getValue()/100;
+//		double q = qSlider.getValue()/100;
+//		int price = priceSlider.getValue();
+//		int pumps = pumpSlider.getValue();
+//		int tills = tillSlider.getValue();
+//		int ticks = periodTime.getValue();
+//		simulator = new Simulator (ticks, p , q, pumps, tills, price);
+	}
 }
 
 
