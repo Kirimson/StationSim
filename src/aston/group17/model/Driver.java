@@ -2,7 +2,7 @@ package aston.group17.model;
 import java.util.Random;
 
 public class Driver {
-	private boolean shopping, wait, queueing;
+	private boolean shopping, wait, queueing, done;
 	private int  totalTime, shoppingTime, minShoppingTime;
 	private double moneySpent;
 	private Vehicle vehicle;
@@ -47,7 +47,7 @@ public class Driver {
 	/**
 	 * What the driver will do each tick
 	 */
-	public void act()
+	public void act(double fuelCost)
 	{
 		if(wait)
 		{
@@ -60,6 +60,8 @@ public class Driver {
 				if(!getVehicle().isFull())
 				{
 						fillTank();
+						moneySpent += fuelCost;
+						System.out.println("money Spend on fuel: " + moneySpent);
 				}
 				else
 				{
@@ -95,7 +97,8 @@ public class Driver {
 	 * @return
 	 * Returns the Driver's Vehicle object
 	 */
-	public Vehicle getVehicle(){	
+	public Vehicle getVehicle()
+	{	
 		return vehicle;
 	}
 	
@@ -105,7 +108,8 @@ public class Driver {
 	 * returns the amount of money the Driver has spent at the station
 	 */
 	
-	public double moneySpent(){
+	public double getMoneySpent()
+	{
 		return moneySpent;
 		
 	}
@@ -115,7 +119,8 @@ public class Driver {
 	 * @return
 	 * returns int of the amount of time the driver would spend shopping
 	 */
-	public int shoppingTime(){
+	public int shoppingTime()
+	{
 		
 		totalTime = vehicle.timeToSpendShopping();
 		
@@ -139,7 +144,7 @@ public class Driver {
 	/**
 	 * Returns if the Driver is queueing or not
 	 * @return
-	 * Boolean queueing
+	 * true if driver is still shopping
 	 */
 	public boolean isQueueing()
 	{
@@ -149,7 +154,7 @@ public class Driver {
 	/**
 	 * Returns true if the Driver is still shopping
 	 * @return
-	 * Boolean
+	 * true if driver is still shopping
 	 */
 	public boolean stillShopping()
 	{
@@ -163,11 +168,21 @@ public class Driver {
 	/**
 	 * Returns if the Driver is in the Shop
 	 * @return
-	 * Boolean shopping
+	 * Boolean true if the driver is shopping
 	 */
 	public boolean isInShop()
 	{
 		return shopping;
+	}
+	
+	/**
+	 * Returns if the Driver is in the Shop
+	 * @return
+	 * true if the driver is done shopping
+	 */
+	public boolean isDone()
+	{
+		return done;
 	}
 	
 	/**
@@ -183,14 +198,16 @@ public class Driver {
 	 * @return
 	 * vehicle type the driver owns
 	 */
-	public String getVehicleType(){
+	public String getVehicleType()
+	{
 		return vehicleType;
 	}
 	
 	/**
 	 * Changes the driver's shopping state
 	 */
-	public void toggleShopping(){
+	public void toggleShopping()
+	{
 		shopping = !shopping;
 	}
 	
@@ -207,14 +224,16 @@ public class Driver {
 	 * @return
 	 * shoppingTime
 	 */
-	public int getShoppingTime(){
+	public int getShoppingTime()
+	{
 		return shoppingTime;
 	}
 
 	/**
 	 * Calls the vehicle fill tank method
 	 */
-	public void fillTank() {
+	public void fillTank()
+	{
 		vehicle.fill();
 	}
 	

@@ -6,8 +6,8 @@ public class Car extends Vehicle {
 	private static final double UNIT_SIZE = 1.0;
 	private Random rand;
 
-	public Car(){
-
+	public Car()
+	{
 		super(3, 7);
 		vehicleType = "Car";
 		rand = new Random();
@@ -26,5 +26,4 @@ public class Car extends Vehicle {
 		double moneySpent = rand.nextInt(5)+5;
 		return moneySpent;
 	}
-
 }
