@@ -12,14 +12,14 @@ import javax.swing.event.*;
  */
 
 
-public class LabelledSlider extends JComponent {
+public class LabeledSlider extends JComponent {
 	
 	private static final long serialVersionUID = 6511929653284188062L;
 	private String labelString;
 	private JLabel label;
 	private JSlider slider;
 	
-	public LabelledSlider(String text, int min, int max, int value) {
+	public LabeledSlider(String text, int min, int max, int value) {
 		this.setDoubleBuffered(true);
 		label = new JLabel(text + value);
 		labelString = new String(text);
