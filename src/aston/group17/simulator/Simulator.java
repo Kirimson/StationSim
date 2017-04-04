@@ -15,12 +15,7 @@ public class Simulator {
 	private int numSteps, tills, pumps;
 	private Random rnd;
 	
-	private static SimulatorGUI simGUI;
-	
-	public static void main(String[] args)
-	{
-		simGUI = new SimulatorGUI();
-	}
+
 	
 	public Simulator(int numSteps, double p, double q, int pumps, int tills)
 	{
@@ -31,7 +26,7 @@ public class Simulator {
 		this.pumps = pumps;
 		this.tills = tills;
 		station = new Station(pumps, tills);
-		tempDriver = new Driver("");
+		tempDriver = null;
 
 	}
 	
