@@ -12,7 +12,8 @@ public class Pump {
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
 	
-	public Pump(){
+	public Pump(double price){
+		priceOfFuel = price;
 		queueSize = 0;
 		unitSpaceAvailable = 3;
 		queue = new ArrayList<Driver>();
@@ -23,7 +24,15 @@ public class Pump {
 	 */
 	public void act()
 	{
-		getFirstDriver().act();
+		if(!getFirstDriver().isDone())
+		{
+			getFirstDriver().act(priceOfFuel);
+		}
+		else
+		{
+			System.out.println("Driver is leaving. Spent: " + getFirstDriver().getMoneySpent());
+			removeVehicleFromPumpQueue();
+		}
 	}
 	
 	/**
@@ -78,6 +87,7 @@ public class Pump {
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
 		queueSize--;
+		//new first driver is no longer queueing
 		getFirstDriver().toggleQueueing();
 	}
 	

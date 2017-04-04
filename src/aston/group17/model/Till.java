@@ -1,13 +1,26 @@
 package aston.group17.model;
 
+import java.util.ArrayList;
+
 public class Till {
 	private double moneyTaken;
-	private Driver currentDriver;
+	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
+	private int ticksAtTill;
+	private boolean newDriver;
 	
-	public Till(){
+	public Till()
+	{
 		moneyTaken = 0;
 		tillInUse = false;
+	}
+	
+	public void act()
+	{
+		if(newDriver)
+		{
+			
+		}
 	}
 	
 	/**
@@ -15,10 +28,10 @@ public class Till {
 	* @return
 	* returns a boolean of the till status
 	*/
-	public boolean isTillInUse(){
+	public boolean isTillInUse()
+	{
 		return tillInUse;
 	}
-
 	
 	/**
 	 * Adds a Driver to the Till
@@ -27,8 +40,9 @@ public class Till {
 	 */
 	public void addDriver(Driver d)
 	{
-		currentDriver = d;
+		drivers.add(d);
 		toggleTillInUse();
+		toggleNewDriver();
 	}
 	
 	/**
@@ -36,24 +50,35 @@ public class Till {
 	* @return
 	* Driver object
 	*/
-	public Driver getShoppingDriver(){
-			return currentDriver;
-		}
+	public Driver getShoppingDriver()
+	{
+			return drivers.get(0);
+	}
 
 	/**
 	* Returns the total money taken in from that till
 	* @return
 	* returns the amount of money the till has taken
 	*/
-	public double getMoneyTaken(){
-
+	public double getMoneyTaken()
+	{
 		return moneyTaken;
 	}
+	
 	/**
 	 *  Toggles the status of the till, wither in use or free
 	 */
-	public void toggleTillInUse(){
+	public void toggleTillInUse()
+	{
 		tillInUse = !tillInUse;
+	}
+	
+	/**
+	 *  Toggles the status of the the driver. If they have just arrived at till
+	 */
+	public void toggleNewDriver()
+	{
+		newDriver = !newDriver;
 	}
 	
 	/**
@@ -61,7 +86,8 @@ public class Till {
 	 * @param money
 	 * The amount of money the driver gives the till, includes both shop purchase and pump purchase
 	 */
-	public void addMoneyTaken(double money){
+	public void addMoneyTaken(double money)
+	{
 		moneyTaken += money;
 	}
 }

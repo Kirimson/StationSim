@@ -34,11 +34,14 @@ public class Shop {
 			{
 				if(shoppingDriver.stillShopping())
 				{
+					System.out.println("Driver is shopping");
 					shoppingDriver.shop();
 				}
 				else
 				{
+					System.out.println("Driver is waiting for a till");
 					shoppingDriver.toggleQueueing();
+					makeDriverIdle(shoppingDriver);
 				}
 			}
 		}
@@ -55,9 +58,19 @@ public class Shop {
 			}
 			else
 			{
-				
+				System.out.println("Driver has left the shop");
+				removeDriver(idleDriver);
 			}
 		}
+		
+		for(Till t : tills)
+		{
+			if(t.isTillInUse())
+			{
+				t.act();
+			}
+		}
+		
 	}
 	
 	/**
@@ -87,6 +100,7 @@ public class Shop {
 	 */
 	public void makeDriverIdle(Driver d)
 	{
+		shoppingDrivers.remove(d);
 		idleDrivers.add(d);
 	}
 	
