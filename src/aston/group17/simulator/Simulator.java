@@ -17,7 +17,7 @@ public class Simulator {
 	
 
 	
-	public Simulator(int numSteps, double p, double q, int pumps, int tills)
+	public Simulator(int numSteps, double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
 		this.p = p;
@@ -25,7 +25,7 @@ public class Simulator {
 		this.numSteps = numSteps;
 		this.pumps = pumps;
 		this.tills = tills;
-		station = new Station(pumps, tills);
+		station = new Station(pumps, tills, price);
 		tempDriver = null;
 
 	}

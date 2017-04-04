@@ -13,7 +13,7 @@ public class Station {
 	 * @param tAmount
 	 * Amount of shops the Station will have
 	 */
-	public Station(int pAmount, int tAmount)
+	public Station(int pAmount, int tAmount, double price)
 	{
 		//create a Shop and create tills inside depending on how many tills were specified in tAmount
 		shop = new Shop(tAmount);
@@ -23,7 +23,7 @@ public class Station {
 		
 		for(int i = 0; i < pAmount; i++)
 		{
-			pumps.add(new Pump());
+			pumps.add(new Pump(price));
 		}
 	}
 	
@@ -32,16 +32,22 @@ public class Station {
 	 */
 	public void act()
 	{
+		int i = 0;
 		for(Pump p : pumps)
 		{
+			System.out.println("Pump " + i+":");
 			if(!p.getFirstDriver().wantsToShop())
 			{
+				System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
 				p.act();
 			}
 			else
 			{
+				System.out.println("Driver spent " + p.getFirstDriver().getMoneySpent() + " at pump");
+				System.out.println("Driver going to shop");
 				addDriverToShop(p.getFirstDriver());
 			}
+			i++;
 		}
 		shop.act();
 	}
