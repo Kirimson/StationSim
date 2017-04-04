@@ -265,6 +265,10 @@ public class SimulatorGUI {
 		int ticks = periodTime.getValue();
 		simulator = new Simulator (ticks, p , q, pumps, tills, price);
 	}
+	
+	private void listDataToLog() {
+		log.append(simulator.toString());
+	}
 
 }
 
