@@ -15,7 +15,7 @@ public class StationTest {
 
 	@Test
 	public void testJoinQueue() {
-		Station s = new Station(3, 3);
+		Station s = new Station(3, 3, 1.2);
 		
 		Driver carDriver = new Driver("Car");
 		
@@ -50,7 +50,7 @@ public class StationTest {
 	
 	@Test
 	public void testFillTank() {
-		Station s = new Station(1, 3);
+		Station s = new Station(1, 3, 1.2);
 		
 		Driver carDriver = new Driver("Car");
 		
@@ -58,19 +58,19 @@ public class StationTest {
 		
 		Driver vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println(vp1.toString());
+//		System.out.println(vp1.toString());
 		
 		while(s.getPump(0).getFirstDriver().getVehicle().getGallonsFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
 		{
 			s.act();
-			System.out.println(s.getPump(0).getFirstDriver().toString());
+//			System.out.println(s.getPump(0).getFirstDriver().toString());
 		}
 		
 		vp1 = s.getPump(0).getFirstDriver();
 		
-		System.out.println(vp1.toString());
+//		System.out.println(vp1.toString());
 		
-		System.out.println("\n");
+//		System.out.println("\n");
 		
 		if(vp1.getVehicle().getGallonsFilled() != vp1.getVehicle().getTankSize())
 		{
@@ -81,7 +81,7 @@ public class StationTest {
 	@Test
 	public void testFullQueue()
 	{
-		Station s = new Station(1, 1);
+		Station s = new Station(1, 1, 1.2);
 
 		ArrayList<Driver> carDrivers = new ArrayList<Driver>();
 		
@@ -97,13 +97,13 @@ public class StationTest {
 			{System.out.println("c"+ p + " in");}
 			else
 			{
-				System.out.println("c"+p +" not in");
+//				System.out.println("c"+p +" not in");
 				if(p != 3)
 				{
 					fail();
 				}
 			}
-			System.out.println(findVehicle(s, d));
+//			System.out.println(findVehicle(s, d));
 			p++;
 			}
 		}
@@ -112,7 +112,7 @@ public class StationTest {
 	@Test
 	public void testMultiplePumpFull()
 	{
-		Station s = new Station(2, 1);
+		Station s = new Station(2, 1, 1.2);
 		
 		ArrayList<Driver> sedanDrivers = new ArrayList<Driver>();
 		
@@ -128,7 +128,7 @@ public class StationTest {
 			{System.out.println("s"+p +" in");}
 			else
 			{
-				System.out.println("s"+p +" not in");
+//				System.out.println("s"+p +" not in");
 				if(p != 4)
 				{
 					fail();

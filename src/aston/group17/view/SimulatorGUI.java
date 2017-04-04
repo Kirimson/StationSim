@@ -116,7 +116,7 @@ public class SimulatorGUI {
 	private void setParameters(){
 		
 		final int blankSpace = 6;  // blank at edge of panels
-		
+
 		LabeledSlider pSlider; 
 		LabeledSlider qSlider;
 		LabeledSlider priceSlider;
@@ -272,7 +272,7 @@ public class SimulatorGUI {
 	private void resetApp(){
 		setParameters();
 	}
-	
+
 	
 	private void startSimulation(){
 //		double p = pSlider.getValue()/100;
@@ -283,6 +283,7 @@ public class SimulatorGUI {
 //		int ticks = periodTime.getValue();
 //		simulator = new Simulator (ticks, p , q, pumps, tills, price);
 	}
+
 }
 
 
