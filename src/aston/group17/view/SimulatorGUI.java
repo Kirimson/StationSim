@@ -11,12 +11,12 @@ public class SimulatorGUI {
 	
 	private JFrame menuFrame;
 	private Simulator s;
-	private LabelledSlider pSlider;
-	private LabelledSlider qSlider;
-	private LabelledSlider priceSlider;
-	private LabelledSlider pumpSlider;
-	private LabelledSlider tillSlider;
-	private LabelledSlider periodTime;
+	private LabeledSlider pSlider;
+	private LabeledSlider qSlider;
+	private LabeledSlider priceSlider;
+	private LabeledSlider pumpSlider;
+	private LabeledSlider tillSlider;
+	private LabeledSlider periodTime;
 	private JTextArea log;
 	private Simulator simulator;
 	
@@ -24,7 +24,7 @@ public class SimulatorGUI {
 		
 		JFrame firstFrame;
 			
-			final int blankSpace = 6;  // blank at edge of panels
+		final int blankSpace = 6;  // blank at edge of panels
 
 //		 Step 1: create the components
 			JButton startButton = new JButton();
@@ -109,18 +109,15 @@ public class SimulatorGUI {
 				firstFrame.setVisible(true);
 	}
 	
-	private void resetApp(){
-		setParameters();
-	}
 	private void setParameters(){
 		
 		final int blankSpace = 6;  // blank at edge of panels
 
 
-		LabelledSlider pSlider; 
-		LabelledSlider qSlider;
-		LabelledSlider priceSlider;
-		JTextField periodTime;
+		LabeledSlider pSlider; 
+		LabeledSlider qSlider;
+		LabeledSlider priceSlider;
+		LabeledSlider periodTime;
 	
 		
 //	Step 1: create the components for the 
@@ -128,22 +125,22 @@ public class SimulatorGUI {
 		JButton resetButton = new JButton();
 		JButton quitButton = new JButton();
 		
-		pSlider = new LabelledSlider("Set probability of P ", 0, 5, 0);
+		pSlider = new LabeledSlider("Set probability of P ", 0, 5, 0);
 		pSlider.setMajorTickSpacing(1);
 		
-		qSlider = new LabelledSlider("Set probability of Q ", 0, 5, 0);
+		qSlider = new LabeledSlider("Set probability of Q ", 0, 5, 0);
 		qSlider.setMajorTickSpacing(1);
 		
-		priceSlider = new LabelledSlider("Set price ", 0, 2, 0);
+		priceSlider = new LabeledSlider("Set price ", 0, 2, 0);
 		priceSlider.setMajorTickSpacing(1);
 		
-		pumpSlider = new LabelledSlider("Set the number of pumps ", 0, 10, 0);
+		pumpSlider = new LabeledSlider("Set the number of pumps ", 0, 10, 0);
 		pumpSlider.setMajorTickSpacing(1);
 		
-		tillSlider = new LabelledSlider("Set the number of tills ", 0, 10, 0);
+		tillSlider = new LabeledSlider("Set the number of tills ", 0, 10, 0);
 		tillSlider.setMajorTickSpacing(1);
 		
-		periodTime = new LabelledSlider("Set the time period of ticks ", 0, 1440, 0);
+		periodTime = new LabeledSlider("Set the time period of ticks ", 0, 1440, 0);
 		tillSlider.setMajorTickSpacing(140);
 		
 		JLabel sliderLabel1 = new JLabel();
@@ -306,15 +303,15 @@ public class SimulatorGUI {
 		setParameters();
 		
 	}
-	private void setParameters(){
-		double a = pSlider.getValue()/10;
-		double b = qSlider.getValue()/10;
-		int c = priceSlider.getValue();
-		int d = pumpSlider.getValue();
-		int e = tillSlider.getValue();
-		int f = periodTime.getValue();
-		simulator = new Simulator (f,a,b,d,e);
-	}
+//	private void setParameters(){
+//		double a = pSlider.getValue()/10;
+//		double b = qSlider.getValue()/10;
+//		int c = priceSlider.getValue();
+//		int d = pumpSlider.getValue();
+//		int e = tillSlider.getValue();
+//		int f = periodTime.getValue();
+//		simulator = new Simulator (f,a,b,d,e);
+//	}
 }
 
 
