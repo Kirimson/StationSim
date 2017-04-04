@@ -20,6 +20,11 @@ public class SimulatorGUI {
 	private JTextArea log;
 	private Simulator simulator;
 	
+	public static void main(String[] args)
+	{
+		new SimulatorGUI();
+	}
+	
 	public SimulatorGUI() {
 		
 		JFrame firstFrame;
