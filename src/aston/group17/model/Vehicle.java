@@ -114,5 +114,5 @@ public abstract class Vehicle {
 	 * @return
 	 * Vehicle's amount of money to spend in Shop
 	 */
-	 public abstract double moneySpent();
+	 public abstract double moneySpentForShopping();
 }
