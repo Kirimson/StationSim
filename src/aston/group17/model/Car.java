@@ -22,7 +22,7 @@ public class Car extends Vehicle {
 		return timeSpent * 6;
 	}
 	
-	public double moneySpent(){
+	public double moneySpentForShopping(){
 		double moneySpent = rand.nextInt(5)+5;
 		return moneySpent;
 	}
