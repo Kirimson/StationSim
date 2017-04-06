@@ -47,12 +47,21 @@ public class Station {
 					}
 					else if(p.getFirstDriver().wantsToShop())
 					{
-						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpent() + " at pump");
+						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
 						System.out.println("Driver going to shop");
 						p.getFirstDriver().toggleShopping();
 						System.out.println(p.getFirstDriver().isInShop());
 						addDriverToShop(p.getFirstDriver());
 					}
+					System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
+					p.act();
+				}
+				else if(!p.getFirstDriver().isInShop())
+				{
+					System.out.println("Driver spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
+					System.out.println("Driver going to shop");
+					
+					addDriverToShop(p.getFirstDriver());
 				}
 			}
 			i++;

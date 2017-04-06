@@ -2,11 +2,13 @@ package aston.group17.model;
 import java.util.Random;
 
 public class Driver {
+
 	private boolean shopping, wait, queueing, done, wantsToShop;
-	private int  totalTime, shoppingTime, minShoppingTime;
-	private double moneySpent;
+	private int  totalTime, shoppingTime, minShoppingTime, tillTime, currentTillTime;
+	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
 	private String vehicleType;
+	private Random rnd;
 	
 	/**
 	 * constructs a new Driver object
@@ -15,11 +17,15 @@ public class Driver {
 	 */
 	public Driver(String type)
 	{
+		tillTime = 0;
 		totalTime = 0;
-		moneySpent = 0;
+		moneySpentPump = 0;
+		moneySpentShop = 0;
+		totalSpent = 0;
 		shopping = false;
 		wait = true;
 		queueing = true;
+		rnd = new Random();
 		
 		switch(type){
 			case "Car":
@@ -61,8 +67,8 @@ public class Driver {
 				if(!getVehicle().isFull())
 				{
 						fillTank();
-						moneySpent += fuelCost;
-						System.out.println("money Spend on fuel: " + moneySpent);
+						moneySpentPump += fuelCost;
+						System.out.println("Money spent on fuel: " + moneySpentPump);
 				}
 				else
 				{
@@ -110,15 +116,24 @@ public class Driver {
 	 * returns the amount of money the Driver has spent at the station
 	 */
 	
-	public double getMoneySpent()
+	// returns the amount of money spent at pump
+	public double getMoneySpentPump()
 	{
-		return moneySpent;
-		
+		return moneySpentPump;	
 	}
 	
+	// returns the amount of money spent at shop
+	public double getTotalMoney()
+	{
+		totalSpent = moneySpentPump + moneySpentShop;
+		return totalSpent;	
+	}
+	
+	// returns the total amount of money spent
 	public double getShopSpendingAmount()
 	{
-		return vehicle.moneySpentForShopping();
+		moneySpentShop = vehicle.moneySpentForShopping();
+		return moneySpentShop;
 	}
 	
 	/**
@@ -247,5 +262,28 @@ public class Driver {
 	public String toString()
 	{
 		return vehicle.toString();
+	}
+	
+	public void toggleDone()
+	{
+		done = !done;
+	}
+	
+	public int getTillTime()
+	{
+		return tillTime;
+	}
+	public void setTillTime()
+	{
+		tillTime = rnd.nextInt(2)+2;
+		tillTime *= 6;
+	}
+
+	public int getCurrentTillTime() {
+		return currentTillTime * 6;
+	}
+
+	public int setCurrentTillTime() {
+		return currentTillTime++;
 	}
 }

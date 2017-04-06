@@ -41,25 +41,8 @@ public class Shop {
 //				{
 //					System.out.println("Driver is waiting for a till");
 //					shoppingDriver.toggleQueueing();
-//					makeDriverIdle(shoppingDriver);
+//					actDriverToTillQueue(shoppingDriver);
 //				}
-//			}
-//		}
-//		
-//		for(Driver idleDriver : idleDrivers)
-//		{
-//			if(idleDriver.isInShop())
-//			{
-//				Till freeTill = getFreeTill();
-//				if(freeTill != null)
-//				{
-//					freeTill.addDriver(idleDriver);
-//				}
-//			}
-//			else
-//			{
-//				System.out.println("Driver has left the shop");
-//				removeDriver(idleDriver);
 //			}
 //		}
 //		
@@ -109,14 +92,16 @@ public class Shop {
 	* @return
 	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
-	public Till getFreeTill(){
-		for(Till t : tills){
-			if(!t.isTillInUse())
+	public Till getShortestPumpQueue(Vehicle v){
+		Till shortestTill = tills.get(0);
+		for(Till t : tills)
+		{
+			if(t.getQueueLength() < shortestTill.getQueueLength())
 			{
-				return t;
+				shortestTill = t;
 			}
 		}
-		return null;
+		return shortestTill;
 	}
 	
 	/**
