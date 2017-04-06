@@ -2,11 +2,13 @@ package aston.group17.model;
 import java.util.Random;
 
 public class Driver {
-	private boolean shopping, wait, queueing, done;
-	private int  totalTime, shoppingTime, minShoppingTime;
-	private double moneySpent;
+
+	private boolean shopping, wait, queueing, done, wantsToShop;
+	private int  totalTime, shoppingTime, minShoppingTime, tillTime, currentTillTime, pump;
+	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
 	private String vehicleType;
+	private Random rnd;
 	
 	/**
 	 * constructs a new Driver object
@@ -15,11 +17,15 @@ public class Driver {
 	 */
 	public Driver(String type)
 	{
+		tillTime = 0;
 		totalTime = 0;
-		moneySpent = 0;
+		moneySpentPump = 0;
+		moneySpentShop = 0;
+		totalSpent = 0;
 		shopping = false;
 		wait = true;
 		queueing = true;
+		rnd = new Random();
 		
 		switch(type){
 			case "Car":
@@ -52,6 +58,7 @@ public class Driver {
 		if(wait)
 		{
 			wait = !wait;
+			System.out.println("Driver is waiting");
 		}
 		else if(!shopping)
 		{
@@ -60,13 +67,14 @@ public class Driver {
 				if(!getVehicle().isFull())
 				{
 						fillTank();
-						moneySpent += fuelCost;
-//						System.out.println("money Spend on fuel: " + moneySpent);
+						moneySpentPump += fuelCost;
+//						System.out.println("Money spent on fuel: " + moneySpentPump);
 				}
 				else
 				{
-					shopping = true;
+					System.out.println("Tank full");
 					wait = true;
+					wantsToShop = true;
 					minShoppingTime = getShoppingTime();
 				}
 			}
@@ -108,12 +116,20 @@ public class Driver {
 	 * returns the amount of money the Driver has spent at the station
 	 */
 	
-	public double getMoneySpent()
+	// returns the amount of money spent at pump
+	public double getMoneySpentPump()
 	{
-		return moneySpent;
-		
+		return moneySpentPump;	
 	}
 	
+	// returns the amount of money spent at shop
+	public double getTotalMoney()
+	{
+		totalSpent = moneySpentPump + moneySpentShop;
+		return totalSpent;	
+	}
+	
+	// returns the total amount of money spent
 	public double getShopSpendingAmount()
 	{
 		return vehicle.moneySpentForShopping();
@@ -124,12 +140,9 @@ public class Driver {
 	 * @return
 	 * returns int of the amount of time the driver would spend shopping
 	 */
-	public int setShoppingTime()
+	public void setShoppingTime()
 	{
-		
-		totalTime = vehicle.timeToSpendShopping();
-		
-		return totalTime;
+		minShoppingTime = vehicle.timeToSpendShopping();
 	}
 	
 	/**
@@ -139,11 +152,7 @@ public class Driver {
 	 */
 	public boolean wantsToShop()
 	{
-		if(!wait && shopping)
-		{
-			return true;
-		}
-		return false;
+		return wantsToShop;
 	}
 	
 	/**
@@ -249,6 +258,38 @@ public class Driver {
 	 */
 	public String toString()
 	{
-		return vehicle.toString();
+		return "Driver of: " + getVehicleType() + " shopping: "+shopping+" shoppingTime: "+shoppingTime+" minShoppingTime: "+minShoppingTime+" Done: "+done;
+	}
+	
+	public void toggleDone()
+	{
+		done = !done;
+	}
+	
+	public int getTillTime()
+	{
+		return tillTime;
+	}
+	public void setTillTime()
+	{
+		tillTime = rnd.nextInt(2)+2;
+		tillTime *= 6;
+	}
+
+	public int getCurrentTillTime() {
+		return currentTillTime * 6;
+	}
+
+	public int incrementCurrentTillTime() {
+		return currentTillTime++;
+	}
+	
+	public int getPumpNumber()
+	{
+		return pump;
+	}
+
+	public void assignPump(int pumpNumber) {
+		pump = pumpNumber;
 	}
 }

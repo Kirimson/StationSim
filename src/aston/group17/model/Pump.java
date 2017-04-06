@@ -7,13 +7,14 @@ public class Pump {
 
 	private static final int GALLON_TICK = 1;
 	private double unitSpaceAvailable;
-	private int queueSize;
+	private int queueSize, pumpNumber;
 	private static final double MAX_QUEUE = 3.0;
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
 	
-	public Pump(double price){
+	public Pump(double price, int pumpNumber){
 		priceOfFuel = price;
+		this.pumpNumber = pumpNumber;
 		queueSize = 0;
 		unitSpaceAvailable = 3;
 		queue = new ArrayList<Driver>();
@@ -30,8 +31,8 @@ public class Pump {
 		}
 		else
 		{
-			System.out.println("Driver is leaving. Spent: " + getFirstDriver().getMoneySpent());
-			removeVehicleFromPumpQueue();
+			System.out.println("Driver is leaving pump. Spent: " + getFirstDriver().getMoneySpentPump());
+			removeDriverFromPumpQueue();
 		}
 	}
 	
@@ -68,6 +69,8 @@ public class Pump {
 	 */
 	public void addToPumpQueue(Driver driver){
 		queue.add(driver);
+		driver.assignPump(pumpNumber);
+		
 		queueSize++;
 		unitSpaceAvailable -= driver.getVehicle().getUnitSize();
 		if(driver.equals(getFirstDriver()))
@@ -83,7 +86,7 @@ public class Pump {
 	* 
 	* A
 	*/
-	public void removeVehicleFromPumpQueue(){
+	public void removeDriverFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
 		queueSize--;
@@ -117,6 +120,7 @@ public class Pump {
 	 */
 	public Driver getFirstDriver()
 	{
+		if(unitSpaceAvailable == MAX_QUEUE){return null;}
 		return queue.get(0);
 	}
 	

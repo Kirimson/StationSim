@@ -44,6 +44,7 @@ public abstract class Vehicle {
 	 {
 		 if(gallonsFilled < tankSize)
 		 {
+			 System.out.println("MaxFuel: "+ tankSize);
 			 gallonsFilled++;
 		 }
 	 }

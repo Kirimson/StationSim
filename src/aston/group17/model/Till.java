@@ -6,81 +6,110 @@ public class Till {
 	private double moneyTaken;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
-	private int ticksAtTill;
 	private boolean newDriver;
-	
+
 	public Till()
 	{
 		moneyTaken = 0;
 		tillInUse = false;
+		drivers = new ArrayList<Driver>();
 	}
-	
+
 	public void act()
 	{
-		if(newDriver)
+		// if the till is not being used get next driver
+
+		if(tillInUse)
 		{
-			
+			// gets current driver and its money adds it to tills total
+			if(getFirstDriver().getTillTime() == getFirstDriver().getCurrentTillTime()){
+
+				addMoneyTaken(getFirstDriver().getTotalMoney());
+				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
+				getFirstDriver().toggleDone();
+				
+				System.out.println("Driver is leaving the till.");
+				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
+				
+				tillInUse = false;
+				
+			}
+			else
+			{
+				System.out.println("Driver is waiting at till queue");
+				getFirstDriver().incrementCurrentTillTime();
+			}
+		}
+		if(drivers.size() == 0)
+		{
+			tillInUse = false;
 		}
 	}
-	
+
 	/**
-	* Returns the queue at the till
-	* @return
-	* returns a boolean of the till status
-	*/
+	 * Returns the queue at the till
+	 * @return
+	 * returns a boolean of the till status
+	 */
+
 	public boolean isTillInUse()
 	{
 		return tillInUse;
 	}
-	
+
 	/**
 	 * Adds a Driver to the Till
 	 * @param d
 	 * Driver to be added to the Till
 	 */
+
 	public void addDriver(Driver d)
 	{
+		d.setTillTime();
 		drivers.add(d);
-		toggleTillInUse();
-		toggleNewDriver();
-	}
-	
-	/**
-	* Gets the current shopping Driver
-	* @return
-	* Driver object
-	*/
-	public Driver getShoppingDriver()
-	{
-			return drivers.get(0);
+		System.out.println("Driver has entered the till queue");
+		setTillInUse();
 	}
 
 	/**
-	* Returns the total money taken in from that till
-	* @return
-	* returns the amount of money the till has taken
-	*/
+	 * Gets the current shopping Driver
+	 * @return
+	 * Driver object
+	 */
+	public Driver getFirstDriver()
+	{
+		if(drivers.size() != 0){
+			return drivers.get(0);
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the total money taken in from that till
+	 * @return
+	 * returns the amount of money the till has taken
+	 */
 	public double getMoneyTaken()
 	{
 		return moneyTaken;
 	}
-	
+
 	/**
 	 *  Toggles the status of the till, wither in use or free
 	 */
-	public void toggleTillInUse()
+	public void setTillInUse()
 	{
-		tillInUse = !tillInUse;
+		tillInUse = true;
 	}
-	
-	/**
-	 *  Toggles the status of the the driver. If they have just arrived at till
-	 */
-	public void toggleNewDriver()
-	{
-		newDriver = !newDriver;
-	}
-	
+
+//	/**
+//	 *  Toggles the status of the the driver. If they have just arrived at till
+//	 */
+//	public void toggleNewDriver()
+//	{
+//		newDriver = !newDriver;
+//	}
+
 	/**
 	 * Adds money taken at till to total
 	 * @param money
@@ -89,5 +118,18 @@ public class Till {
 	public void addMoneyTaken(double money)
 	{
 		moneyTaken += money;
+	}
+
+	public int getQueueLength() {
+		if(!tillInUse)
+		{
+			return 0;
+		}
+		return drivers.size();
+	}
+	
+	public void removeDriver()
+	{
+		drivers.remove(getFirstDriver());
 	}
 }

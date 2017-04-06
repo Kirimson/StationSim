@@ -23,7 +23,7 @@ public class Station {
 		
 		for(int i = 0; i < pAmount; i++)
 		{
-			pumps.add(new Pump(price));
+			pumps.add(new Pump(price, i));
 		}
 	}
 	
@@ -32,30 +32,54 @@ public class Station {
 	 */
 	public void act()
 	{
+		shop.act();
+		
+		for(Till t : shop.getTills())
+		{
+			if(t.getFirstDriver() != null)
+			{
+				if(t.getFirstDriver().isDone())
+				{
+					System.out.println("DRIVER IS LEAVING THIS SHIT HOLE");
+					pumps.get(t.getFirstDriver().getPumpNumber()).removeDriverFromPumpQueue();
+					shop.removeDriver(t.getFirstDriver());
+					t.removeDriver();
+				}
+			}
+		}
+		
 		int i = 0;
 		for(Pump p : pumps)
 		{
-			System.out.println("Pump " + i+":");
-			if(!p.getFirstDriver().wantsToShop())
+			if(p.getFirstDriver() != null)
 			{
-				System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
-				p.act();
-			}
-			else
-			{
-				System.out.println("Driver spent " + p.getFirstDriver().getMoneySpent() + " at pump");
-				System.out.println("Driver going to shop");
-				addDriverToShop(p.getFirstDriver());
+				if(!p.getFirstDriver().isInShop())
+				{
+					System.out.println("Pump " + i+":");
+					if(!p.getFirstDriver().wantsToShop())
+					{
+						System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
+						p.act();
+					}
+					else if(p.getFirstDriver().wantsToShop())
+					{
+						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
+						System.out.println("Driver going to shop");
+						addDriverToShop(p.getFirstDriver());
+					}
+				}
 			}
 			i++;
+			System.out.println();
 		}
-		shop.act();
 	}
 	
 	/**
 	* Sends customer to the shortest till queue
 	*/
 	public void addDriverToShop(Driver driver){
+		driver.toggleShopping();
+		driver.setShoppingTime();
 		shop.addNewDriver(driver);
 	}
 	
@@ -117,7 +141,7 @@ public class Station {
 		if(shortestPump != null)
 		{
 			shortestPump.addToPumpQueue(driver);
-			
+			System.out.println(findVehicle(driver)+" ");
 			return true;
 		}
 		return false;
@@ -131,5 +155,19 @@ public class Station {
 	public Shop getShop()
 	{
 		return shop;
+	}
+	
+	private String findVehicle(Driver d)
+	{
+		int i = 0;
+		for(Pump p : getPumpArray())
+		{
+			if(p.getVehicleQueue().contains(d))
+			{
+				return "New driver in pump "+i;
+			}
+			i++;
+		}
+		return "Not in pump";
 	}
 }
