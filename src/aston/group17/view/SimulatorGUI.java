@@ -185,6 +185,7 @@ public class SimulatorGUI {
 		buttons.setBorder(new 
 				EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 			
+		sliders.setLayout(new GridLayout(6, 1, 0, 10));
 
 //	 Step 5: Add components to containers 
 		buttons.add(runButton);
