@@ -30,7 +30,7 @@ public class Pump {
 		}
 		else
 		{
-			System.out.println("Driver is leaving. Spent: " + getFirstDriver().getMoneySpent());
+			System.out.println("Driver is leaving pump. Spent: " + getFirstDriver().getMoneySpentPump());
 			removeVehicleFromPumpQueue();
 		}
 	}

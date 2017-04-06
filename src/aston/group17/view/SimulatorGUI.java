@@ -263,7 +263,9 @@ public class SimulatorGUI {
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
 		simulator = new Simulator (100, p , q, pumps, tills, price);
+		menuFrame.dispose();
 		simulator.simulate();
+		
 	}
 	
 	private void listDataToLog() {
