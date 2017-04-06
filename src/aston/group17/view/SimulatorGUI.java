@@ -33,10 +33,10 @@ public class SimulatorGUI {
 	public SimulatorGUI() {
 		
 		JFrame firstFrame;
-			
+		
 		final int blankSpace = 6;  // blank at edge of panels
-
-//		 Step 1: create the components
+		
+//		 Step 1: create the components	
 			log = new JTextArea();
 			log.setEditable(false);
 			JScrollPane actionList = new JScrollPane(log);
