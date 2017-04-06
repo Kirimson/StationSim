@@ -144,7 +144,7 @@ public class StationTest {
 		int i = 0;
 		for(Pump p : s.getPumpArray())
 		{
-			if(p.getVehicleQueue().contains(d.getVehicle()))
+			if(p.getVehicleQueue().contains(d))
 			{
 				return "pump: "+i;
 			}

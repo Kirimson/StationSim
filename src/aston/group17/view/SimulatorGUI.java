@@ -33,10 +33,10 @@ public class SimulatorGUI {
 	public SimulatorGUI() {
 		
 		JFrame firstFrame;
-			
+		
 		final int blankSpace = 6;  // blank at edge of panels
-
-//		 Step 1: create the components		
+		
+//		 Step 1: create the components	
 			log = new JTextArea();
 			log.setEditable(false);
 			JScrollPane actionList = new JScrollPane(log);
@@ -250,12 +250,11 @@ public class SimulatorGUI {
 	private void closeWindow() {
 		menuFrame.dispose();
 	}
-
+	
 	private void resetApp(){
 		setParameters();
 	}
 
-	
 	private void runSimulation(){
 		double p = (Double)pChoice.getSelectedItem();
 		double q = (Double)qChoice.getSelectedItem();
@@ -263,7 +262,8 @@ public class SimulatorGUI {
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
-		simulator = new Simulator (ticks, p , q, pumps, tills, price);
+		simulator = new Simulator (100, p , q, pumps, tills, price);
+		simulator.simulate();
 	}
 	
 	private void listDataToLog() {

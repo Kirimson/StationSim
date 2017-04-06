@@ -61,11 +61,11 @@ public class Driver {
 				{
 						fillTank();
 						moneySpent += fuelCost;
-//						System.out.println("money Spend on fuel: " + moneySpent);
+						System.out.println("money Spend on fuel: " + moneySpent);
 				}
 				else
 				{
-					shopping = true;
+					System.out.println("Tank full");
 					wait = true;
 					minShoppingTime = getShoppingTime();
 				}
