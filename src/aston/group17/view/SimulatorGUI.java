@@ -20,6 +20,10 @@ public class SimulatorGUI {
 	private	JComboBox<Integer> pumpChoice = new JComboBox<Integer>();
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodTime;
+	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
+	private JButton startButton = new JButton();
+	private JButton resetButton = new JButton();
+	private JButton quitButton = new JButton();
 	
 	public static void main(String[] args)
 	{
@@ -32,12 +36,7 @@ public class SimulatorGUI {
 			
 		final int blankSpace = 6;  // blank at edge of panels
 
-//		 Step 1: create the components
-			JButton startButton = new JButton();
-			JButton resetButton = new JButton();
-			JButton quitButton = new JButton();
-			final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
-			
+//		 Step 1: create the components		
 			log = new JTextArea();
 			log.setEditable(false);
 			JScrollPane actionList = new JScrollPane(log);
