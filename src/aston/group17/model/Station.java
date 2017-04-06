@@ -23,7 +23,7 @@ public class Station {
 		
 		for(int i = 0; i < pAmount; i++)
 		{
-			pumps.add(new Pump(price));
+			pumps.add(new Pump(price, i));
 		}
 	}
 	

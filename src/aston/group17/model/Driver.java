@@ -4,7 +4,7 @@ import java.util.Random;
 public class Driver {
 
 	private boolean shopping, wait, queueing, done, wantsToShop;
-	private int  totalTime, shoppingTime, minShoppingTime, tillTime, currentTillTime;
+	private int  totalTime, shoppingTime, minShoppingTime, tillTime, currentTillTime, pump;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
 	private String vehicleType;
@@ -286,6 +286,10 @@ public class Driver {
 	
 	public int getPumpNumber()
 	{
-		return 0;
+		return pump;
+	}
+
+	public void assignPump(int pumpNumber) {
+		pump = pumpNumber;
 	}
 }

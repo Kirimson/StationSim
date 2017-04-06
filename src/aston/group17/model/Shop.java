@@ -26,6 +26,7 @@ public class Shop {
 	 */
 	public void act()
 	{
+		System.out.println("Shop");
 		int i = 0;
 		for(Driver shoppingDriver : shoppingDrivers)
 		{
@@ -46,13 +47,18 @@ public class Shop {
 			}
 			i++;
 		}
+		System.out.println();
 		
+		int k = 0;
 		for(Till t : tills)
 		{
+			System.out.println("Till " + k+":");
 			if(t.isTillInUse())
 			{
 				t.act();
 			}
+			System.out.println();
+			k++;
 		}
 	}
 	
