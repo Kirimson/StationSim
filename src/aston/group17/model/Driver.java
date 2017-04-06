@@ -68,7 +68,7 @@ public class Driver {
 				{
 						fillTank();
 						moneySpentPump += fuelCost;
-						System.out.println("Money spent on fuel: " + moneySpentPump);
+//						System.out.println("Money spent on fuel: " + moneySpentPump);
 				}
 				else
 				{
@@ -132,8 +132,7 @@ public class Driver {
 	// returns the total amount of money spent
 	public double getShopSpendingAmount()
 	{
-		moneySpentShop = vehicle.moneySpentForShopping();
-		return moneySpentShop;
+		return vehicle.moneySpentForShopping();
 	}
 	
 	/**
@@ -141,11 +140,9 @@ public class Driver {
 	 * @return
 	 * returns int of the amount of time the driver would spend shopping
 	 */
-	public int setShoppingTime()
+	public void setShoppingTime()
 	{
-		totalTime = vehicle.timeToSpendShopping();
-		
-		return totalTime;
+		minShoppingTime = vehicle.timeToSpendShopping();
 	}
 	
 	/**
@@ -283,7 +280,12 @@ public class Driver {
 		return currentTillTime * 6;
 	}
 
-	public int setCurrentTillTime() {
+	public int incrementCurrentTillTime() {
 		return currentTillTime++;
+	}
+	
+	public int getPumpNumber()
+	{
+		return 0;
 	}
 }

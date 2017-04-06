@@ -258,7 +258,7 @@ public class SimulatorGUI {
 	private void runSimulation(){
 		double p = (Double)pChoice.getSelectedItem();
 		double q = (Double)qChoice.getSelectedItem();
-		double price = priceSlider.getValue() / 100;
+		double price = (double)priceSlider.getValue() / 100;
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();

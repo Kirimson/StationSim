@@ -31,7 +31,7 @@ public class Pump {
 		else
 		{
 			System.out.println("Driver is leaving pump. Spent: " + getFirstDriver().getMoneySpentPump());
-			removeVehicleFromPumpQueue();
+			removeDriverFromPumpQueue();
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class Pump {
 	* 
 	* A
 	*/
-	public void removeVehicleFromPumpQueue(){
+	public void removeDriverFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
 		queueSize--;

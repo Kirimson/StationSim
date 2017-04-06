@@ -6,31 +6,44 @@ public class Till {
 	private double moneyTaken;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
-	private int driverTicksAtTill;
-	private Driver currentDriver;
 	private boolean newDriver;
 
 	public Till()
 	{
 		moneyTaken = 0;
 		tillInUse = false;
+		drivers = new ArrayList<Driver>();
 	}
 
 	public void act()
 	{
 		// if the till is not being used get next driver
 
-		if(!tillInUse)
+		if(tillInUse)
 		{
 			// gets current driver and its money adds it to tills total
-
 			if(getFirstDriver().getTillTime() == getFirstDriver().getCurrentTillTime()){
 
 				addMoneyTaken(getFirstDriver().getTotalMoney());
+				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
 				getFirstDriver().toggleDone();
-				drivers.remove(getFirstDriver());
+				
 				System.out.println("Driver is leaving the till.");
+				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
+				
+				System.out.println(drivers.size());
+				tillInUse = false;
+				
 			}
+			else
+			{
+				System.out.println("Driver is waiting at till queue");
+				getFirstDriver().incrementCurrentTillTime();
+			}
+		}
+		if(drivers.size() == 0)
+		{
+			tillInUse = false;
 		}
 	}
 
@@ -53,9 +66,10 @@ public class Till {
 
 	public void addDriver(Driver d)
 	{
+		d.setTillTime();
 		drivers.add(d);
-		//		toggleTillInUse();
-		//		toggleNewDriver();
+		System.out.println("Driver has entered the till queue");
+		setTillInUse();
 	}
 
 	/**
@@ -65,12 +79,10 @@ public class Till {
 	 */
 	public Driver getFirstDriver()
 	{
-		Driver tempDriver = null;
-
-		if(drivers.get(0) != null){
-			tempDriver = drivers.get(0);
+		if(drivers.size() != 0){
+			return drivers.get(0);
 		}
-		return tempDriver;
+		return null;
 	}
 
 	/**
@@ -86,18 +98,18 @@ public class Till {
 	/**
 	 *  Toggles the status of the till, wither in use or free
 	 */
-	public void toggleTillInUse()
+	public void setTillInUse()
 	{
-		tillInUse = !tillInUse;
+		tillInUse = true;
 	}
 
-	/**
-	 *  Toggles the status of the the driver. If they have just arrived at till
-	 */
-	public void toggleNewDriver()
-	{
-		newDriver = !newDriver;
-	}
+//	/**
+//	 *  Toggles the status of the the driver. If they have just arrived at till
+//	 */
+//	public void toggleNewDriver()
+//	{
+//		newDriver = !newDriver;
+//	}
 
 	/**
 	 * Adds money taken at till to total
@@ -110,6 +122,15 @@ public class Till {
 	}
 
 	public int getQueueLength() {
+		if(!tillInUse)
+		{
+			return 0;
+		}
 		return drivers.size();
+	}
+	
+	public void removeDriver()
+	{
+		drivers.remove(getFirstDriver());
 	}
 }

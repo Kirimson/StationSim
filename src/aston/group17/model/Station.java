@@ -32,6 +32,21 @@ public class Station {
 	 */
 	public void act()
 	{
+		shop.act();
+		
+		for(Till t : shop.getTills())
+		{
+			if(t.getFirstDriver() != null)
+			{
+				if(t.getFirstDriver().isDone())
+				{
+					System.out.println("DRIVER IS LEAVING THIS SHIT HOLE");
+					pumps.get(t.getFirstDriver().getPumpNumber()).removeDriverFromPumpQueue();
+					t.removeDriver();
+				}
+			}
+		}
+		
 		int i = 0;
 		for(Pump p : pumps)
 		{
@@ -49,26 +64,13 @@ public class Station {
 					{
 						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
 						System.out.println("Driver going to shop");
-						p.getFirstDriver().toggleShopping();
-						System.out.println(p.getFirstDriver().isInShop());
 						addDriverToShop(p.getFirstDriver());
 					}
-					System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
-					p.act();
-				}
-				else if(!p.getFirstDriver().isInShop())
-				{
-					System.out.println("Driver spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
-					System.out.println("Driver going to shop");
-					
-					addDriverToShop(p.getFirstDriver());
 				}
 			}
 			i++;
 			System.out.println();
 		}
-		
-		shop.act();
 	}
 	
 	/**
@@ -76,6 +78,7 @@ public class Station {
 	*/
 	public void addDriverToShop(Driver driver){
 		driver.toggleShopping();
+		driver.setShoppingTime();
 		shop.addNewDriver(driver);
 	}
 	

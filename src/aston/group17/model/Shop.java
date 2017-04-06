@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Shop {
 	private ArrayList<Driver> shoppingDrivers;
-	private ArrayList<Driver> idleDrivers;
 	private ArrayList<Till> tills;
 	private double moneyEarnt;
 	
@@ -20,7 +19,6 @@ public class Shop {
 			tills.add(new Till());
 		}
 		shoppingDrivers = new ArrayList<Driver>();
-		idleDrivers = new ArrayList<Driver>();
 	}
 	
 	/**
@@ -28,32 +26,33 @@ public class Shop {
 	 */
 	public void act()
 	{
-//		for(Driver shoppingDriver : shoppingDrivers)
-//		{
-//			if(!shoppingDriver.isQueueing())
-//			{
-//				if(shoppingDriver.stillShopping())
-//				{
-//					System.out.println("Driver is shopping");
-//					shoppingDriver.shop();
-//				}
-//				else
-//				{
-//					System.out.println("Driver is waiting for a till");
-//					shoppingDriver.toggleQueueing();
-//					actDriverToTillQueue(shoppingDriver);
-//				}
-//			}
-//		}
-//		
-//		for(Till t : tills)
-//		{
-//			if(t.isTillInUse())
-//			{
-//				t.act();
-//			}
-//		}
+		int i = 0;
+		for(Driver shoppingDriver : shoppingDrivers)
+		{
+			System.out.println("Shopping driver "+i);
+			if(!shoppingDriver.isQueueing())
+			{
+				if(shoppingDriver.stillShopping())
+				{
+					System.out.println("Driver is shopping");
+					shoppingDriver.shop();
+				}
+				else
+				{
+					shoppingDriver.toggleQueueing();
+					addDriverToTillQueue(shoppingDriver);
+				}
+			}
+			i++;
+		}
 		
+		for(Till t : tills)
+		{
+			if(t.isTillInUse())
+			{
+				t.act();
+			}
+		}
 	}
 	
 	/**
@@ -67,32 +66,11 @@ public class Shop {
 	}
 	
 	/**
-	 * Removes a Driver from the shop
-	 * @param d
-	 * The Driver to be removed
-	 */
-	public void removeDriver(Driver d)
-	{
-		idleDrivers.remove(d);
-	}
-	
-	/**
-	 * Adds a driver to the idle list
-	 * @param d
-	 * Driver to add to the idle list
-	 */
-	public void makeDriverIdle(Driver d)
-	{
-		shoppingDrivers.remove(d);
-		idleDrivers.add(d);
-	}
-	
-	/**
 	* Returns a till that is not in use, first till that is free will be used, if any
 	* @return
 	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
-	public Till getShortestPumpQueue(Vehicle v){
+	public void addDriverToTillQueue(Driver d){
 		Till shortestTill = tills.get(0);
 		for(Till t : tills)
 		{
@@ -101,7 +79,7 @@ public class Shop {
 				shortestTill = t;
 			}
 		}
-		return shortestTill;
+		shortestTill.addDriver(d);;
 	}
 	
 	/**
@@ -118,5 +96,10 @@ public class Shop {
 		}
 		
 		return moneyEarnt;
+	}
+	
+	public ArrayList<Till> getTills()
+	{
+		return tills;
 	}
 }
