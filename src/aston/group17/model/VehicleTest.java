@@ -17,10 +17,10 @@ public class VehicleTest {
 		assertEquals("Check unit space is correct", 1.0, carTest.getUnitSize(), 1e-4);
 		
 		Sedan sedanTest = new Sedan();
-		assertEquals("Check unit space is correct", 1.5, sedanTest.getUnitSize(), 0);
+		assertEquals("Check unit space is correct", 1.5, sedanTest.getUnitSize(), 1e-4);
 		
 		Bike bikeTest = new Bike();
-		assertEquals("Check unit space is correct", 0.75, bikeTest.getUnitSize(), 0);
+		assertEquals("Check unit space is correct", 0.75, bikeTest.getUnitSize(), 1e-4);
 	}
 	
 	@Test
