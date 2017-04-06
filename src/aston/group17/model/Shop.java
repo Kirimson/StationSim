@@ -29,7 +29,7 @@ public class Shop {
 		int i = 0;
 		for(Driver shoppingDriver : shoppingDrivers)
 		{
-			System.out.println("Shopping driver "+i);
+			System.out.println("Shopping driver "+i + " "+ shoppingDriver.toString());
 			if(!shoppingDriver.isQueueing())
 			{
 				if(shoppingDriver.stillShopping())
@@ -39,6 +39,7 @@ public class Shop {
 				}
 				else
 				{
+					System.out.println("Driver wants to join queue");
 					shoppingDriver.toggleQueueing();
 					addDriverToTillQueue(shoppingDriver);
 				}
@@ -65,12 +66,18 @@ public class Shop {
 		shoppingDrivers.add(d);
 	}
 	
+	public void removeDriver(Driver d)
+	{
+		shoppingDrivers.remove(d);
+	}
+	
 	/**
 	* Returns a till that is not in use, first till that is free will be used, if any
 	* @return
 	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
 	public void addDriverToTillQueue(Driver d){
+//		shoppingDrivers.remove(d);
 		Till shortestTill = tills.get(0);
 		for(Till t : tills)
 		{
@@ -79,7 +86,7 @@ public class Shop {
 				shortestTill = t;
 			}
 		}
-		shortestTill.addDriver(d);;
+		shortestTill.addDriver(d);
 	}
 	
 	/**

@@ -258,7 +258,7 @@ public class Driver {
 	 */
 	public String toString()
 	{
-		return vehicle.toString();
+		return "Driver of: " + getVehicleType() + " shopping: "+shopping+" shoppingTime: "+shoppingTime+" minShoppingTime: "+minShoppingTime+" Done: "+done;
 	}
 	
 	public void toggleDone()

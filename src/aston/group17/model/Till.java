@@ -31,7 +31,6 @@ public class Till {
 				System.out.println("Driver is leaving the till.");
 				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
 				
-				System.out.println(drivers.size());
 				tillInUse = false;
 				
 			}

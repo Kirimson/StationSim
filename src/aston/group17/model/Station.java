@@ -42,6 +42,7 @@ public class Station {
 				{
 					System.out.println("DRIVER IS LEAVING THIS SHIT HOLE");
 					pumps.get(t.getFirstDriver().getPumpNumber()).removeDriverFromPumpQueue();
+					shop.removeDriver(t.getFirstDriver());
 					t.removeDriver();
 				}
 			}
