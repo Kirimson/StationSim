@@ -39,7 +39,7 @@ public class Simulator {
 			tempDriver = new Driver("Car");
 			if(!station.addDriverToPumpQueue(tempDriver))
 			{
-				System.out.println("Couldn't Fit");
+				System.out.println("Couldn't Fit in pumps. Driver leaving");
 			}
 			station.act();
 			System.out.println();

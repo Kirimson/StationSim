@@ -37,22 +37,28 @@ public class Station {
 		{
 			if(p.getFirstDriver() != null)
 			{
-				System.out.println("Pump " + i+":");
-				if(!p.getFirstDriver().wantsToShop())
+				if(!p.getFirstDriver().isInShop())
 				{
-					System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
-					p.act();
-				}
-				else if(!p.getFirstDriver().isInShop())
-				{
-					System.out.println("Driver spent " + p.getFirstDriver().getMoneySpent() + " at pump");
-					System.out.println("Driver going to shop");
-					
-					addDriverToShop(p.getFirstDriver());
+					System.out.println("Pump " + i+":");
+					if(!p.getFirstDriver().wantsToShop())
+					{
+						System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
+						p.act();
+					}
+					else if(p.getFirstDriver().wantsToShop())
+					{
+						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpent() + " at pump");
+						System.out.println("Driver going to shop");
+						p.getFirstDriver().toggleShopping();
+						System.out.println(p.getFirstDriver().isInShop());
+						addDriverToShop(p.getFirstDriver());
+					}
 				}
 			}
 			i++;
+			System.out.println();
 		}
+		
 		shop.act();
 	}
 	
@@ -145,7 +151,7 @@ public class Station {
 		{
 			if(p.getVehicleQueue().contains(d))
 			{
-				return "In pump "+i;
+				return "New driver in pump "+i;
 			}
 			i++;
 		}

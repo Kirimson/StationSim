@@ -2,7 +2,7 @@ package aston.group17.model;
 import java.util.Random;
 
 public class Driver {
-	private boolean shopping, wait, queueing, done;
+	private boolean shopping, wait, queueing, done, wantsToShop;
 	private int  totalTime, shoppingTime, minShoppingTime;
 	private double moneySpent;
 	private Vehicle vehicle;
@@ -52,6 +52,7 @@ public class Driver {
 		if(wait)
 		{
 			wait = !wait;
+			System.out.println("Driver is waiting");
 		}
 		else if(!shopping)
 		{
@@ -67,6 +68,7 @@ public class Driver {
 				{
 					System.out.println("Tank full");
 					wait = true;
+					wantsToShop = true;
 					minShoppingTime = getShoppingTime();
 				}
 			}
@@ -126,7 +128,6 @@ public class Driver {
 	 */
 	public int setShoppingTime()
 	{
-		
 		totalTime = vehicle.timeToSpendShopping();
 		
 		return totalTime;
@@ -139,11 +140,7 @@ public class Driver {
 	 */
 	public boolean wantsToShop()
 	{
-		if(!wait && shopping)
-		{
-			return true;
-		}
-		return false;
+		return wantsToShop;
 	}
 	
 	/**
