@@ -30,12 +30,19 @@ public class Simulator {
 
 	}
 	
-	public void simulate(int numSteps)
+	public void simulate()
 	{
 		for(int i = 0; i < numSteps; i++)
 		{
+			System.out.println("Step: "+i);
 			//Simulation code
-			station.addDriverToPumpQueue(tempDriver);
+			tempDriver = new Driver("Car");
+			if(!station.addDriverToPumpQueue(tempDriver))
+			{
+				System.out.println("Couldn't Fit");
+			}
+			station.act();
+			System.out.println();
 		}
 	}
 	
