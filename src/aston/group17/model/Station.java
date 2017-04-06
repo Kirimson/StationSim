@@ -45,7 +45,7 @@ public class Station {
 				}
 				else if(!p.getFirstDriver().isInShop())
 				{
-					System.out.println("Driver spent " + p.getFirstDriver().getMoneySpent() + " at pump");
+					System.out.println("Driver spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
 					System.out.println("Driver going to shop");
 					
 					addDriverToShop(p.getFirstDriver());
