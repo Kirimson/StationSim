@@ -20,7 +20,7 @@ public class Bike extends Vehicle {
 		return 0;
 	}
 
-	public double moneySpent() {
+	public double moneySpentForShopping() {
 		return 0;
 	}
 	

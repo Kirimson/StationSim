@@ -20,7 +20,7 @@ class Truck extends Vehicle{
 		return timeSpent * 6;
 	}
 
-	public double moneySpent() {
+	public double moneySpentForShopping() {
 		double moneySpent = rand.nextInt(5)+15;
 		return moneySpent;
 	}

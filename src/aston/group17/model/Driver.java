@@ -61,7 +61,7 @@ public class Driver {
 				{
 						fillTank();
 						moneySpent += fuelCost;
-						System.out.println("money Spend on fuel: " + moneySpent);
+//						System.out.println("money Spend on fuel: " + moneySpent);
 				}
 				else
 				{
@@ -114,12 +114,17 @@ public class Driver {
 		
 	}
 	
+	public double getShopSpendingAmount()
+	{
+		return vehicle.moneySpentForShopping();
+	}
+	
 	/**
 	 * This calculates the time a driver could potentially spend shopping.
 	 * @return
 	 * returns int of the amount of time the driver would spend shopping
 	 */
-	public int shoppingTime()
+	public int setShoppingTime()
 	{
 		
 		totalTime = vehicle.timeToSpendShopping();
@@ -144,7 +149,7 @@ public class Driver {
 	/**
 	 * Returns if the Driver is queueing or not
 	 * @return
-	 * true if driver is still shopping
+	 * true if driver is still queueing
 	 */
 	public boolean isQueueing()
 	{
