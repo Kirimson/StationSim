@@ -24,6 +24,7 @@ public class DriverTest {
 		
 		Driver truckDriver = new Driver("Truck");
 		assertEquals("Check the drivers vehicle is correct", "Truck", truckDriver.getVehicleType());
-		
 	}
+	
+	
 }

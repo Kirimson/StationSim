@@ -6,7 +6,7 @@ public class Till {
 	private double moneyTaken;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
-	private int ticksAtTill;
+	private int driverTicksAtTill;
 	private boolean newDriver;
 	
 	public Till()
@@ -17,9 +17,11 @@ public class Till {
 	
 	public void act()
 	{
-		if(newDriver)
+		// if the till is not being used get next driver
+		if(!tillInUse)
 		{
-			
+			if(drivers.get(0))
+			drivers.get(0);
 		}
 	}
 	
@@ -41,8 +43,8 @@ public class Till {
 	public void addDriver(Driver d)
 	{
 		drivers.add(d);
-		toggleTillInUse();
-		toggleNewDriver();
+//		toggleTillInUse();
+//		toggleNewDriver();
 	}
 	
 	/**
