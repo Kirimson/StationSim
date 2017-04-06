@@ -117,6 +117,7 @@ public class Pump {
 	 */
 	public Driver getFirstDriver()
 	{
+		if(unitSpaceAvailable == MAX_QUEUE){return null;}
 		return queue.get(0);
 	}
 	

@@ -28,48 +28,48 @@ public class Shop {
 	 */
 	public void act()
 	{
-		for(Driver shoppingDriver : shoppingDrivers)
-		{
-			if(!shoppingDriver.isQueueing())
-			{
-				if(shoppingDriver.stillShopping())
-				{
-					System.out.println("Driver is shopping");
-					shoppingDriver.shop();
-				}
-				else
-				{
-					System.out.println("Driver is waiting for a till");
-					shoppingDriver.toggleQueueing();
-					makeDriverIdle(shoppingDriver);
-				}
-			}
-		}
-		
-		for(Driver idleDriver : idleDrivers)
-		{
-			if(idleDriver.isInShop())
-			{
-				Till freeTill = getFreeTill();
-				if(freeTill != null)
-				{
-					freeTill.addDriver(idleDriver);
-				}
-			}
-			else
-			{
-				System.out.println("Driver has left the shop");
-				removeDriver(idleDriver);
-			}
-		}
-		
-		for(Till t : tills)
-		{
-			if(t.isTillInUse())
-			{
-				t.act();
-			}
-		}
+//		for(Driver shoppingDriver : shoppingDrivers)
+//		{
+//			if(!shoppingDriver.isQueueing())
+//			{
+//				if(shoppingDriver.stillShopping())
+//				{
+//					System.out.println("Driver is shopping");
+//					shoppingDriver.shop();
+//				}
+//				else
+//				{
+//					System.out.println("Driver is waiting for a till");
+//					shoppingDriver.toggleQueueing();
+//					makeDriverIdle(shoppingDriver);
+//				}
+//			}
+//		}
+//		
+//		for(Driver idleDriver : idleDrivers)
+//		{
+//			if(idleDriver.isInShop())
+//			{
+//				Till freeTill = getFreeTill();
+//				if(freeTill != null)
+//				{
+//					freeTill.addDriver(idleDriver);
+//				}
+//			}
+//			else
+//			{
+//				System.out.println("Driver has left the shop");
+//				removeDriver(idleDriver);
+//			}
+//		}
+//		
+//		for(Till t : tills)
+//		{
+//			if(t.isTillInUse())
+//			{
+//				t.act();
+//			}
+//		}
 		
 	}
 	

@@ -20,6 +20,10 @@ public class SimulatorGUI {
 	private	JComboBox<Integer> pumpChoice = new JComboBox<Integer>();
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodTime;
+	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
+	private JButton startButton = new JButton();
+	private JButton resetButton = new JButton();
+	private JButton quitButton = new JButton();
 	
 	public static void main(String[] args)
 	{
@@ -33,11 +37,6 @@ public class SimulatorGUI {
 		final int blankSpace = 6;  // blank at edge of panels
 
 //		 Step 1: create the components
-			JButton startButton = new JButton();
-			JButton resetButton = new JButton();
-			JButton quitButton = new JButton();
-			final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
-			
 			log = new JTextArea();
 			log.setEditable(false);
 			JScrollPane actionList = new JScrollPane(log);
@@ -251,12 +250,11 @@ public class SimulatorGUI {
 	private void closeWindow() {
 		menuFrame.dispose();
 	}
-
+	
 	private void resetApp(){
 		setParameters();
 	}
 
-	
 	private void runSimulation(){
 		double p = (Double)pChoice.getSelectedItem();
 		double q = (Double)qChoice.getSelectedItem();
@@ -264,7 +262,8 @@ public class SimulatorGUI {
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
-		simulator = new Simulator (ticks, p , q, pumps, tills, price);
+		simulator = new Simulator (100, p , q, pumps, tills, price);
+		simulator.simulate();
 	}
 	
 	private void listDataToLog() {
