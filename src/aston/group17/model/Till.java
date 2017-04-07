@@ -6,44 +6,43 @@ public class Till {
 	private double moneyTaken;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
+	private int tillNumber;
 
-	public Till()
+	public Till(int number)
 	{
 		moneyTaken = 0;
 		tillInUse = false;
 		drivers = new ArrayList<Driver>();
+		tillNumber = number;
 	}
 
 	public void act()
 	{
 		// if the till is not being used get next driver
-		if(tillInUse)
-		{
+//		if(tillInUse)
+//		{
 			// gets current driver and its money adds it to tills total
+		if(getFirstDriver() != null){
 			if(getFirstDriver().donePaying()){
 
-				addMoneyTaken(getFirstDriver().getTotalMoney());
+				addMoneyTaken(getFirstDriver().getPumpMoney());
 				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
 				getFirstDriver().toggleDone();
-				
-				System.out.println("Driver is leaving the till.");
 				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
-				
+				if(drivers.size() - 1 == 0){
 				tillInUse = false;
-				
+				}else{
+					tillInUse = true;
+				}
 			}
 			else
 			{
-				
-				System.out.println("Driver is waiting at till queue");
+//				System.out.println(getFirstDriver().toString());
 				getFirstDriver().waitAtTill();
 			}
 		}
-		if(drivers.size() == 0)
-		{
-			tillInUse = false;
-		}
 	}
+	
 
 	/**
 	 * Returns the queue at the till
@@ -65,6 +64,7 @@ public class Till {
 	public void addDriver(Driver d)
 	{
 		d.setTillTime();
+		d.setTillNumber(tillNumber);
 		drivers.add(d);
 		System.out.println("Driver has entered the till queue");
 		setTillInUse();

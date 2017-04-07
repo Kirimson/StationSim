@@ -2,6 +2,7 @@ package aston.group17.model;
 
 import java.util.ArrayList;
 
+
 public class Station {
 	private Shop shop;
 	private ArrayList<Pump> pumps;
@@ -32,10 +33,26 @@ public class Station {
 	 */
 	public void act()
 	{
-//		if(shop.isEmpty())
-//		{
-			shop.act();
-//		}
+		shop.act();
+		
+		for(Pump p : pumps)
+		{
+			System.out.println(p.toString());
+			if(p.getFirstDriver() != null)
+			{
+				if(!p.getFirstDriver().isInShop())
+				{
+					if(!p.getFirstDriver().wantsToShop())
+					{
+						p.act();
+					}
+					else if(p.getFirstDriver().wantsToShop())
+					{
+						addDriverToShop(p.getFirstDriver());
+					}
+				}
+			}
+		}
 		
 		for(Till t : shop.getTills())
 		{
@@ -50,31 +67,6 @@ public class Station {
 				}
 			}
 		}
-		
-		int i = 0;
-		for(Pump p : pumps)
-		{
-			if(p.getFirstDriver() != null)
-			{
-				if(!p.getFirstDriver().isInShop())
-				{
-					System.out.println("Pump " + i+":");
-					if(!p.getFirstDriver().wantsToShop())
-					{
-						System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
-						p.act();
-					}
-					else if(p.getFirstDriver().wantsToShop())
-					{
-						System.out.println("Driver done refilling. Spent " + p.getFirstDriver().getMoneySpentPump() + " at pump");
-						System.out.println("Driver going to shop");
-						addDriverToShop(p.getFirstDriver());
-					}
-				}
-			}
-			i++;
-			System.out.println();
-		}
 	}
 	
 	/**
@@ -82,7 +74,6 @@ public class Station {
 	*/
 	public void addDriverToShop(Driver driver){
 		driver.toggleShopping();
-		driver.setShoppingTime();
 		shop.addNewDriver(driver);
 	}
 	
@@ -167,10 +158,13 @@ public class Station {
 		{
 			if(p.getVehicleQueue().contains(d))
 			{
-				return "New driver in pump "+i;
+				return "New "+d.getVehicleType()+" driver in pump "+i;
 			}
 			i++;
 		}
 		return "Not in pump";
+	}
+	public double countMoney(){
+		return shop.countMoney();
 	}
 }

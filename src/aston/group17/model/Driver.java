@@ -4,7 +4,7 @@ import java.util.Random;
 public class Driver {
 
 	private boolean shopping, wait, queueing, done, wantsToShop;
-	private int  totalTime, shoppingTime, tillTime, pump;
+	private int  totalTime, shoppingTime, tillTime, pump, tillNumber;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
 	private String vehicleType;
@@ -17,6 +17,7 @@ public class Driver {
 	 */
 	public Driver(String type)
 	{
+		tillNumber = -1;
 		tillTime = 0;
 		setTotalTime(0);
 		moneySpentPump = 0;
@@ -59,7 +60,6 @@ public class Driver {
 		if(wait)
 		{
 			wait = !wait;
-			System.out.println("Driver is waiting");
 		}
 		else if(!shopping)
 		{
@@ -72,7 +72,6 @@ public class Driver {
 				}
 				else
 				{
-					System.out.println("Tank full");
 					wait = true;
 					wantsToShop = true;
 					setShoppingTime();
@@ -88,15 +87,17 @@ public class Driver {
 		{
 			if(stillShopping())
 			{
-				System.out.println("Driver is shopping");
+//				System.out.println("Driver is shopping");
 				shop();
 			}
 			else
 			{
-				System.out.println("Driver wants to join queue");
+//				System.out.println("Driver wants to join queue");
+				if(vehicleType != "Bike"){
 				toggleQueueing();
+				}
 			}
-			System.out.println(toString());
+//			System.out.println(toString());
 		}
 	}
 	
@@ -123,7 +124,7 @@ public class Driver {
 	}
 	
 	// returns the amount of money spent at shop
-	public double getTotalMoney()
+	public double getPumpMoney()
 	{
 		totalSpent = moneySpentPump + moneySpentShop;
 		return totalSpent;	
@@ -258,7 +259,7 @@ public class Driver {
 	 */
 	public String toString()
 	{
-		return "Driver of: " + getVehicleType() + " shopping: "+shopping+" shoppingTime: "+shoppingTime+" tillTime: "+ tillTime +" Done: "+done;
+		return "Driver of: " + getVehicleType() + " | Vehicle Tank Size: "+ vehicle.getTankSize() +" | Gallons to fill: "+ (vehicle.getTankSize() - vehicle.getTankFilled()) +" | in shop: "+shopping+" | shoppingTime: "+shoppingTime+" | Till Number: "+(tillNumber + 1)+" | tillTime: "+ tillTime +" | Done: "+done;
 	}
 	
 	public void toggleDone()
@@ -268,8 +269,7 @@ public class Driver {
 	
 	public void setTillTime()
 	{
-		tillTime = rnd.nextInt(2)+2;
-		tillTime *= 6;
+		tillTime = rnd.nextInt(6)+12;
 	}
 
 	public int waitAtTill() {
@@ -299,5 +299,9 @@ public class Driver {
 
 	public void setTotalTime(int totalTime) {
 		this.totalTime = totalTime;
+	}
+	
+	public void setTillNumber(int tillNumber){
+		this.tillNumber = tillNumber;
 	}
 }

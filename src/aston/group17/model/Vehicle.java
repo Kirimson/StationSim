@@ -33,6 +33,10 @@ public abstract class Vehicle {
 		*random number is between (0)-(tankSize - 1)
 		*/
 		gallonsFilled = tankSize - rand.nextInt(tankSize);
+		if(gallonsFilled == tankSize)
+		{
+			gallonsFilled--;
+		}
 	}
 	
 	/**
@@ -42,7 +46,7 @@ public abstract class Vehicle {
 	 {
 		 if(gallonsFilled < tankSize)
 		 {
-			 System.out.println("MaxFuel: "+ tankSize);
+//			 System.out.println("MaxFuel: "+ tankSize);
 			 gallonsFilled++;
 		 }
 	 }
@@ -52,7 +56,7 @@ public abstract class Vehicle {
 	 * @return
 	 * gallonsFilled of the Vehicle
 	 */
-	 public int getGallonsFilled()
+	 public int getTankFilled()
 	 {
 		 return gallonsFilled;
 	 }

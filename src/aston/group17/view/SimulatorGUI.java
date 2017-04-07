@@ -264,17 +264,21 @@ public class SimulatorGUI {
 		int ticks = periodTime.getValue();
 		simulator = new Simulator (p , q, pumps, tills, price);
 		menuFrame.dispose();
-		for(int i = 0; i < ticks; i++)
+		for(int i = 0; i < 200; i++)
 		{
 			System.out.println("Step: "+ i+"\n");
 			
 			simulator.simulate();
+			System.out.println("Money made £"+ simulator.countMoney());
+			System.out.println("Money lost £"+ simulator.countLostMoney());
 			listDataToLog();
 		}
 	}
 	
 	private void listDataToLog() {
 		log.append(simulator.toString());
+		log.append(simulator.countMoney()+"\n");
+		log.append(simulator.countLostMoney()+"\n");
 	}
 
 }
