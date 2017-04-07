@@ -8,15 +8,16 @@ public class Simulator {
 	private double t, p, q; //truck probability
 	private Station station;
 	private Random rnd;
-	private boolean newVehicle;
+	private boolean newVehicle, vehicleLeft;
 	private Driver newDriver;
-
+	private double moneyGained, moneyLost, price;
 	
 	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
 		this.p = p;
 		this.q = q;
+		this.price = price;
 		station = new Station(pumps, tills, price);
 		rnd = new Random();
 	}
@@ -24,26 +25,26 @@ public class Simulator {
 	public void simulate()
 	{
 		
-//		newDriver = generateDriver();
-//		
-//		if(newDriver == null)
-//		{
-//			newVehicle = false;
-//		}
-//		else
-//		{
 		newDriver = generateDriver();
 		if(newDriver != null){
+			System.out.println("New Driver of "+newDriver.getVehicleType()+" approaching");
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
+				vehicleLeft = true;
+				setLost();
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
 			}
 			else
 			{
+				vehicleLeft = false;
 				newVehicle = true;
 			}
+			System.out.println();
 		}
-//		}
+		else
+		{
+			newVehicle = false;
+		}
 		
 		station.act();
 		System.out.println();
@@ -69,13 +70,31 @@ public class Simulator {
 	
 	public String toString()
 	{
-		if(newVehicle)
+		String text = new String();
+		if(newVehicle && !vehicleLeft)
 		{
-			return "A new vehicle has entered";
+			text += "A new vehicle has entered";
 		}
-		else
+		else if(newVehicle)
 		{
-			return "";
+			text += "A vehicle couldn't fit.\n";
 		}
+
+		text += "\n";
+		return text;
+	}
+	
+	private void setLost()
+	{
+		moneyLost += (newDriver.getVehicle().getTankSize() - newDriver.getVehicle().getTankFilled()) * price;
+	}
+	
+	public double countMoney(){
+		return station.countMoney();
+	}
+	
+	public double countLostMoney()
+	{
+		return moneyLost;
 	}
 }

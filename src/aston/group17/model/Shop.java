@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Shop {
 	private ArrayList<Driver> shoppingDrivers;
 	private ArrayList<Till> tills;
-	private double moneyEarnt;
-	
+
 	/**
 	 * Creates a new Shop object with the specified amount of Tills
 	 * @param amount
@@ -16,7 +15,7 @@ public class Shop {
 		tills = new ArrayList<Till>();
 		for(int i = 0; i < amount; i++)
 		{
-			tills.add(new Till());
+			tills.add(new Till(i));
 		}
 		shoppingDrivers = new ArrayList<Driver>();
 	}
@@ -26,7 +25,6 @@ public class Shop {
 	 */
 	public void act()
 	{
-		System.out.println("Shop: ");
 		for(Driver shoppingDriver : shoppingDrivers)
 		{
 			shoppingDriver.act();
@@ -34,20 +32,19 @@ public class Shop {
 			if(!shoppingDriver.stillShopping() && !shoppingDriver.isQueueing())
 			{
 				addDriverToTillQueue(shoppingDriver);
+				if(shoppingDriver.getVehicleType().equals("Bike"))
+				{
+					shoppingDriver.toggleQueueing();
+				}
 			}
 		}
-		System.out.println();
 		
-		int k = 0;
 		for(Till t : tills)
 		{
 			if(t.isTillInUse())
 			{
-				System.out.println("Till: "+k);
 				t.act();
 			}
-			System.out.println();
-			k++;
 		}
 	}
 	
@@ -72,7 +69,6 @@ public class Shop {
 	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
 	*/
 	public void addDriverToTillQueue(Driver d){
-//		shoppingDrivers.remove(d);
 		Till shortestTill = tills.get(0);
 		for(Till t : tills)
 		{
@@ -92,6 +88,7 @@ public class Shop {
 	 */
 	public double countMoney()
 	{	
+		double moneyEarnt = 0;
 		for(Till s : tills)
 		{
 			moneyEarnt += s.getMoneyTaken();

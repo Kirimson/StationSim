@@ -23,19 +23,12 @@ public class Pump {
 	 */
 	public void act()
 	{
-		System.out.println(queue.size());
-		for(int i = 0; i < queue.size(); i++){
-//		System.out.println(queue.get(i).toString())
-			System.out.println("anal" + queue.get(i).toString());
-
-		}
 		if(!getFirstDriver().isDone())
 		{
 			getFirstDriver().act(priceOfFuel);
 		}
 		else
 		{
-			System.out.println("Driver is leaving pump. Spent: " + getFirstDriver().getMoneySpentPump());
 			removeDriverFromPumpQueue();
 		}
 	}
@@ -89,7 +82,7 @@ public class Pump {
 	*/
 	public void removeDriverFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
-		queue.remove(getFirstDriver());
+		queue.remove(0);
 		//new first driver is no longer queueing
 		if(getFirstDriver() != null){
 		getFirstDriver().toggleQueueing();
@@ -136,5 +129,20 @@ public class Pump {
 	public double getUnitSpaceAvailable(){
 		return unitSpaceAvailable;
 		
+	}
+	
+	public String toString()
+	{
+		String list = new String();
+		list += "Pump: "+(pumpNumber + 1)+"\n";
+		list += "Queue size is: " + queue.size()+" Queue Free is: "+unitSpaceAvailable+"\n";
+		for(int i = 0; i < queue.size(); i++){
+			list += queue.get(i).toString()+"\n";
+		}
+		if(list.equals(""))
+		{
+			return "Empty";
+		}
+		return list;
 	}
 }

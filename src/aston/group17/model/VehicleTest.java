@@ -68,8 +68,8 @@ public class VehicleTest {
 		for(int i = 0; i < 15; i++)
 		{
 			Car carTest = new Car();
-			System.out.println(carTest.getGallonsFilled());
-			if(!(carTest.getGallonsFilled() >= 1 && carTest.getGallonsFilled() <= carTest.getTankSize()))
+			System.out.println("Tank size: "+carTest.getTankSize()+"|Filled: "+carTest.getTankFilled());
+			if(!(carTest.getTankFilled() >= 1 && carTest.getTankFilled() <= carTest.getTankSize()))
 			{
 				fail("Not within correct bounds");
 			}
@@ -79,8 +79,8 @@ public class VehicleTest {
 		for(int i = 0; i < 15; i++)
 		{
 			Sedan sedanTest = new Sedan();
-			System.out.println(sedanTest.getGallonsFilled());
-			if(!(sedanTest.getGallonsFilled() >= 1 && sedanTest.getGallonsFilled() <= sedanTest.getTankSize()))
+			System.out.println("Tank size: "+sedanTest.getTankSize()+"|Filled: "+sedanTest.getTankFilled());
+			if(!(sedanTest.getTankFilled() >= 1 && sedanTest.getTankFilled() <= sedanTest.getTankSize()))
 			{
 				fail("Not within correct bounds");
 			}
@@ -90,8 +90,8 @@ public class VehicleTest {
 		for(int i = 0; i < 15; i++)
 		{
 			Bike bikeTest = new Bike();
-			System.out.println(bikeTest.getGallonsFilled());
-			if(!(bikeTest.getGallonsFilled() >= 1 && bikeTest.getGallonsFilled() <= bikeTest.getTankSize()))
+			System.out.println("Tank size: "+bikeTest.getTankSize()+"|Filled: "+bikeTest.getTankFilled());
+			if(!(bikeTest.getTankFilled() >= 1 && bikeTest.getTankFilled() <= bikeTest.getTankSize()))
 			{
 				fail("Not within correct bounds");
 			}

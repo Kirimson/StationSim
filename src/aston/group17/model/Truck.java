@@ -7,7 +7,7 @@ class Truck extends Vehicle{
 	private Random rand;
 	
 	public Truck(){
-		super(30, 10);
+		super(10, 30);
 		vehicleType = "Truck";
 		rand = new Random();
 	}
