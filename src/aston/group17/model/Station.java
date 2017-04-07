@@ -32,7 +32,10 @@ public class Station {
 	 */
 	public void act()
 	{
-		shop.act();
+//		if(shop.isEmpty())
+//		{
+			shop.act();
+//		}
 		
 		for(Till t : shop.getTills())
 		{
@@ -56,8 +59,6 @@ public class Station {
 				if(!p.getFirstDriver().isInShop())
 				{
 					System.out.println("Pump " + i+":");
-					System.out.println("Unit space available : " + p.getUnitSpaceAvailable());
-
 					if(!p.getFirstDriver().wantsToShop())
 					{
 						System.out.println("Driver is refilling. Fuel currently at: " + p.getFirstDriver().getVehicle().getGallonsFilled());
@@ -81,7 +82,7 @@ public class Station {
 	*/
 	public void addDriverToShop(Driver driver){
 		driver.toggleShopping();
-//		driver.setShoppingTime();
+		driver.setShoppingTime();
 		shop.addNewDriver(driver);
 	}
 	

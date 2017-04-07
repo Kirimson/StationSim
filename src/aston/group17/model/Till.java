@@ -17,7 +17,6 @@ public class Till {
 	public void act()
 	{
 		// if the till is not being used get next driver
-
 		if(tillInUse)
 		{
 			// gets current driver and its money adds it to tills total
@@ -35,6 +34,7 @@ public class Till {
 			}
 			else
 			{
+				
 				System.out.println("Driver is waiting at till queue");
 				getFirstDriver().waitAtTill();
 			}
