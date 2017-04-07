@@ -26,26 +26,15 @@ public class Shop {
 	 */
 	public void act()
 	{
-		System.out.println("Shop");
-		int i = 0;
+		System.out.println("Shop: ");
 		for(Driver shoppingDriver : shoppingDrivers)
 		{
-			System.out.println("Shopping driver "+i + " "+ shoppingDriver.toString());
-			if(!shoppingDriver.isQueueing())
+			shoppingDriver.act();
+			
+			if(!shoppingDriver.stillShopping() && !shoppingDriver.isQueueing())
 			{
-				if(shoppingDriver.stillShopping())
-				{
-					System.out.println("Driver is shopping");
-					shoppingDriver.shop();
-				}
-				else
-				{
-					System.out.println("Driver wants to join queue");
-					shoppingDriver.toggleQueueing();
-					addDriverToTillQueue(shoppingDriver);
-				}
+				addDriverToTillQueue(shoppingDriver);
 			}
-			i++;
 		}
 		System.out.println();
 		

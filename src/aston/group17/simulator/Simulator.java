@@ -1,45 +1,50 @@
 package aston.group17.simulator;
 import aston.group17.model.*;
-import aston.group17.view.*;
 
-import java.util.ArrayList;
 
 import java.util.Random;
 
 public class Simulator {
 	private double t, p, q; //truck probability
-
 	private Station station;
-	private Station updatedStation;
-	private int numSteps, tills, pumps;
 	private Random rnd;
+	private boolean newVehicle;
+	private Driver newDriver;
+
 	
-	public Simulator(int numSteps, double p, double q, int pumps, int tills, double price)
+	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
-		this.p = p;
-		this.q = q;
-		this.numSteps = numSteps;
-		this.pumps = pumps;
-		this.tills = tills;
 		station = new Station(pumps, tills, price);
-
 	}
 	
 	public void simulate()
 	{
-		for(int i = 0; i < numSteps; i++)
+		
+		newDriver = generateDriver();
+		
+		if(newDriver == null)
 		{
-			System.out.println("Step: "+i);
+			newVehicle = false;
+		}
+		else
+		{
+
 			//Simulation code
-//			tempDriver = new Driver("Car");
-			if(!station.addDriverToPumpQueue(generateDriver()))
+
+
+			if(!station.addDriverToPumpQueue(newDriver))
 			{
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
 			}
-			station.act();
-			System.out.println();
+			else
+			{
+				newVehicle = true;
+			}
 		}
+		
+		station.act();
+		System.out.println();
 	}
 	
 	private Driver generateDriver(){
@@ -58,5 +63,17 @@ public class Simulator {
 			return tempDriver;
 		}
 		return tempDriver;
+	}
+	
+	public String toString()
+	{
+		if(newVehicle)
+		{
+			return "A new vehicle has entered";
+		}
+		else
+		{
+			return "";
+		}
 	}
 }

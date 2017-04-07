@@ -9,8 +9,6 @@ public abstract class Vehicle {
 	private Random rand;
 	protected String vehicleType;
 	private boolean inQueue;
-	private double moneySpent;
-	private int timeWaiting;
 	
 	/**
 	 * Constructor for Vehicles, sets their tank size and amount filled on creation
@@ -77,14 +75,6 @@ public abstract class Vehicle {
 	 public String toString()
 	 {
 		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
-	 }
-	 
-	 /**
-	  * Increments the timeWaiting field by one. the vehicle has waited for an extra tick
-	  */
-	 public void incrementWaiting()
-	 {
-		 timeWaiting++;
 	 }
 	 
 	 public boolean isFull()

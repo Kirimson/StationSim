@@ -6,7 +6,6 @@ public class Till {
 	private double moneyTaken;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
-	private boolean newDriver;
 
 	public Till()
 	{
@@ -22,7 +21,7 @@ public class Till {
 		if(tillInUse)
 		{
 			// gets current driver and its money adds it to tills total
-			if(getFirstDriver().getTillTime() == getFirstDriver().getCurrentTillTime()){
+			if(getFirstDriver().donePaying()){
 
 				addMoneyTaken(getFirstDriver().getTotalMoney());
 				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
@@ -37,7 +36,7 @@ public class Till {
 			else
 			{
 				System.out.println("Driver is waiting at till queue");
-				getFirstDriver().incrementCurrentTillTime();
+				getFirstDriver().waitAtTill();
 			}
 		}
 		if(drivers.size() == 0)
@@ -101,14 +100,6 @@ public class Till {
 	{
 		tillInUse = true;
 	}
-
-//	/**
-//	 *  Toggles the status of the the driver. If they have just arrived at till
-//	 */
-//	public void toggleNewDriver()
-//	{
-//		newDriver = !newDriver;
-//	}
 
 	/**
 	 * Adds money taken at till to total

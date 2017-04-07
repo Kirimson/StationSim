@@ -262,10 +262,14 @@ public class SimulatorGUI {
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
-		simulator = new Simulator (100, p , q, pumps, tills, price);
+		simulator = new Simulator (p , q, pumps, tills, price);
 		menuFrame.dispose();
-		simulator.simulate();
-		
+		for(int i = 0; i < ticks; i++)
+		{
+			log.append("Step: "+ i+"\n");
+			simulator.simulate();
+			listDataToLog();
+		}
 	}
 	
 	private void listDataToLog() {
