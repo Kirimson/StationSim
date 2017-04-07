@@ -81,7 +81,7 @@ public class Station {
 	*/
 	public void addDriverToShop(Driver driver){
 		driver.toggleShopping();
-		driver.setShoppingTime();
+//		driver.setShoppingTime();
 		shop.addNewDriver(driver);
 	}
 	

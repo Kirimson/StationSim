@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 public class Pump {
 
-	private static final int GALLON_TICK = 1;
 	private double unitSpaceAvailable;
-	private int queueSize, pumpNumber;
+	private int pumpNumber;
 	private static final double MAX_QUEUE = 3.0;
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
@@ -15,7 +14,6 @@ public class Pump {
 	public Pump(double price, int pumpNumber){
 		priceOfFuel = price;
 		this.pumpNumber = pumpNumber;
-		queueSize = 0;
 		unitSpaceAvailable = 3;
 		queue = new ArrayList<Driver>();
 	}
@@ -71,7 +69,6 @@ public class Pump {
 		queue.add(driver);
 		driver.assignPump(pumpNumber);
 		
-		queueSize++;
 		unitSpaceAvailable -= driver.getVehicle().getUnitSize();
 		if(driver.equals(getFirstDriver()))
 		{
@@ -83,24 +80,12 @@ public class Pump {
 	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
 	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
 	* The next Vehicle in the queue is specified by this method.
-	* 
-	* A
 	*/
 	public void removeDriverFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
-		queueSize--;
 		//new first driver is no longer queueing
 		getFirstDriver().toggleQueueing();
-	}
-	
-	/**
-	* Returns the pump's queue
-	* @return
-	* queueSize
-	*/
-	public int getQueue(){
-		return queueSize;
 	}
 	
 	/**
