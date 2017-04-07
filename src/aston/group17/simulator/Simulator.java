@@ -21,18 +21,15 @@ public class Simulator {
 	public void simulate()
 	{
 		
-		newDriver = generateDriver();
-		
-		if(newDriver == null)
-		{
-			newVehicle = false;
-		}
-		else
-		{
-
-			//Simulation code
-
-
+//		newDriver = generateDriver();
+//		
+//		if(newDriver == null)
+//		{
+//			newVehicle = false;
+//		}
+//		else
+//		{
+		newDriver = new Driver("Car");
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
@@ -41,7 +38,7 @@ public class Simulator {
 			{
 				newVehicle = true;
 			}
-		}
+//		}
 		
 		station.act();
 		System.out.println();
