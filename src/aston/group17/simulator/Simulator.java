@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class Simulator {
 	private double t, p, q; //truck probability
-	
 	private Station station;
 	private Random rnd;
 	private boolean newVehicle;
@@ -30,6 +29,10 @@ public class Simulator {
 		}
 		else
 		{
+
+			//Simulation code
+
+
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
@@ -40,16 +43,26 @@ public class Simulator {
 			}
 		}
 		
-		
-		
-		
 		station.act();
 		System.out.println();
 	}
 	
 	private Driver generateDriver(){
-		Driver driver = new Driver("Car");
-		return driver;
+		Driver tempDriver = null;
+		double random = rnd.nextDouble();
+		
+		if(random <= p){
+			tempDriver = new Driver("Car");
+		}else if(random <= 2*p){
+			tempDriver = new Driver("Bike");
+		}else if(random <= 2*p + q){
+			tempDriver = new Driver("Sedan");
+		}else if(random <= 2*p + q + t){
+			tempDriver = new Driver("Truck");
+		}else{
+			return tempDriver;
+		}
+		return tempDriver;
 	}
 	
 	public String toString()
