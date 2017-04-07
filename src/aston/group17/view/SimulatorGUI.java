@@ -264,7 +264,7 @@ public class SimulatorGUI {
 		int ticks = periodTime.getValue();
 		simulator = new Simulator (p , q, pumps, tills, price);
 		menuFrame.dispose();
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < ticks; i++)
 		{
 			System.out.println("Step: "+ i+"\n");
 			

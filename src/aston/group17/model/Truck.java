@@ -9,6 +9,7 @@ class Truck extends Vehicle{
 	public Truck(){
 		super(30, 10);
 		vehicleType = "Truck";
+		rand = new Random();
 	}
 
 	public double getUnitSize() {
