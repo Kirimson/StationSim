@@ -15,7 +15,10 @@ public class Simulator {
 	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
+		this.p = p;
+		this.q = q;
 		station = new Station(pumps, tills, price);
+		rnd = new Random();
 	}
 	
 	public void simulate()
@@ -29,7 +32,8 @@ public class Simulator {
 //		}
 //		else
 //		{
-		newDriver = new Driver("Car");
+		newDriver = generateDriver();
+		if(newDriver != null){
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
@@ -38,6 +42,7 @@ public class Simulator {
 			{
 				newVehicle = true;
 			}
+		}
 //		}
 		
 		station.act();

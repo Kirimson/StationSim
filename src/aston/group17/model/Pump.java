@@ -85,7 +85,9 @@ public class Pump {
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(getFirstDriver());
 		//new first driver is no longer queueing
+		if(getFirstDriver() != null){
 		getFirstDriver().toggleQueueing();
+		}
 	}
 	
 	/**
