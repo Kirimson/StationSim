@@ -4,7 +4,7 @@ import java.util.Random;
 public class Driver {
 
 	private boolean shopping, wait, queueing, done, wantsToShop;
-	private int  totalTime, shoppingTime, minShoppingTime, tillTime, currentTillTime, pump;
+	private int  totalTime, shoppingTime, tillTime, pump;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
 	private String vehicleType;
@@ -18,7 +18,7 @@ public class Driver {
 	public Driver(String type)
 	{
 		tillTime = 0;
-		totalTime = 0;
+		setTotalTime(0);
 		moneySpentPump = 0;
 		moneySpentShop = 0;
 		totalSpent = 0;
@@ -55,6 +55,7 @@ public class Driver {
 	 */
 	public void act(double fuelCost)
 	{
+		setTotalTime(getTotalTime() + 1);
 		if(wait)
 		{
 			wait = !wait;
@@ -68,36 +69,35 @@ public class Driver {
 				{
 						fillTank();
 						moneySpentPump += fuelCost;
-//						System.out.println("Money spent on fuel: " + moneySpentPump);
 				}
 				else
 				{
 					System.out.println("Tank full");
 					wait = true;
 					wantsToShop = true;
-					minShoppingTime = getShoppingTime();
+					setShoppingTime();
 				}
 			}
 		}
-//		else
-//		{
-//			//shopping code
-//			if(!queueing)
-//			{
-//				if(!(shoppingTime < minShoppingTime))
-//				{
-//					shoppingTime++;
-//				}
-//				else
-//				{
-//					toggleQueueing();
-//				}
-//			}
-//			else
-//			{
-//				
-//			}
-//		}
+	}
+	
+	public void act()
+	{
+		setTotalTime(getTotalTime() + 1);
+		if(!queueing)
+		{
+			if(stillShopping())
+			{
+				System.out.println("Driver is shopping");
+				shop();
+			}
+			else
+			{
+				System.out.println("Driver wants to join queue");
+				toggleQueueing();
+			}
+			System.out.println(toString());
+		}
 	}
 	
 	/**
@@ -142,7 +142,7 @@ public class Driver {
 	 */
 	public void setShoppingTime()
 	{
-		minShoppingTime = vehicle.timeToSpendShopping();
+		shoppingTime = vehicle.timeToSpendShopping();
 	}
 	
 	/**
@@ -172,11 +172,11 @@ public class Driver {
 	 */
 	public boolean stillShopping()
 	{
-		if(shoppingTime < minShoppingTime)
+		if(shoppingTime == 0)
 		{
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	/**
@@ -202,9 +202,9 @@ public class Driver {
 	/**
 	 * The driver shops, incrementing shoppingTime
 	 */
-	public void shop()
+	private void shop()
 	{
-		shoppingTime++;
+		shoppingTime--;
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class Driver {
 	 */
 	public String toString()
 	{
-		return "Driver of: " + getVehicleType() + " shopping: "+shopping+" shoppingTime: "+shoppingTime+" minShoppingTime: "+minShoppingTime+" Done: "+done;
+		return "Driver of: " + getVehicleType() + " shopping: "+shopping+" shoppingTime: "+shoppingTime+" tillTime: "+ tillTime +" Done: "+done;
 	}
 	
 	public void toggleDone()
@@ -266,22 +266,22 @@ public class Driver {
 		done = !done;
 	}
 	
-	public int getTillTime()
-	{
-		return tillTime;
-	}
 	public void setTillTime()
 	{
 		tillTime = rnd.nextInt(2)+2;
 		tillTime *= 6;
 	}
 
-	public int getCurrentTillTime() {
-		return currentTillTime * 6;
+	public int waitAtTill() {
+		return tillTime--;
 	}
-
-	public int incrementCurrentTillTime() {
-		return currentTillTime++;
+	
+	public boolean donePaying(){
+		if(tillTime == 0)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	public int getPumpNumber()
@@ -291,5 +291,13 @@ public class Driver {
 
 	public void assignPump(int pumpNumber) {
 		pump = pumpNumber;
+	}
+
+	public int getTotalTime() {
+		return totalTime;
+	}
+
+	public void setTotalTime(int totalTime) {
+		this.totalTime = totalTime;
 	}
 }
