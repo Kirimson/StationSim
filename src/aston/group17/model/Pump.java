@@ -140,4 +140,8 @@ public class Pump {
 		return false;
 	}
 	
+	public double getUnitSpaceAvailable(){
+		return unitSpaceAvailable;
+		
+	}
 }
