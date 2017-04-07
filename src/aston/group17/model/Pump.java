@@ -23,6 +23,12 @@ public class Pump {
 	 */
 	public void act()
 	{
+		System.out.println(queue.size());
+		for(int i = 0; i < queue.size(); i++){
+//		System.out.println(queue.get(i).toString())
+			System.out.println("anal" + queue.get(i).toString());
+
+		}
 		if(!getFirstDriver().isDone())
 		{
 			getFirstDriver().act(priceOfFuel);
