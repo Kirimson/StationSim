@@ -15,6 +15,8 @@ public class Simulator {
 	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
+		this.p = p;
+		this.q = q;
 		station = new Station(pumps, tills, price);
 	}
 	

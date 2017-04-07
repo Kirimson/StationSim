@@ -41,9 +41,9 @@ public class Shop {
 		int k = 0;
 		for(Till t : tills)
 		{
-			System.out.println("Till " + k+":");
 			if(t.isTillInUse())
 			{
+				System.out.println("Till: "+k);
 				t.act();
 			}
 			System.out.println();
@@ -103,5 +103,14 @@ public class Shop {
 	public ArrayList<Till> getTills()
 	{
 		return tills;
+	}
+	
+	public boolean isEmpty()
+	{
+		if(shoppingDrivers.size() == 0)
+		{
+			return true;
+		}
+		return false;
 	}
 }
