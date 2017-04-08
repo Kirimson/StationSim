@@ -26,4 +26,13 @@ public class Sedan extends Vehicle {
 		double moneySpent = rand.nextInt(9)+8;
 		return moneySpent;
 	}
+	
+	@Override
+	public boolean willShop(int driverTime) {
+		if(driverTime < 60)
+		{
+			return true;
+		}
+		return false;
+	}
 }

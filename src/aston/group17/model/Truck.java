@@ -26,4 +26,12 @@ class Truck extends Vehicle{
 		return moneySpent;
 	}
 
+	@Override
+	public boolean willShop(int driverTime) {
+		if(driverTime < 48)
+		{
+			return true;
+		}
+		return false;
+	}
 }

@@ -42,11 +42,11 @@ public class Station {
 			{
 				if(!p.getFirstDriver().isInShop())
 				{
-					if(!p.getFirstDriver().wantsToShop())
+					if(!p.getFirstDriver().isDoneRefilling())
 					{
 						p.act();
 					}
-					else if(p.getFirstDriver().wantsToShop())
+					else if(p.getFirstDriver().isDoneRefilling())
 					{
 						addDriverToShop(p.getFirstDriver());
 					}

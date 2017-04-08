@@ -26,4 +26,13 @@ public class Car extends Vehicle {
 		double moneySpent = rand.nextInt(5)+5;
 		return moneySpent;
 	}
+
+	@Override
+	public boolean willShop(int driverTime) {
+		if(driverTime < 30)
+		{
+			return true;
+		}
+		return false;
+	}
 }

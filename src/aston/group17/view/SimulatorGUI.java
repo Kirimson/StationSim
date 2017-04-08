@@ -14,17 +14,21 @@ public class SimulatorGUI {
 	private JTextArea log;
 	private Simulator simulator;
 	
-
+	//parameter
 	private LabeledSlider priceSlider;
 	private JComboBox<Double> pChoice = new JComboBox<Double>();
 	private JComboBox<Double> qChoice = new JComboBox<Double>();
 	private	JComboBox<Integer> pumpChoice = new JComboBox<Integer>();
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodTime;
+	
+	//mainframe
 	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
 	private JButton startButton = new JButton();
-	private JButton resetButton = new JButton();
+//	private JButton resetButton = new JButton();
 	private JButton quitButton = new JButton();
+	
+	//log fields
 	private DecimalFormat df = new DecimalFormat("####0.00");
 	private double[] moneyTakenArray;
 	private double[] moneyLostArray;
@@ -40,22 +44,55 @@ public class SimulatorGUI {
 		
 		final int blankSpace = 6;  // blank at edge of panels
 		
-//		 Step 1: create the components	
+//		 Step 1: create the components
+		
+			//mainframe
 			log = new JTextArea();
 			log.setEditable(false);
 			JScrollPane actionList = new JScrollPane(log);
 			actionList.setPreferredSize(new Dimension(300, 300));
 			actionList.setMinimumSize(new Dimension(200,200));
 			
+			//parameters			
+			pChoice.addItem(0.01);
+			pChoice.addItem(0.02);
+			pChoice.addItem(0.03);
+			pChoice.addItem(0.04);
+			pChoice.addItem(0.05);
+			
+			qChoice.addItem(0.01);
+			qChoice.addItem(0.02);
+			qChoice.addItem(0.03);
+			qChoice.addItem(0.04);
+			qChoice.addItem(0.05);
+			
+			priceSlider = new LabeledSlider("", 100, 400, 120);
+			priceSlider.setMajorTickSpacing(50);
+			
+			periodTime = new LabeledSlider("", 1440, 4230, 1440);
+			periodTime.setMajorTickSpacing(800);
+			
+			pumpChoice.addItem(1);
+			pumpChoice.addItem(2);
+			pumpChoice.addItem(4);
+			
+			tillChoice.addItem(1);
+			tillChoice.addItem(2);
+			tillChoice.addItem(4);
+			
 //		 Step 2: Set the properties of the components
+			
+			//mainframe
 			startButton.setText("Start");
 			startButton.setToolTipText("Start the simulation");
-			resetButton.setText("Reset");
-			resetButton.setToolTipText("Reset the simulation");
+//			resetButton.setText("Reset");
+//			resetButton.setToolTipText("Reset the simulation");
 			quitButton.setText("Quit");
 			quitButton.setToolTipText("Quit application");
 			
 //		 Step 3: Create containers to hold the components
+			
+			//mainframe
 			firstFrame = new JFrame("Fuelling Station Simulator");
 			firstFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			
@@ -63,6 +100,8 @@ public class SimulatorGUI {
 			JPanel title = new JPanel();
 			
 //		 Step 4: Specify LayoutManagers
+			
+			//mainframe
 			firstFrame.setLayout(new BorderLayout());
 			((JPanel)firstFrame.getContentPane()).setBorder(new 
 					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
@@ -80,8 +119,10 @@ public class SimulatorGUI {
 					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 			
 //		 Step 5: Add components to containers 
+			
+			//mainframe
 			buttons.add(startButton);
-			buttons.add(resetButton);
+//			buttons.add(resetButton);
 			buttons.add(quitButton);
 			firstFrame.add(buttons, BorderLayout.SOUTH);
 			firstFrame.add(actionList, BorderLayout.CENTER);
@@ -101,11 +142,11 @@ public class SimulatorGUI {
 				}
 			});
 				
-			resetButton.addActionListener(new ActionListener() { 
-				public void actionPerformed(ActionEvent e) {
-				resetApp();
-				}
-			});
+//			resetButton.addActionListener(new ActionListener() { 
+//				public void actionPerformed(ActionEvent e) {
+//				resetApp();
+//				}
+//			});
 				
 			startButton.addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) {
@@ -121,36 +162,11 @@ public class SimulatorGUI {
 	private void setParameters(){
 		
 		final int blankSpace = 6;  // blank at edge of panels
-	
-//	Step 1: create the components for the 
+		log.setText("");
+//	Step 1: create the components for the
+		
 		JButton runButton = new JButton();
 		JButton closeWindowButton = new JButton();
-		
-		pChoice.addItem(0.01);
-		pChoice.addItem(0.02);
-		pChoice.addItem(0.03);
-		pChoice.addItem(0.04);
-		pChoice.addItem(0.05);
-		
-		qChoice.addItem(0.01);
-		qChoice.addItem(0.02);
-		qChoice.addItem(0.03);
-		qChoice.addItem(0.04);
-		qChoice.addItem(0.05);
-		
-		priceSlider = new LabeledSlider("", 100, 400, 120);
-		priceSlider.setMajorTickSpacing(50);
-		
-		pumpChoice.addItem(1);
-		pumpChoice.addItem(2);
-		pumpChoice.addItem(4);
-		
-		tillChoice.addItem(1);
-		tillChoice.addItem(2);
-		tillChoice.addItem(4);
-	
-		periodTime = new LabeledSlider("", 1440, 4230, 1440);
-		periodTime.setMajorTickSpacing(800);
 		
 		JLabel pLabel = new JLabel();
 		JLabel qLabel = new JLabel();
@@ -255,12 +271,15 @@ public class SimulatorGUI {
 		menuFrame.dispose();
 	}
 	
-	private void resetApp(){
-		log.setText("");
-		setParameters();
-	}
+//	private void resetApp(){
+//		log.setText("");
+//		setParameters();
+//	}
 
 	private void runSimulation(){
+		startButton.setText("Reset");
+		startButton.setToolTipText("Reset the simualtion");
+		
 		double p = (Double)pChoice.getSelectedItem();
 		double q = (Double)qChoice.getSelectedItem();
 		double price = (double)priceSlider.getValue() / 100;
@@ -276,8 +295,7 @@ public class SimulatorGUI {
 		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
 			System.out.println("Run: " + (i + 1));
 			simulator = new Simulator (p , q, pumps, tills, price);
-			int k;
-			for(k = 0; k < ticks; k++) //To simulate the amount of ticks
+			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
 			{
 				System.out.println("Step: "+ k +"\n");
 			
@@ -285,9 +303,7 @@ public class SimulatorGUI {
 			
 				System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
 				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
-				
 			}
-			k = 0;
 			listDataToLog(i);
 		}
 
@@ -328,7 +344,6 @@ public class SimulatorGUI {
 		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
 		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");
 		log.append("\n\n");
-		
 	}
 
 }
