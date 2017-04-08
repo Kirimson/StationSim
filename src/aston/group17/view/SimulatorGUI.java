@@ -26,7 +26,8 @@ public class SimulatorGUI {
 	private JButton resetButton = new JButton();
 	private JButton quitButton = new JButton();
 	private DecimalFormat df = new DecimalFormat("####0.00");
-
+	private double[] moneyTakenArray;
+	private double[] moneyLostArray;
 	
 	public static void main(String[] args)
 	{
@@ -255,6 +256,7 @@ public class SimulatorGUI {
 	}
 	
 	private void resetApp(){
+		log.setText("");
 		setParameters();
 	}
 
@@ -265,11 +267,15 @@ public class SimulatorGUI {
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
-		simulator = new Simulator (p , q, pumps, tills, price);
+		
+		moneyTakenArray = new double[10];
+		moneyLostArray = new double[10];
+		
 		menuFrame.dispose();
 		
-		for(int i = 0; i < 11; i++){ //To simulate the 10 runs through
+		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
 			System.out.println("Run: " + (i + 1));
+			simulator = new Simulator (p , q, pumps, tills, price);
 			int k;
 			for(k = 0; k < ticks; k++) //To simulate the amount of ticks
 			{
@@ -277,21 +283,52 @@ public class SimulatorGUI {
 			
 				simulator.simulate();
 			
-				System.out.println("Money Taken: £" + df.format(simulator.countMoney()));
+				System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
 				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
-				listDataToLog();
 				
 			}
 			k = 0;
-			simulator.resetStats();
+			listDataToLog(i);
 		}
+
+		double avgTakenMoney = 0.0;
+		double avgLostMoney = 0.0;
+		for(double d : moneyTakenArray)
+		{
+			avgTakenMoney += d;
+		}
+		
+		for(double d : moneyLostArray)
+		{
+			avgLostMoney += d;
+		}
+		
+		log.append("Configuration:\n");
+		log.append("Pumps: "+pumps+"\n");
+		log.append("Tills: "+tills+"\n");
+		log.append("P: "+p+"\n");
+		log.append("Q: "+q+"\n");
+		log.append("Price: £"+df.format(price)+"\n");
+		
+		log.append("\n");
+		
+		log.append("Money Taken average: £"+df.format((avgTakenMoney/10))+"\n");
+
+		log.append("Money Lost average: £"+df.format((avgLostMoney/10))+"\n");
+		
 	}
 	
-	private void listDataToLog() {
-		log.append(simulator.toString());
-		log.append("Money Taken: £" + df.format(simulator.countMoney())+ "\n");
+	private void listDataToLog(int i) {
+//		log.append(simulator.toString());
+		log.append("Run: "+(i+1)+"\n");
+		moneyTakenArray[i] = simulator.countTakenMoney();
+		moneyLostArray[i] = simulator.countLostMoney();
+		log.append("Money Taken: £" + df.format(simulator.countTakenMoney())+ "\n");
 		log.append("Money Lost: £" + df.format(simulator.countLostMoney())+ "\n");
-
+		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
+		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");
+		log.append("\n\n");
+		
 	}
 
 }
