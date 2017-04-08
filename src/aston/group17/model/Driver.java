@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Driver {
 
-	private boolean shopping, wait, queueing, done, wantsToShop;
+	private boolean shopping, wait, queueing, done, doneRefilling, didShop;
 	private int  totalTime, shoppingTime, tillTime, pump, tillNumber;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
@@ -56,7 +56,6 @@ public class Driver {
 	 */
 	public void act(double fuelCost)
 	{
-		setTotalTime(getTotalTime() + 1);
 		if(wait)
 		{
 			wait = !wait;
@@ -73,32 +72,30 @@ public class Driver {
 				else
 				{
 					wait = true;
-					wantsToShop = true;
+					doneRefilling = true;
 					setShoppingTime();
 				}
 			}
 		}
+		setTotalTime(getTotalTime() + 1);
 	}
 	
 	public void act()
 	{
-		setTotalTime(getTotalTime() + 1);
 		if(!queueing)
 		{
 			if(stillShopping())
 			{
-//				System.out.println("Driver is shopping");
 				shop();
 			}
 			else
 			{
-//				System.out.println("Driver wants to join queue");
 				if(vehicleType != "Bike"){
 				toggleQueueing();
 				}
 			}
-//			System.out.println(toString());
 		}
+		setTotalTime(getTotalTime() + 1);
 	}
 	
 	/**
@@ -143,19 +140,36 @@ public class Driver {
 	 */
 	public void setShoppingTime()
 	{
-		shoppingTime = vehicle.timeToSpendShopping();
+		if(willShop(totalTime))
+		{
+			System.out.println("Did shop");
+			didShop = true;
+			shoppingTime = vehicle.timeToSpendShopping();
+		}
+		else
+		{
+			System.out.println("Didn't shop");
+			didShop = false;
+			shoppingTime = 0;
+		}
 	}
 	
+<<<<<<< HEAD
 	
+=======
+	private boolean willShop(int time){
+		return vehicle.willShop(time);
+	}
+>>>>>>> Kirimson/master
 
 	/**
 	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
 	 * @return
 	 * Boolean
 	 */
-	public boolean wantsToShop()
+	public boolean isDoneRefilling()
 	{
-		return wantsToShop;
+		return doneRefilling;
 	}
 	
 	/**
@@ -306,6 +320,13 @@ public class Driver {
 	public void setTillNumber(int tillNumber){
 		this.tillNumber = tillNumber;
 	}
+<<<<<<< HEAD
 	
 	
+=======
+
+	public boolean didShop() {
+		return didShop;
+	}
+>>>>>>> Kirimson/master
 }

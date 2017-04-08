@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Till {
 	private double moneyTaken;
+	private double moneyLost;
 	private ArrayList<Driver> drivers;
 	private boolean tillInUse;
 	private int tillNumber;
@@ -66,6 +67,12 @@ public class Till {
 		d.setTillTime();
 		d.setTillNumber(tillNumber);
 		drivers.add(d);
+		
+		if(d.didShop())
+		{
+			moneyLost += d.getShopSpendingAmount();
+		}
+		
 		System.out.println("Driver has entered the till queue");
 		setTillInUse();
 	}
