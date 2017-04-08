@@ -8,9 +8,10 @@ public class Simulator {
 	private double t, p, q; //truck probability
 	private Station station;
 	private Random rnd;
-	private boolean newVehicle, vehicleLeft;
+//	private boolean newVehicle, vehicleLeft;
 	private Driver newDriver;
 	private double moneyGained, moneyLost, price;
+	private int totalVehicles, totalLostVehicles;
 	
 	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
@@ -18,6 +19,10 @@ public class Simulator {
 		this.p = p;
 		this.q = q;
 		this.price = price;
+
+		totalVehicles = 0;
+		totalLostVehicles = 0;
+		
 		station = new Station(pumps, tills, price);
 		rnd = new Random();
 	}
@@ -30,21 +35,23 @@ public class Simulator {
 			System.out.println("New Driver of "+newDriver.getVehicleType()+" approaching");
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
-				vehicleLeft = true;
+//				vehicleLeft = true;
 				setLost();
 				System.out.println("Couldn't Fit in pumps. Driver leaving");
+				incrementTotalLostVehicles();
 			}
 			else
 			{
-				vehicleLeft = false;
-				newVehicle = true;
+				incrementTotalVehicles();
+//				vehicleLeft = false;
+//				newVehicle = true;
 			}
 			System.out.println();
 		}
-		else
-		{
-			newVehicle = false;
-		}
+//		else
+//		{
+//			newVehicle = false;
+//		}
 		
 		station.act();
 		System.out.println();
@@ -68,21 +75,21 @@ public class Simulator {
 		return tempDriver;
 	}
 	
-	public String toString()
-	{
-		String text = new String();
-		if(newVehicle && !vehicleLeft)
-		{
-			text += "A new vehicle has entered";
-		}
-		else if(newVehicle)
-		{
-			text += "A vehicle couldn't fit.\n";
-		}
-
-		text += "\n";
-		return text;
-	}
+//	public String toString()
+//	{
+//		String text = new String();
+//		if(newVehicle && !vehicleLeft)
+//		{
+//			text += "A new vehicle has entered";
+//		}
+//		else if(newVehicle)
+//		{
+//			text += "A vehicle couldn't fit.\n";
+//		}
+//
+//		text += "\n";
+//		return text;
+//	}
 	
 	private void setLost()
 	{
@@ -101,5 +108,21 @@ public class Simulator {
 	public void resetStats(){
 		moneyLost = 0;
 		// moneyTaken = 0;
+	}
+
+	public int getTotalVehicles() {
+		return totalVehicles;
+	}
+
+	private void incrementTotalVehicles() {
+		totalVehicles++;
+	}
+
+	public int getTotalLostVehicles() {
+		return totalLostVehicles;
+	}
+
+	private void incrementTotalLostVehicles() {
+		totalLostVehicles++;;
 	}
 }

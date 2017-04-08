@@ -4,7 +4,6 @@ import aston.group17.simulator.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -257,6 +256,7 @@ public class SimulatorGUI {
 	}
 	
 	private void resetApp(){
+		log.setText("");
 		setParameters();
 	}
 
@@ -303,6 +303,15 @@ public class SimulatorGUI {
 			avgLostMoney += d;
 		}
 		
+		log.append("Configuration:\n");
+		log.append("Pumps: "+pumps+"\n");
+		log.append("Tills: "+tills+"\n");
+		log.append("P: "+p+"\n");
+		log.append("Q: "+q+"\n");
+		log.append("Price: £"+df.format(price)+"\n");
+		
+		log.append("\n");
+		
 		log.append("Money Taken average: £"+df.format((avgTakenMoney/10))+"\n");
 
 		log.append("Money Lost average: £"+df.format((avgLostMoney/10))+"\n");
@@ -316,7 +325,10 @@ public class SimulatorGUI {
 		moneyLostArray[i] = simulator.countLostMoney();
 		log.append("Money Taken: £" + df.format(simulator.countTakenMoney())+ "\n");
 		log.append("Money Lost: £" + df.format(simulator.countLostMoney())+ "\n");
-		log.append("\n");
+		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
+		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");
+		log.append("\n\n");
+		
 	}
 
 }
