@@ -3,6 +3,7 @@ import aston.group17.simulator.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -24,6 +25,8 @@ public class SimulatorGUI {
 	private JButton startButton = new JButton();
 	private JButton resetButton = new JButton();
 	private JButton quitButton = new JButton();
+	private DecimalFormat df = new DecimalFormat("####0.00");
+
 	
 	public static void main(String[] args)
 	{
@@ -264,21 +267,31 @@ public class SimulatorGUI {
 		int ticks = periodTime.getValue();
 		simulator = new Simulator (p , q, pumps, tills, price);
 		menuFrame.dispose();
-		for(int i = 0; i < 200; i++)
-		{
-			System.out.println("Step: "+ i+"\n");
+		
+		for(int i = 0; i < 11; i++){ //To simulate the 10 runs through
+			System.out.println("Run: " + (i + 1));
+			int k;
+			for(k = 0; k < ticks; k++) //To simulate the amount of ticks
+			{
+				System.out.println("Step: "+ k +"\n");
 			
-			simulator.simulate();
-			System.out.println("Money made £"+ simulator.countMoney());
-			System.out.println("Money lost £"+ simulator.countLostMoney());
-			listDataToLog();
+				simulator.simulate();
+			
+				System.out.println("Money Taken: £" + df.format(simulator.countMoney()));
+				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
+				listDataToLog();
+				
+			}
+			k = 0;
+			simulator.resetStats();
 		}
 	}
 	
 	private void listDataToLog() {
 		log.append(simulator.toString());
-		log.append(simulator.countMoney()+"\n");
-		log.append(simulator.countLostMoney()+"\n");
+		log.append("Money Taken: £" + df.format(simulator.countMoney())+ "\n");
+		log.append("Money Lost: £" + df.format(simulator.countLostMoney())+ "\n");
+
 	}
 
 }
