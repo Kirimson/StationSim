@@ -147,41 +147,7 @@ public class Driver {
 	}
 	
 	
-	/**
-	 * Sets the probability of the car driver to shop to 0.3 (3/10). 
-	 * This method should only be called if the car driver has spend less than 5 mins refilling
-	 * 
-	 */
-	
-	public void probabilityOfCarShopping(){
-		int chance = rnd.nextInt(10)+1;
-		
-		if (chance == 1 || chance == 2 || chance == 3) {
-			//the driver will go to the shop
-			wantsToShop();
-		}else{
-			//the driver will go straight to the till
-		}
-	}
-		
-	/**
-	 * Sets the probability of the sedan driver to shop to 0.4 (4/10). 
-	 * This method should only be called if the car driver has spend less than 10 mins refilling.	
-	 *   
-	 */
-		
-	public void probabilityOfSedanShopping(){
-		int chance = rnd.nextInt(10)+1;			
-	
-		if (chance == 1 || chance == 2 || chance == 3 || chance == 4) {
-			//the driver will go to the shop		
-			wantsToShop();
-			}else{				
-			//the driver will go straight to the till
-			
-		}
-		
-	}
+
 	/**
 	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
 	 * @return
