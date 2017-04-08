@@ -5,16 +5,15 @@ import java.util.ArrayList;
 
 public class Pump {
 
-	private static final int GALLON_TICK = 1;
 	private double unitSpaceAvailable;
-	private int queueSize;
+	private int pumpNumber;
 	private static final double MAX_QUEUE = 3.0;
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
 	
-	public Pump(double price){
+	public Pump(double price, int pumpNumber){
 		priceOfFuel = price;
-		queueSize = 0;
+		this.pumpNumber = pumpNumber;
 		unitSpaceAvailable = 3;
 		queue = new ArrayList<Driver>();
 	}
@@ -30,8 +29,7 @@ public class Pump {
 		}
 		else
 		{
-			System.out.println("Driver is leaving. Spent: " + getFirstDriver().getMoneySpent());
-			removeVehicleFromPumpQueue();
+			removeDriverFromPumpQueue();
 		}
 	}
 	
@@ -68,7 +66,8 @@ public class Pump {
 	 */
 	public void addToPumpQueue(Driver driver){
 		queue.add(driver);
-		queueSize++;
+		driver.assignPump(pumpNumber);
+		
 		unitSpaceAvailable -= driver.getVehicle().getUnitSize();
 		if(driver.equals(getFirstDriver()))
 		{
@@ -80,24 +79,14 @@ public class Pump {
 	* A pump will have several vehicles. removeVehicleFromPumpQueue method will iterate through those vehicles.
 	* This means that when a vehicle leaves the queue, the next vehicle arrives at the pump. 
 	* The next Vehicle in the queue is specified by this method.
-	* 
-	* A
 	*/
-	public void removeVehicleFromPumpQueue(){
+	public void removeDriverFromPumpQueue(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
-		queue.remove(getFirstDriver());
-		queueSize--;
+		queue.remove(0);
 		//new first driver is no longer queueing
+		if(getFirstDriver() != null){
 		getFirstDriver().toggleQueueing();
-	}
-	
-	/**
-	* Returns the pump's queue
-	* @return
-	* queueSize
-	*/
-	public int getQueue(){
-		return queueSize;
+		}
 	}
 	
 	/**
@@ -117,6 +106,7 @@ public class Pump {
 	 */
 	public Driver getFirstDriver()
 	{
+		if(unitSpaceAvailable == MAX_QUEUE){return null;}
 		return queue.get(0);
 	}
 	
@@ -136,4 +126,23 @@ public class Pump {
 		return false;
 	}
 	
+	public double getUnitSpaceAvailable(){
+		return unitSpaceAvailable;
+		
+	}
+	
+	public String toString()
+	{
+		String list = new String();
+		list += "Pump: "+(pumpNumber + 1)+"\n";
+		list += "Queue size is: " + queue.size()+" Queue Free is: "+unitSpaceAvailable+"\n";
+		for(int i = 0; i < queue.size(); i++){
+			list += queue.get(i).toString()+"\n";
+		}
+		if(list.equals(""))
+		{
+			return "Empty";
+		}
+		return list;
+	}
 }

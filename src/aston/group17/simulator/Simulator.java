@@ -1,56 +1,100 @@
 package aston.group17.simulator;
 import aston.group17.model.*;
-import aston.group17.view.*;
 
-import java.util.ArrayList;
 
 import java.util.Random;
 
 public class Simulator {
 	private double t, p, q; //truck probability
-	
-	private Driver tempDriver;
 	private Station station;
-	private Station updatedStation;
-	private int numSteps, tills, pumps;
 	private Random rnd;
+	private boolean newVehicle, vehicleLeft;
+	private Driver newDriver;
+	private double moneyGained, moneyLost, price;
 	
-
-	
-	public Simulator(int numSteps, double p, double q, int pumps, int tills, double price)
+	public Simulator(double p, double q, int pumps, int tills, double price)
 	{
 		t = 0.02;
 		this.p = p;
 		this.q = q;
-		this.numSteps = numSteps;
-		this.pumps = pumps;
-		this.tills = tills;
+		this.price = price;
 		station = new Station(pumps, tills, price);
-		tempDriver = null;
-
+		rnd = new Random();
 	}
 	
-	public void simulate(int numSteps)
+	public void simulate()
 	{
-		for(int i = 0; i < numSteps; i++)
-		{
-			//Simulation code
-			station.addDriverToPumpQueue(tempDriver);
+		
+		newDriver = generateDriver();
+		if(newDriver != null){
+			System.out.println("New Driver of "+newDriver.getVehicleType()+" approaching");
+			if(!station.addDriverToPumpQueue(newDriver))
+			{
+				vehicleLeft = true;
+				setLost();
+				System.out.println("Couldn't Fit in pumps. Driver leaving");
+			}
+			else
+			{
+				vehicleLeft = false;
+				newVehicle = true;
+			}
+			System.out.println();
 		}
+		else
+		{
+			newVehicle = false;
+		}
+		
+		station.act();
+		System.out.println();
 	}
 	
-	private String generateVehicleType(){
-		String vehicleType = "";
+	private Driver generateDriver(){
+		Driver tempDriver = null;
 		double random = rnd.nextDouble();
+		
 		if(random <= p){
-			vehicleType = "Car";
+			tempDriver = new Driver("Car");
 		}else if(random <= 2*p){
-			vehicleType = "Bike";
+			tempDriver = new Driver("Bike");
 		}else if(random <= 2*p + q){
-			vehicleType = "Sedan";
+			tempDriver = new Driver("Sedan");
 		}else if(random <= 2*p + q + t){
-			vehicleType = "Truck";
-		}		
-		return vehicleType;
+			tempDriver = new Driver("Truck");
+		}else{
+			return tempDriver;
+		}
+		return tempDriver;
+	}
+	
+	public String toString()
+	{
+		String text = new String();
+		if(newVehicle && !vehicleLeft)
+		{
+			text += "A new vehicle has entered";
+		}
+		else if(newVehicle)
+		{
+			text += "A vehicle couldn't fit.\n";
+		}
+
+		text += "\n";
+		return text;
+	}
+	
+	private void setLost()
+	{
+		moneyLost += (newDriver.getVehicle().getTankSize() - newDriver.getVehicle().getTankFilled()) * price;
+	}
+	
+	public double countMoney(){
+		return station.countMoney();
+	}
+	
+	public double countLostMoney()
+	{
+		return moneyLost;
 	}
 }

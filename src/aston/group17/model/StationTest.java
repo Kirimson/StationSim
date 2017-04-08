@@ -60,7 +60,7 @@ public class StationTest {
 		
 //		System.out.println(vp1.toString());
 		
-		while(s.getPump(0).getFirstDriver().getVehicle().getGallonsFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
+		while(s.getPump(0).getFirstDriver().getVehicle().getTankFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
 		{
 			s.act();
 //			System.out.println(s.getPump(0).getFirstDriver().toString());
@@ -72,7 +72,7 @@ public class StationTest {
 		
 //		System.out.println("\n");
 		
-		if(vp1.getVehicle().getGallonsFilled() != vp1.getVehicle().getTankSize())
+		if(vp1.getVehicle().getTankFilled() != vp1.getVehicle().getTankSize())
 		{
 			fail();
 		}
@@ -144,7 +144,7 @@ public class StationTest {
 		int i = 0;
 		for(Pump p : s.getPumpArray())
 		{
-			if(p.getVehicleQueue().contains(d.getVehicle()))
+			if(p.getVehicleQueue().contains(d))
 			{
 				return "pump: "+i;
 			}
