@@ -97,4 +97,9 @@ public class Simulator {
 	{
 		return moneyLost;
 	}
+	
+	public void resetStats(){
+		moneyLost = 0;
+		// moneyTaken = 0;
+	}
 }
