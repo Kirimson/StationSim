@@ -89,7 +89,7 @@ public class Simulator {
 		moneyLost += (newDriver.getVehicle().getTankSize() - newDriver.getVehicle().getTankFilled()) * price;
 	}
 	
-	public double countMoney(){
+	public double countTakenMoney(){
 		return station.countMoney();
 	}
 	
