@@ -140,27 +140,29 @@ public class Driver {
 	 */
 	public void setShoppingTime()
 	{
+			
 		if(willShop(totalTime))
 		{
-			System.out.println("Did shop");
-			didShop = true;
-			shoppingTime = vehicle.timeToSpendShopping();
+	
+					System.out.println("Did shop");
+					didShop = true;
+					shoppingTime = vehicle.timeToSpendShopping();
 		}
+			
 		else
 		{
-			System.out.println("Didn't shop");
-			didShop = false;
-			shoppingTime = 0;
+					System.out.println("Didn't shop");
+					didShop = false;
+					shoppingTime = 0;
 		}
 	}
+		
 	
-<<<<<<< HEAD
-	
-=======
+
 	private boolean willShop(int time){
 		return vehicle.willShop(time);
 	}
->>>>>>> Kirimson/master
+
 
 	/**
 	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
@@ -320,13 +322,10 @@ public class Driver {
 	public void setTillNumber(int tillNumber){
 		this.tillNumber = tillNumber;
 	}
-<<<<<<< HEAD
-	
-	
-=======
+
 
 	public boolean didShop() {
 		return didShop;
 	}
->>>>>>> Kirimson/master
+
 }
