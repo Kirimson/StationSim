@@ -139,9 +139,10 @@ public class Driver {
 	 * returns int of the amount of time the driver would spend shopping
 	 */
 	public void setShoppingTime()
-	{
+	{		
 		if(willShop(totalTime))
 		{
+	
 			System.out.println("Did shop");
 			didShop = true;
 			shoppingTime = vehicle.timeToSpendShopping();
@@ -153,7 +154,7 @@ public class Driver {
 			shoppingTime = 0;
 		}
 	}
-	
+
 	private boolean willShop(int time){
 		return vehicle.willShop(time);
 	}
