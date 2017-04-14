@@ -139,66 +139,25 @@ public class Driver {
 	 * returns int of the amount of time the driver would spend shopping
 	 */
 	public void setShoppingTime()
-	{
-<<<<<<< Updated upstream
-			
+	{		
 		if(willShop(totalTime))
 		{
 	
-					System.out.println("Did shop");
-					didShop = true;
-					shoppingTime = vehicle.timeToSpendShopping();
+			System.out.println("Did shop");
+			didShop = true;
+			shoppingTime = vehicle.timeToSpendShopping();
 		}
-			
-=======
-		int chance = rnd.nextInt(10)+1;
-			if (vehicleType.equals("Sedan")){
-				if (chance <= 3){
-					System.out.println("this car should buy stuff from the shop");
-				}
-			}
-			
-		System.out.println("Chance is equal to " + chance);
-		
-		
-		if(willShop(totalTime))
-		{ 
-		//	if (vehicleType.equals("Car")){
-			//	if (chance == 1 || chance == 2 || chance == 3) {
-					
-					System.out.println("Did shop");
-					didShop = true;
-					shoppingTime = vehicle.timeToSpendShopping();
-				}
-			//}else if(vehicleType.equals("Sedan")){
-				//if (chance == 1 || chance == 2 || chance == 3 || chance == 4) {
-
-					//System.out.println("Did shop");
-					//didShop = true;
-					//shoppingTime = vehicle.timeToSpendShopping();
-				
-				//}
-			//}
-				
-		///}
->>>>>>> Stashed changes
 		else
 		{
-					System.out.println("Didn't shop");
-					didShop = false;
-					shoppingTime = 0;
+			System.out.println("Didn't shop");
+			didShop = false;
+			shoppingTime = 0;
 		}
 	}
-<<<<<<< Updated upstream
-		
-	
-=======
->>>>>>> Stashed changes
 
 	private boolean willShop(int time){
 		return vehicle.willShop(time);
 	}
-
 
 	/**
 	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
@@ -359,16 +318,7 @@ public class Driver {
 		this.tillNumber = tillNumber;
 	}
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-
 	public boolean didShop() {
 		return didShop;
 	}
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 }
