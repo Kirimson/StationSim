@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Driver {
 
-	private boolean shopping, wait, queueing, done, doneRefilling, didShop;
+	private boolean shopping, wait, queueing, done, doneRefilling, didShop, atPump;
 	private int  totalTime, shoppingTime, tillTime, pump, tillNumber;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
@@ -26,6 +26,7 @@ public class Driver {
 		shopping = false;
 		wait = true;
 		queueing = true;
+		setAtPump(true);
 		rnd = new Random();
 		
 		switch(type){
@@ -60,7 +61,7 @@ public class Driver {
 		{
 			wait = !wait;
 		}
-		else if(!shopping)
+		else if(!isAtShop())
 		{
 			if(!queueing)
 			{
@@ -82,7 +83,7 @@ public class Driver {
 	
 	public void act()
 	{
-		if(!queueing)
+		if(isAtShop())
 		{
 			if(stillShopping())
 			{
@@ -90,9 +91,10 @@ public class Driver {
 			}
 			else
 			{
-				if(vehicleType != "Bike"){
-				toggleQueueing();
-				}
+//				if(vehicleType != "Bike"){
+//				toggleQueueing();
+//				}
+				shopping = false;
 			}
 		}
 		setTotalTime(getTotalTime() + 1);
@@ -142,7 +144,6 @@ public class Driver {
 	{		
 		if(willShop(totalTime))
 		{
-	
 			System.out.println("Did shop");
 			didShop = true;
 			shoppingTime = vehicle.timeToSpendShopping();
@@ -156,7 +157,8 @@ public class Driver {
 	}
 
 	private boolean willShop(int time){
-		return vehicle.willShop(time);
+		//to be overwritten
+		return false;
 	}
 
 	/**
@@ -198,7 +200,7 @@ public class Driver {
 	 * @return
 	 * Boolean true if the driver is shopping
 	 */
-	public boolean isInShop()
+	public boolean isAtShop()
 	{
 		return shopping;
 	}
@@ -237,6 +239,7 @@ public class Driver {
 	public void toggleShopping()
 	{
 		shopping = !shopping;
+		setAtPump(!atPump);
 	}
 	
 	/**
@@ -320,5 +323,13 @@ public class Driver {
 
 	public boolean didShop() {
 		return didShop;
+	}
+
+	public boolean isAtPump() {
+		return atPump;
+	}
+
+	public void setAtPump(boolean atPump) {
+		this.atPump = atPump;
 	}
 }

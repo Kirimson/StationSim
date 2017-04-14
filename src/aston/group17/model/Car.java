@@ -33,9 +33,9 @@ public class Car extends Vehicle {
 		
 		if(driverTime < 30)
 		{
-			if(chance <= 3 ){
+//			if(chance <= 3 ){
 				return true;
-			}
+//			}
 			
 		}
 		return false;

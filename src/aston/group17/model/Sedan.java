@@ -32,9 +32,9 @@ public class Sedan extends Vehicle {
 		int chance = rand.nextInt(10)+1;
 		if(driverTime < 60)
 			{
-				if(chance <= 4){
+//				if(chance <= 4){
 				return true;
-			}
+//			}
 		}
 		return false;
 	}

@@ -292,10 +292,10 @@ public class SimulatorGUI {
 		
 		menuFrame.dispose();
 		
-		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
+		for(int i = 0; i < 1; i++){ //To simulate the 10 runs through
 			System.out.println("Run: " + (i + 1));
 			simulator = new Simulator (p , q, pumps, tills, price);
-			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
+			for(int k = 0; k < 200; k++) //To simulate the amount of ticks
 			{
 				System.out.println("Step: "+ k +"\n");
 			

@@ -29,7 +29,9 @@ public class Till {
 				addMoneyTaken(getFirstDriver().getPumpMoney());
 				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
 				getFirstDriver().toggleDone();
+				
 				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
+				
 				if(drivers.size() - 1 == 0){
 				tillInUse = false;
 				}else{

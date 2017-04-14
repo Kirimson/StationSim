@@ -40,7 +40,7 @@ public class Station {
 			System.out.println(p.toString());
 			if(p.getFirstDriver() != null)
 			{
-				if(!p.getFirstDriver().isInShop())
+				if(p.getFirstDriver().isAtPump())
 				{
 					if(!p.getFirstDriver().isDoneRefilling())
 					{
@@ -62,7 +62,7 @@ public class Station {
 				{
 					System.out.println("DRIVER IS LEAVING THIS SHIT HOLE");
 					pumps.get(t.getFirstDriver().getPumpNumber()).removeDriverFromPumpQueue();
-					shop.removeDriver(t.getFirstDriver());
+//					shop.removeDriver(t.getFirstDriver());
 					t.removeDriver();
 				}
 			}
