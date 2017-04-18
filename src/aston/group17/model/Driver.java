@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Driver {
 
-	private boolean shopping, wait, queueing, done, doneRefilling, didShop, atPump;
+	private boolean shopping, wait, done, doneRefilling, didShop, atPump;
 	private int  totalTime, shoppingTime, tillTime, pump, tillNumber;
 	private double moneySpentPump, moneySpentShop, totalSpent;
 	private Vehicle vehicle;
@@ -19,13 +19,12 @@ public class Driver {
 	{
 		tillNumber = -1;
 		tillTime = 0;
-		setTotalTime(0);
+		totalTime = 0;
 		moneySpentPump = 0;
 		moneySpentShop = 0;
 		totalSpent = 0;
 		shopping = false;
 		wait = true;
-		queueing = true;
 		setAtPump(true);
 		rnd = new Random();
 		
@@ -63,8 +62,6 @@ public class Driver {
 		}
 		else if(!isAtShop())
 		{
-			if(!queueing)
-			{
 				if(!getVehicle().isFull())
 				{
 						fillTank();
@@ -76,9 +73,8 @@ public class Driver {
 					doneRefilling = true;
 					setShoppingTime();
 				}
-			}
 		}
-		setTotalTime(getTotalTime() + 1);
+		incrementTotalTime();
 	}
 	
 	public void act()
@@ -97,7 +93,7 @@ public class Driver {
 				shopping = false;
 			}
 		}
-		setTotalTime(getTotalTime() + 1);
+		incrementTotalTime();
 	}
 	
 	/**
@@ -115,8 +111,6 @@ public class Driver {
 	 * @return
 	 * returns the amount of money the Driver has spent at the station
 	 */
-	
-	// returns the amount of money spent at pump
 	public double getMoneySpentPump()
 	{
 		return moneySpentPump;	
@@ -140,7 +134,7 @@ public class Driver {
 	 * @return
 	 * returns int of the amount of time the driver would spend shopping
 	 */
-	public void setShoppingTime()
+	private void setShoppingTime()
 	{		
 		if(willShop(totalTime))
 		{
@@ -157,14 +151,12 @@ public class Driver {
 	}
 
 	private boolean willShop(int time){
-		//to be overwritten
-		return false;
+		return vehicle.willShop(totalTime);
 	}
 
 	/**
 	 * Checks if the driver wants to shop, only true if wait is false and shopping is true
-	 * @return
-	 * Boolean
+	 * @return True if the Driver is done refilling their Vehicle
 	 */
 	public boolean isDoneRefilling()
 	{
@@ -172,21 +164,10 @@ public class Driver {
 	}
 	
 	/**
-	 * Returns if the Driver is queueing or not
-	 * @return
-	 * true if driver is still queueing
-	 */
-	public boolean isQueueing()
-	{
-		return queueing;
-	}
-	
-	/**
 	 * Returns true if the Driver is still shopping
-	 * @return
-	 * true if driver is still shopping
+	 * @return true if Driver is still shopping
 	 */
-	public boolean stillShopping()
+	private boolean stillShopping()
 	{
 		if(shoppingTime == 0)
 		{
@@ -197,8 +178,7 @@ public class Driver {
 	
 	/**
 	 * Returns if the Driver is in the Shop
-	 * @return
-	 * Boolean true if the driver is shopping
+	 * @return True if the driver is shopping
 	 */
 	public boolean isAtShop()
 	{
@@ -207,8 +187,7 @@ public class Driver {
 	
 	/**
 	 * Returns if the Driver is in the Shop
-	 * @return
-	 * true if the driver is done shopping
+	 * @return True if the driver is done shopping
 	 */
 	public boolean isDone()
 	{
@@ -216,7 +195,7 @@ public class Driver {
 	}
 	
 	/**
-	 * The driver shops, incrementing shoppingTime
+	 * Simulates the Driver shopping, incrementing shoppingTime by one
 	 */
 	private void shop()
 	{
@@ -225,8 +204,7 @@ public class Driver {
 	
 	/**
 	 * Returns vehicle type the driver owns
-	 * @return
-	 * vehicle type the driver owns
+	 * @return String for vehicle type the driver owns
 	 */
 	public String getVehicleType()
 	{
@@ -243,17 +221,8 @@ public class Driver {
 	}
 	
 	/**
-	 * Changes the Driver's queueing state
-	 */
-	public void toggleQueueing()
-	{
-		queueing = !queueing;
-	}
-	
-	/**
 	 * Returns length of shopping in ticks
-	 * @return
-	 * shoppingTime
+	 * @return Value of shoppingTime
 	 */
 	public int getShoppingTime()
 	{
@@ -263,36 +232,48 @@ public class Driver {
 	/**
 	 * Calls the vehicle fill tank method
 	 */
-	public void fillTank()
+	private void fillTank()
 	{
 		vehicle.fill();
 	}
 	
 	/**
 	 * Returns a text representation of Driver
-	 * @return
-	 * Text representation of Driver
+	 * @return Text representation of Driver
 	 */
 	public String toString()
 	{
 		return "Driver of: " + getVehicleType() + " | Vehicle Tank Size: "+ vehicle.getTankSize() +" | Gallons to fill: "+ (vehicle.getTankSize() - vehicle.getTankFilled()) +" | in shop: "+shopping+" | shoppingTime: "+shoppingTime+" | Till Number: "+(tillNumber + 1)+" | tillTime: "+ tillTime +" | Done: "+done;
 	}
 	
+	/**
+	 * Toggles the Driver's 'done' status, meaning they are ready to leave the station
+	 */
 	public void toggleDone()
 	{
 		done = !done;
 	}
 	
+	/**
+	 * Sets the time that the driver will spend paying at the till. This is only called when the driver is at the front of the queue
+	 */
 	public void setTillTime()
 	{
 		tillTime = rnd.nextInt(6)+12;
 	}
 
-	public int waitAtTill() {
-		return tillTime--;
+	/**
+	 * Simulates the driver paying at the till, reducing the amount they have left to wait at the till by one tick
+	 */
+	public void waitAtTill() {
+		tillTime--;
 	}
 	
-	public boolean donePaying(){
+	/**
+	 * Checks if the Driver is done paying at the till (checks if tillTime == 0)
+	 * @return true if tillTime is equal to zero
+	 */
+	public boolean isDonePaying(){
 		if(tillTime == 0)
 		{
 			return true;
@@ -300,35 +281,66 @@ public class Driver {
 		return false;
 	}
 	
+	/**
+	 * Returns the Driver's pump number, the pump their vehicle is at
+	 * @return integer for the Driver's pump number
+	 */
 	public int getPumpNumber()
 	{
 		return pump;
 	}
 
+	/**
+	 * assigns the driver to a specific pump, used to find the driver when leaving the station
+	 * @param pumpNumber the index number for the pump the driver is at
+	 */
 	public void assignPump(int pumpNumber) {
 		pump = pumpNumber;
 	}
 
+	/**
+	 * Returns the total time the Driver has spent at the station thus far
+	 * @return field totalTime
+	 */
 	public int getTotalTime() {
 		return totalTime;
 	}
 
-	public void setTotalTime(int totalTime) {
-		this.totalTime = totalTime;
+	/**
+	 * Adds one tick to the total time the Driver has spent at the station. 
+	 */
+	private void incrementTotalTime() {
+		totalTime++;
 	}
 	
+	/**
+	 * Sets the Driver's till number they are at while paying
+	 * @param tillNumber the index number for the till the Driver is at
+	 */
 	public void setTillNumber(int tillNumber){
 		this.tillNumber = tillNumber;
 	}
 
+	/**
+	 * Checks if the driver did shop 
+	 * @return True if the Driver went shopping
+	 */
 	public boolean didShop() {
 		return didShop;
 	}
 
+	/**
+	 * Returns whether the Driver is at the Pump or not
+	 * @return True if Driver s currently at the pump
+	 */
 	public boolean isAtPump() {
 		return atPump;
 	}
 
+	/**
+	 * Sets the value for atPump
+	 * @param atPump Boolean, true or false depending on the driver's state
+	 */
 	public void setAtPump(boolean atPump) {
 		this.atPump = atPump;
 	}

@@ -25,7 +25,6 @@ public class SimulatorGUI {
 	//mainframe
 	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
 	private JButton startButton = new JButton();
-//	private JButton resetButton = new JButton();
 	private JButton quitButton = new JButton();
 	
 	//log fields
@@ -38,11 +37,19 @@ public class SimulatorGUI {
 		new SimulatorGUI();
 	}
 	
+	/**
+	 * Constructor for SimulatorGUI, creates the main window, containing the log, start and quit buttons
+	 * Also creates drop down fields for the parameters, to prevent adding options multiple times by
+	 * multiple clicks of the start button
+	 */
 	public SimulatorGUI() {
 		
 		JFrame firstFrame;
 		
 		final int blankSpace = 6;  // blank at edge of panels
+		
+		moneyTakenArray = new double[10];
+		moneyLostArray = new double[10];
 		
 //		 Step 1: create the components
 		
@@ -159,6 +166,10 @@ public class SimulatorGUI {
 				firstFrame.setVisible(true);
 	}
 	
+	/**
+	 * Creates and displays the set parameter window,
+	 * where all simulation parameters will be set by the user
+	 */
 	private void setParameters(){
 		
 		final int blankSpace = 6;  // blank at edge of panels
@@ -235,13 +246,13 @@ public class SimulatorGUI {
 		
 			menuFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-			closeWindow();
+			closeWindow(menuFrame);
 			}
 		});    
 			
 			closeWindowButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			closeWindow();
+			closeWindow(menuFrame);
 			}
 		});
 		
@@ -267,15 +278,18 @@ public class SimulatorGUI {
 		}
 	}
 	
-	private void closeWindow() {
-		menuFrame.dispose();
+	/**
+	 * Closes the JFrame passes as a parameter
+	 * @param frame a JFrame object that will be closed
+	 */
+	private void closeWindow(JFrame frame) {
+		frame.dispose();
 	}
-	
-//	private void resetApp(){
-//		log.setText("");
-//		setParameters();
-//	}
 
+	/**
+	 * Disposes of the parameter window and sets all variables to be used in the Simulator constructor
+	 * Then loops through all 10 runs and finds averages of data.
+	 */
 	private void runSimulation(){
 		startButton.setText("Reset");
 		startButton.setToolTipText("Reset the simualtion");
@@ -287,26 +301,56 @@ public class SimulatorGUI {
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodTime.getValue();
 		
-		moneyTakenArray = new double[10];
-		moneyLostArray = new double[10];
+		closeWindow(menuFrame);
 		
-		menuFrame.dispose();
-		
-		for(int i = 0; i < 1; i++){ //To simulate the 10 runs through
+		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
 			System.out.println("Run: " + (i + 1));
 			simulator = new Simulator (p , q, pumps, tills, price);
-			for(int k = 0; k < 200; k++) //To simulate the amount of ticks
+			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
 			{
 				System.out.println("Step: "+ k +"\n");
 			
 				simulator.simulate();
 			
+				//console log. to be removed
 				System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
 				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
 			}
+			
+			//lists the currents run data to the GUI's log
 			listDataToLog(i);
+			
+			//set money taken/lost for this run
+			setRunMoney(i);
 		}
+		
+		outputRunConfig(pumps, tills, p, q, price);
 
+		findAverages();
+	}
+	
+	/**
+	 * outputs the configuration of the simulation to the GUI log
+	 * @param pumps
+	 * @param tills
+	 * @param p
+	 * @param q
+	 * @param price
+	 */
+	private void outputRunConfig(int pumps, int tills, double p, double q, double price) {
+		//appends the configuration of the ten runs to the GUI's log
+		log.append("Configuration:\n");
+		log.append("Pumps: "+pumps+"\n");
+		log.append("Tills: "+tills+"\n");
+		log.append("P: "+p+"\n");
+		log.append("Q: "+q+"\n");
+		log.append("Price: £"+df.format(price)+"\n");
+		log.append("\n");
+	}
+	/**
+	 * finds averages of all data from all 10 runs and outputs to the GUI's log
+	 */
+	private void findAverages() {
 		double avgTakenMoney = 0.0;
 		double avgLostMoney = 0.0;
 		for(double d : moneyTakenArray)
@@ -319,31 +363,34 @@ public class SimulatorGUI {
 			avgLostMoney += d;
 		}
 		
-		log.append("Configuration:\n");
-		log.append("Pumps: "+pumps+"\n");
-		log.append("Tills: "+tills+"\n");
-		log.append("P: "+p+"\n");
-		log.append("Q: "+q+"\n");
-		log.append("Price: £"+df.format(price)+"\n");
-		
-		log.append("\n");
-		
+		//appends the averages for money lost and money gained to the GUI's log
 		log.append("Money Taken average: £"+df.format((avgTakenMoney/10))+"\n");
-
 		log.append("Money Lost average: £"+df.format((avgLostMoney/10))+"\n");
-		
 	}
-	
+
+	/**
+	 * Outputs field data to the GUI log, such as:
+	 * run number, money taken/lost, total vehicles, total vehicles lost
+	 * @param i current run number
+	 */
 	private void listDataToLog(int i) {
-//		log.append(simulator.toString());
+		//list the data of each run to the log
 		log.append("Run: "+(i+1)+"\n");
-		moneyTakenArray[i] = simulator.countTakenMoney();
-		moneyLostArray[i] = simulator.countLostMoney();
 		log.append("Money Taken: £" + df.format(simulator.countTakenMoney())+ "\n");
 		log.append("Money Lost: £" + df.format(simulator.countLostMoney())+ "\n");
 		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
 		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");
 		log.append("\n\n");
+	}
+	
+	/**
+	 * sets the value of moneyTakenArray and moneyLostArray in the 
+	 * respective array index according to the current run
+	 * @param i run number
+	 */
+	private void setRunMoney(int i){
+		moneyTakenArray[i] = simulator.countTakenMoney();
+		moneyLostArray[i] = simulator.countLostMoney();
 	}
 
 }
