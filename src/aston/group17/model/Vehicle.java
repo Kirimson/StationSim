@@ -110,4 +110,6 @@ public abstract class Vehicle {
 	 * Vehicle's amount of money to spend in Shop
 	 */
 	 public abstract double moneySpentForShopping();
+
+	public abstract boolean willShop(int driverTime);
 }

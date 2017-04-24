@@ -23,6 +23,11 @@ public class Bike extends Vehicle {
 	public double moneySpentForShopping() {
 		return 0;
 	}
+
+	@Override
+	public boolean willShop(int driverTime) {
+		return false;
+	}
 	
 
 }
