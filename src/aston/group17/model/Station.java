@@ -29,7 +29,7 @@ public class Station {
 	}
 	
 	/**
-	 * What will happen at the station each tick
+	 * Runs act methods for each part of the station, the Shop and Pump
 	 */
 	public void act()
 	{
@@ -39,32 +39,13 @@ public class Station {
 		{
 			System.out.println(p.toString());
 			if(p.getFirstDriver() != null)
-			{
-				if(!p.getFirstDriver().isInShop())
+			{		
+				if(p.getFirstDriver().isDoneRefilling() && p.getFirstDriver().isAtPump())
 				{
-					if(!p.getFirstDriver().isDoneRefilling())
-					{
-						p.act();
-					}
-					else if(p.getFirstDriver().isDoneRefilling())
-					{
-						addDriverToShop(p.getFirstDriver());
-					}
+					addDriverToShop(p.getFirstDriver());
 				}
-			}
-		}
-		
-		for(Till t : shop.getTills())
-		{
-			if(t.getFirstDriver() != null)
-			{
-				if(t.getFirstDriver().isDone())
-				{
-					System.out.println("DRIVER IS LEAVING THIS SHIT HOLE");
-					pumps.get(t.getFirstDriver().getPumpNumber()).removeDriverFromPumpQueue();
-					shop.removeDriver(t.getFirstDriver());
-					t.removeDriver();
-				}
+				
+				p.act();
 			}
 		}
 	}

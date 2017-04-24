@@ -19,26 +19,26 @@ public class Till {
 
 	public void act()
 	{
-		// if the till is not being used get next driver
-//		if(tillInUse)
-//		{
-			// gets current driver and its money adds it to tills total
+
+		// gets current driver and its money adds it to tills total
 		if(getFirstDriver() != null){
-			if(getFirstDriver().donePaying()){
+			if(getFirstDriver().isDonePaying()){
 
 				addMoneyTaken(getFirstDriver().getPumpMoney());
 				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
 				getFirstDriver().toggleDone();
+				
 				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
+				
 				if(drivers.size() - 1 == 0){
 				tillInUse = false;
 				}else{
 					tillInUse = true;
 				}
+				removeDriver();
 			}
 			else
 			{
-//				System.out.println(getFirstDriver().toString());
 				getFirstDriver().waitAtTill();
 			}
 		}

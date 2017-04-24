@@ -29,9 +29,12 @@ public class Sedan extends Vehicle {
 	
 	@Override
 	public boolean willShop(int driverTime) {
+		int chance = rand.nextInt(10)+1;
 		if(driverTime < 60)
-		{
-			return true;
+			{
+//				if(chance <= 4){
+				return true;
+//			}
 		}
 		return false;
 	}

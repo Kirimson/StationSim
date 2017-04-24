@@ -25,19 +25,24 @@ public class Shop {
 	 */
 	public void act()
 	{
+		ArrayList<Driver> doneDrivers = new ArrayList<Driver>();
 		for(Driver shoppingDriver : shoppingDrivers)
 		{
 			shoppingDriver.act();
 			
-			if(!shoppingDriver.stillShopping() && !shoppingDriver.isQueueing())
+			if(!shoppingDriver.isAtShop())
 			{
-				addDriverToTillQueue(shoppingDriver);
-				if(shoppingDriver.getVehicleType().equals("Bike"))
-				{
-					shoppingDriver.toggleQueueing();
-				}
+				doneDrivers.add(shoppingDriver);
 			}
 		}
+		
+		for(Driver doneDriver : doneDrivers)
+		{
+			addDriverToTillQueue(doneDriver);
+			removeDriver(doneDriver);
+		}
+		
+		doneDrivers.clear();
 		
 		for(Till t : tills)
 		{

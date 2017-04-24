@@ -29,10 +29,9 @@ public class Simulator {
 	
 	public void simulate()
 	{
-		
 		newDriver = generateDriver();
 		if(newDriver != null){
-			System.out.println("New Driver of "+newDriver.getVehicleType()+" approaching");
+			System.out.println("New "+newDriver.getVehicleType()+" Driver approaching");
 			if(!station.addDriverToPumpQueue(newDriver))
 			{
 //				vehicleLeft = true;
@@ -75,22 +74,6 @@ public class Simulator {
 		return tempDriver;
 	}
 	
-//	public String toString()
-//	{
-//		String text = new String();
-//		if(newVehicle && !vehicleLeft)
-//		{
-//			text += "A new vehicle has entered";
-//		}
-//		else if(newVehicle)
-//		{
-//			text += "A vehicle couldn't fit.\n";
-//		}
-//
-//		text += "\n";
-//		return text;
-//	}
-	
 	private void setLost()
 	{
 		moneyLost += (newDriver.getVehicle().getTankSize() - newDriver.getVehicle().getTankFilled()) * price;
@@ -103,11 +86,6 @@ public class Simulator {
 	public double countLostMoney()
 	{
 		return moneyLost;
-	}
-	
-	public void resetStats(){
-		moneyLost = 0;
-		// moneyTaken = 0;
 	}
 
 	public int getTotalVehicles() {
