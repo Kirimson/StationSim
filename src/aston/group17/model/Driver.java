@@ -4,7 +4,11 @@ import java.util.Random;
 public class Driver {
 
 	private boolean shopping, wait, done, doneRefilling, didShop, atPump;
-	private int  totalTime, shoppingTime, tillTime, pump, tillNumber;
+	protected int  totalTime;
+	private int shoppingTime;
+	private int tillTime;
+	private int pump;
+	private int tillNumber;
 	private double moneySpentPump, moneySpentShop;
 	private Vehicle vehicle;
 	private String vehicleType;
@@ -73,6 +77,7 @@ public class Driver {
 				doneRefilling = true;
 				setShopSpendingAmount();
 				setShoppingTime();
+				setProbability();
 			}
 		}
 		incrementTotalTime();
@@ -351,5 +356,15 @@ public class Driver {
 	 */
 	private void setAtPump(boolean atPump) {
 		this.atPump = atPump;
+	}
+	
+	public void setProbability()
+	{
+		System.out.println("Is Normal");
+	}
+	
+	public double getProbability()
+	{
+		return 0;
 	}
 }

@@ -9,12 +9,14 @@ public class Simulator {
 	private Station station;
 	private Random rnd;
 	private Driver newDriver;
+	private boolean trucks;
 	
-	public Simulator(double p, double q, int pumps, int tills, double price)
+	public Simulator(double p, double q, int pumps, int tills, double price, boolean trucks)
 	{
 		t = 0.02;
 		this.p = p;
 		this.q = q;
+		this.trucks = trucks;
 		
 		station = new Station(pumps, tills, price);
 		rnd = new Random();
@@ -34,6 +36,8 @@ public class Simulator {
 	private Driver generateDriver(){
 		Driver tempDriver = null;
 		double random = rnd.nextDouble();
+//		System.out.println(random);
+		t = new TruckDriver().getProbability();
 		
 		if(random <= p){
 			tempDriver = new Driver("Car");
@@ -41,11 +45,13 @@ public class Simulator {
 			tempDriver = new Driver("Bike");
 		}else if(random <= 2*p + q){
 			tempDriver = new Driver("Sedan");
-		}else if(random <= 2*p + q + t){
-			tempDriver = new Driver("Truck");
+		}else if(random <= 2*p + q + t && trucks){
+			tempDriver = new TruckDriver();
 		}else{
 			return tempDriver;
 		}
+		System.out.println("boo2 "+ t);
+		System.out.println("aa: " + new TruckDriver().getAa());
 		return tempDriver;
 	}
 	
@@ -69,5 +75,9 @@ public class Simulator {
 
 	public int getTotalLostVehicles() {
 		return station.getTotalLostVehicles();
+	}
+
+	public void resetTruck() {
+		new TruckDriver().setProbability(0.02);
 	}
 }

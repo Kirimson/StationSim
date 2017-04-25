@@ -18,21 +18,21 @@ import javax.swing.event.*;
 public class LabeledSlider extends JComponent {
 	
 	private static final long serialVersionUID = 6511929653284188062L;
-	private String labelString;
+	private String labelLString, labelRString;
 	private JLabel label;
 	private JSlider slider;
 	private int divider;
-	private boolean reversed;
 	
-	public LabeledSlider(String text, int min, int max, int value, int divider, boolean reversed) {
+	public LabeledSlider(String lText, String rText, int min, int max, int value, int divider) {
 		this.setDoubleBuffered(true);
-		this.reversed = reversed;
 		this.divider = divider;
 		
 		label = new JLabel();
-		labelString = new String(text);
+		labelLString = lText;
+		labelRString = rText;
 		
 		setCustomLabel(value);
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		slider = new JSlider(min, max, value);
 		
@@ -41,10 +41,9 @@ public class LabeledSlider extends JComponent {
 		slider.setPaintTicks(true);
 		slider.addChangeListener(new SliderListener());
 		
-		this.setLayout(new BorderLayout());
-		this.add(label, BorderLayout.NORTH);
-		this.add(slider, BorderLayout.SOUTH);
-		this.setBorder(BorderFactory.createEtchedBorder());
+		this.setLayout(new GridLayout(1, 1, 10, 10));
+		this.add(label);
+		this.add(slider);
 		
 	}
 	
@@ -76,26 +75,11 @@ public class LabeledSlider extends JComponent {
 	{
 		if(divider != 1)
 		{
-			if(reversed)
-			{
-				label.setText((double)value/divider+labelString);
-			}
-			else
-			{
-				label.setText(labelString + (double)value/divider);
-			}
-			
+				label.setText(labelLString + (double)value/divider + labelRString);
 		}
 		else
 		{
-			if(reversed)
-			{
-				label.setText(value + labelString);
-			}
-			else
-			{
-				label.setText(labelString + value);
-			}
+				label.setText(labelLString + value + labelRString);
 		}
 	}
 }

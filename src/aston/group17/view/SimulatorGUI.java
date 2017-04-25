@@ -22,6 +22,7 @@ public class SimulatorGUI {
 	private	JComboBox<Integer> pumpChoice = new JComboBox<Integer>();
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodSlider;
+	private JCheckBox truckBox = new JCheckBox();
 	
 	//mainframe
 	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
@@ -76,11 +77,11 @@ public class SimulatorGUI {
 			qChoice.addItem(0.04);
 			qChoice.addItem(0.05);
 			
-			priceSlider = new LabeledSlider("£", 100, 400, 120, 100, false);
-			priceSlider.setMajorTickSpacing(50);
-			createSliderLabels(priceSlider, 100, 400, 50, 100, true);
+			priceSlider = new LabeledSlider("Price of fuel: £", "", 100, 400, 120, 100);
+			priceSlider.setMajorTickSpacing(100);
+			createSliderLabels(priceSlider, 100, 400, 100, 100, true);
 			
-			periodSlider = new LabeledSlider(" Hours", 1, 8, 4, 1, true);
+			periodSlider = new LabeledSlider("Duration: ", " Hours", 1, 8, 4, 1);
 			periodSlider.setMajorTickSpacing(1);
 			
 			pumpChoice.addItem(1);
@@ -112,20 +113,16 @@ public class SimulatorGUI {
 			
 			//mainframe
 			firstFrame.setLayout(new BorderLayout());
-			((JPanel)firstFrame.getContentPane()).setBorder(new 
-					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
+			((JPanel)firstFrame.getContentPane()).setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 			
 			buttons.setLayout(new FlowLayout());
-			buttons.setBorder(new 
-					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
+			buttons.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 					
 			log.setLayout(new FlowLayout());
-			log.setBorder(new 
-					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
+			log.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 					
 			title.setLayout(new FlowLayout());
-			title.setBorder(new 
-					EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
+			title.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 			
 //		 Step 5: Add components to containers 
 			
@@ -171,29 +168,20 @@ public class SimulatorGUI {
 		log.setText("");
 //	Step 1: create the components for the
 		
-		JButton runButton = new JButton();
-		JButton closeWindowButton = new JButton();
+		JButton runButton = new JButton("Run");
+		JButton closeWindowButton = new JButton("Close");
 		
-		JLabel pLabel = new JLabel();
-		JLabel qLabel = new JLabel();
-		JLabel pumpLabel = new JLabel();
-		JLabel tillLabel = new JLabel(); 
-		JLabel priceLabel = new JLabel();
-		JLabel ticksLabel = new JLabel();
+		JLabel pLabel = new JLabel("Probability of P:  ", SwingConstants.RIGHT);
+		JLabel qLabel = new JLabel("Probability of Q:  ", SwingConstants.RIGHT);
+		JLabel pumpLabel = new JLabel("Amount of pumps:  ", SwingConstants.RIGHT);
+		JLabel tillLabel = new JLabel("Amount of tills:  ", SwingConstants.RIGHT); 
+		JLabel truckLabel = new JLabel("Include Trucks:  ", SwingConstants.RIGHT);
 		
 //		 Step 2: Set the properties of the components
 	
-		runButton.setText("Run");
 		runButton.setToolTipText("Run the simulation");
-		closeWindowButton.setText("Close");
 		closeWindowButton.setToolTipText("Close window");
-		
-		pLabel.setText("Set probability of P: ");
-		qLabel.setText("Set probability of Q: ");
-		priceLabel.setText("Set price of fuel: ");
-		tillLabel.setText("Set number of Tills: ");
-		pumpLabel.setText("Set number of Pumps: ");
-		ticksLabel.setText("Set duration of simulation: ");
+		truckBox.setSelected(true);
 		
 //	Step 3: Create containers to hold the components
 		menuFrame = new JFrame("Set Parameters");
@@ -206,13 +194,15 @@ public class SimulatorGUI {
 //	 Step 4: Specify LayoutManagers
 		menuFrame.setLayout(new BorderLayout());
 		((JPanel)menuFrame.getContentPane()).setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
+		menuFrame.setPreferredSize(new Dimension(375,400));
+		
 		
 		buttons.setLayout(new FlowLayout());
 		buttons.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 		
 		sliders.setLayout(new GridLayout(2, 1, 0, 10));
 
-		combos.setLayout(new GridLayout(4, 1, 0, 10));
+		combos.setLayout(new GridLayout(5, 1, 0, 10));
 		combos.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
 		
 //	 Step 5: Add components to containers 
@@ -225,16 +215,17 @@ public class SimulatorGUI {
 		combos.add(qLabel);
 		combos.add(qChoice);
 				
-		sliders.add(priceLabel);
-		sliders.add(priceSlider);
-		
 		combos.add(pumpLabel);
 		combos.add(pumpChoice);
 		
 		combos.add(tillLabel);
 		combos.add(tillChoice);
 		
-		sliders.add(ticksLabel);
+		combos.add(truckLabel);
+		combos.add(truckBox);
+		
+		sliders.add(priceSlider);
+		
 		sliders.add(periodSlider);
 		
 		menuFrame.add(combos, BorderLayout.NORTH);
@@ -299,15 +290,16 @@ public class SimulatorGUI {
 		int pumps = (Integer)pumpChoice.getSelectedItem();
 		int tills = (Integer)tillChoice.getSelectedItem();
 		int ticks = periodSlider.getValue()*360;
+		boolean trucks = truckBox.isSelected();
 		
 		closeWindow(menuFrame);
 		
 		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
 			System.out.println("Run: " + (i + 1));
-			simulator = new Simulator (p , q, pumps, tills, price);
+			simulator = new Simulator (p , q, pumps, tills, price, trucks);
 			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
 			{
-				System.out.println("Step: "+ k +"\n");
+				System.out.println("\nStep: "+ k +"\n");
 			
 				simulator.simulate();
 			
@@ -316,7 +308,7 @@ public class SimulatorGUI {
 				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
 				System.out.println("Money Lost in Sales: £" + df.format(simulator.countLostSales()));
 			}
-			
+			simulator.resetTruck();
 			//lists the currents run data to the GUI's log
 			listDataToLog(i);
 			
