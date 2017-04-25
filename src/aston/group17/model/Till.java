@@ -9,6 +9,11 @@ public class Till {
 	private boolean tillInUse;
 	private int tillNumber;
 
+	/**
+	 * A Till which contains a queue of Drivers and keeps track of money made from
+	 * Pumps and Shops well as money lost from unhappy Drivers
+	 * @param number Number Till this is in the Shop. Purely used for Console output. Can be made redundant
+	 */
 	public Till(int number)
 	{
 		moneyTaken = 0;
@@ -17,17 +22,20 @@ public class Till {
 		tillNumber = number;
 	}
 
+	/**
+	 * Till allows the first Driver in the queue to act,
+	 * and adds their money to the Till's moneyEarnt if they have finished paying
+	 */
 	public void act()
 	{
-
 		// gets current driver and its money adds it to tills total
 		if(getFirstDriver() != null){
-			if(getFirstDriver().isDonePaying()){
-
-				addMoneyTaken(getFirstDriver().getPumpMoney());
-				addMoneyTaken(getFirstDriver().getShopSpendingAmount());
-				getFirstDriver().toggleDone();
-				
+			
+			getFirstDriver().act();
+			
+			if(getFirstDriver().isDone()){
+				addMoneyTaken(getFirstDriver().getPumpMoney() + getFirstDriver().getShopMoney());
+								
 				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
 				
 				if(drivers.size() - 1 == 0){
@@ -37,20 +45,14 @@ public class Till {
 				}
 				removeDriver();
 			}
-			else
-			{
-				getFirstDriver().waitAtTill();
-			}
 		}
 	}
 	
 
 	/**
-	 * Returns the queue at the till
-	 * @return
-	 * returns a boolean of the till status
+	 * Returns the Till's current use status
+	 * @return True if the Till has an empty queue
 	 */
-
 	public boolean isTillInUse()
 	{
 		return tillInUse;
@@ -58,29 +60,24 @@ public class Till {
 
 	/**
 	 * Adds a Driver to the Till
-	 * @param d
-	 * Driver to be added to the Till
+	 * @param d Driver to be added to the Till queue
 	 */
-
 	public void addDriver(Driver d)
 	{
-		d.setTillTime();
 		d.setTillNumber(tillNumber);
 		drivers.add(d);
 		
-		if(d.didShop())
+		if(!d.didShop())
 		{
-			moneyLost += d.getShopSpendingAmount();
+			moneyLost += d.getShopMoney();
 		}
 		
-		System.out.println("Driver has entered the till queue");
 		setTillInUse();
 	}
 
 	/**
 	 * Gets the current shopping Driver
-	 * @return
-	 * Driver object
+	 * @return Driver object at the 0th index of the driver ArrayList
 	 */
 	public Driver getFirstDriver()
 	{
@@ -92,12 +89,20 @@ public class Till {
 
 	/**
 	 * Returns the total money taken in from that till
-	 * @return
-	 * returns the amount of money the till has taken
+	 * @return The amount of money the till has taken
 	 */
 	public double getMoneyTaken()
 	{
 		return moneyTaken;
+	}
+	
+	/**
+	 * Returns the total money lost from potential sales
+	 * @return The amount of money the till has lost
+	 */
+	public double getMoneyLost()
+	{
+		return moneyLost;
 	}
 
 	/**
@@ -110,14 +115,17 @@ public class Till {
 
 	/**
 	 * Adds money taken at till to total
-	 * @param money
-	 * The amount of money the driver gives the till, includes both shop purchase and pump purchase
+	 * @param money The amount of money the driver gives the till
 	 */
 	public void addMoneyTaken(double money)
 	{
 		moneyTaken += money;
 	}
 
+	/**
+	 * Returns the size of the Tiil's queue
+	 * @return Int of the Till's queue size
+	 */
 	public int getQueueLength() {
 		if(!tillInUse)
 		{
@@ -126,6 +134,9 @@ public class Till {
 		return drivers.size();
 	}
 	
+	/**
+	 * Removes the front Driver of the queue
+	 */
 	public void removeDriver()
 	{
 		drivers.remove(getFirstDriver());

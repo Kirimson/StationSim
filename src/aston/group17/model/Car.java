@@ -27,17 +27,4 @@ public class Car extends Vehicle {
 		return moneySpent;
 	}
 
-	@Override
-	public boolean willShop(int driverTime) {
-		int chance = rand.nextInt(10)+1;
-		
-		if(driverTime < 30)
-		{
-//			if(chance <= 3 ){
-				return true;
-//			}
-			
-		}
-		return false;
-	}
 }

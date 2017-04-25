@@ -1,6 +1,9 @@
 package aston.group17.view;
 
 import java.awt.*;
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -18,11 +21,19 @@ public class LabeledSlider extends JComponent {
 	private String labelString;
 	private JLabel label;
 	private JSlider slider;
+	private int divider;
+	private boolean reversed;
 	
-	public LabeledSlider(String text, int min, int max, int value) {
+	public LabeledSlider(String text, int min, int max, int value, int divider, boolean reversed) {
 		this.setDoubleBuffered(true);
-		label = new JLabel(text + value);
+		this.reversed = reversed;
+		this.divider = divider;
+		
+		label = new JLabel();
 		labelString = new String(text);
+		
+		setCustomLabel(value);
+		
 		slider = new JSlider(min, max, value);
 		
 		// Set slider properties
@@ -51,7 +62,39 @@ public class LabeledSlider extends JComponent {
 		public void stateChanged(ChangeEvent e) {
 			if (!slider.getValueIsAdjusting()) {
 				int number = slider.getValue();
-				label.setText(labelString + number);
+				setCustomLabel(number);
+			}
+		}
+	}
+	
+	public void changeLabels(Hashtable<Integer, JLabel> labelTable)
+	{
+		slider.setLabelTable( labelTable );
+	}
+	
+	private void setCustomLabel(int value)
+	{
+		if(divider != 1)
+		{
+			if(reversed)
+			{
+				label.setText((double)value/divider+labelString);
+			}
+			else
+			{
+				label.setText(labelString + (double)value/divider);
+			}
+			
+		}
+		else
+		{
+			if(reversed)
+			{
+				label.setText(value + labelString);
+			}
+			else
+			{
+				label.setText(labelString + value);
 			}
 		}
 	}

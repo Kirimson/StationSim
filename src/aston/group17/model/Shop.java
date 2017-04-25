@@ -8,8 +8,7 @@ public class Shop {
 
 	/**
 	 * Creates a new Shop object with the specified amount of Tills
-	 * @param amount
-	 * Amount of tills wanted
+	 * @param amount Amount of tills wanted
 	 */
 	public Shop(int amount){
 		tills = new ArrayList<Till>();
@@ -21,7 +20,8 @@ public class Shop {
 	}
 	
 	/**
-	 * 
+	 * Gets all shopping Drivers to act while in Shop.
+	 * If Driver is done shopping they are moved into a Till and removed from the Shop
 	 */
 	public void act()
 	{
@@ -55,25 +55,27 @@ public class Shop {
 	
 	/**
 	 * Adds a driver to the shop, who will begin shopping
-	 * @param d
-	 * Driver to add to the shop
+	 * @param d Driver to add to the shop
 	 */
 	public void addNewDriver(Driver d)
 	{
 		shoppingDrivers.add(d);
 	}
 	
-	public void removeDriver(Driver d)
+	/**
+	 * Removes a Driver from the Shop
+	 * @param d Driver to be removed
+	 */
+	private void removeDriver(Driver d)
 	{
 		shoppingDrivers.remove(d);
 	}
 	
 	/**
-	* Returns a till that is not in use, first till that is free will be used, if any
-	* @return
-	* Returns the first Till object in tills that is not in sue. If all tills are in use, it returns null
+	* Adds a Driver d to the shortest Till queue
+	* @param d Driver to add to the Till queue
 	*/
-	public void addDriverToTillQueue(Driver d){
+	private void addDriverToTillQueue(Driver d){
 		Till shortestTill = tills.get(0);
 		for(Till t : tills)
 		{
@@ -86,33 +88,33 @@ public class Shop {
 	}
 	
 	/**
-	 * adds all money gained from each pump and shop and adds it to moneyEarnt
-	 * Might just be called at the end of simulation to get all money in one central place, not sure yet
-	 * @return
-	 * the amount of money made at all tills as of calling the method
+	 * Adds all money gained from each till and adds it to moneyEarnt
+	 * @return The amount of money made at all tills as of calling the method
 	 */
 	public double countMoney()
 	{	
 		double moneyEarnt = 0;
-		for(Till s : tills)
+		for(Till t : tills)
 		{
-			moneyEarnt += s.getMoneyTaken();
+			moneyEarnt += t.getMoneyTaken();
 		}
 		
 		return moneyEarnt;
 	}
 	
-	public ArrayList<Till> getTills()
-	{
-		return tills;
+	/**
+	 * Adds all money lost from lost sales from each till and adds it to moneyLost
+	 * @return The amount of money lost in extra shop sales
+	 */
+	public double countMoneyLost()
+	{	
+		double moneyLost = 0;
+		for(Till t : tills)
+		{
+			moneyLost += t.getMoneyLost();
+		}
+		
+		return moneyLost;
 	}
 	
-	public boolean isEmpty()
-	{
-		if(shoppingDrivers.size() == 0)
-		{
-			return true;
-		}
-		return false;
-	}
 }
