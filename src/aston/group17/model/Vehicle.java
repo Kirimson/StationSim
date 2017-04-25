@@ -8,10 +8,10 @@ public abstract class Vehicle {
 	private int gallonsFilled;
 	private Random rand;
 	protected String vehicleType;
-	private boolean inQueue;
 	
 	/**
-	 * Constructor for Vehicles, sets their tank size and amount filled on creation
+	 * A Vehicle with a tankSize, amountFilled on creation. Will be filled at the Pump.
+	 * A Driver has-a Vehicle
 	 * @param range
 	 * range from minimum value to max value (inclusive)
 	 * @param minTank
@@ -78,7 +78,7 @@ public abstract class Vehicle {
 	  */
 	 public String toString()
 	 {
-		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled + ". In Queue: " + inQueue;
+		 return "Type: " + vehicleType + ". Tank Size: " + tankSize + ". Amount Filled: " + gallonsFilled;
 	 }
 	 
 	 public boolean isFull()
@@ -110,6 +110,4 @@ public abstract class Vehicle {
 	 * Vehicle's amount of money to spend in Shop
 	 */
 	 public abstract double moneySpentForShopping();
-
-	public abstract boolean willShop(int driverTime);
 }

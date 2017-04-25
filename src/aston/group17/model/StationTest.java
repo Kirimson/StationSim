@@ -90,24 +90,11 @@ public class StationTest {
 			carDrivers.add(new Driver("Car"));
 		}
 		
-		int p = 0;
 		for(Driver d: carDrivers)
 		{
-			if(s.addDriverToPumpQueue(d))
-			{System.out.println("c"+ p + " in");}
-			else
-			{
-//				System.out.println("c"+p +" not in");
-				if(p != 3)
-				{
-					fail();
-				}
-			}
-//			System.out.println(findVehicle(s, d));
-			p++;
-			}
+			s.addDriverToPumpQueue(d);
 		}
-	
+	}
 	
 	@Test
 	public void testMultiplePumpFull()
@@ -121,21 +108,10 @@ public class StationTest {
 			sedanDrivers.add(new Driver("Sedan"));
 		}
 		
-		int p = 0;
 		for(Driver d: sedanDrivers)
 		{
-			if(s.addDriverToPumpQueue(d))
-			{System.out.println("s"+p +" in");}
-			else
-			{
-//				System.out.println("s"+p +" not in");
-				if(p != 4)
-				{
-					fail();
-				}
-			}
+			s.addDriverToPumpQueue(d);
 			System.out.println(findVehicle(s, d));
-			p++;
 			}
 		}
 	

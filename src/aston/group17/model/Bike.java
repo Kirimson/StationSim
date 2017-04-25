@@ -24,10 +24,4 @@ public class Bike extends Vehicle {
 		return 0;
 	}
 
-	@Override
-	public boolean willShop(int driverTime) {
-		return false;
-	}
-	
-
 }

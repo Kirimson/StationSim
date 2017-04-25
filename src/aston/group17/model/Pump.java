@@ -3,6 +3,10 @@ package aston.group17.model;
 
 import java.util.ArrayList;
 
+/**
+ * @author kieran
+ *
+ */
 public class Pump {
 
 	private double unitSpaceAvailable;
@@ -11,6 +15,11 @@ public class Pump {
 	private ArrayList<Driver> queue;
 	private double priceOfFuel = 1.2;
 	
+	/**
+	 * A pump which will contain a queue of Drivers and will be used to fill vehicles using fuel, set to a price by the Station
+	 * @param price Price of fuel
+	 * @param pumpNumber Number pump at the Station
+	 */
 	public Pump(double price, int pumpNumber){
 		priceOfFuel = price;
 		this.pumpNumber = pumpNumber;
@@ -34,7 +43,7 @@ public class Pump {
 		}
 		else if(getFirstDriver().isDone())
 		{
-			removeDriverFromPumpQueue();
+			removeDriver();
 			System.out.println("Driver is leaving");
 		}
 	}
@@ -64,8 +73,7 @@ public class Pump {
 	/**
 	 * Adds a driver to the pump queue, assigns the Driver their pump number
 	 * and reduces the Pump's unitSpaceAvailable according to the Driver's Vehicle's unitSize
-	 * @param driver 
-	 * The driver to be added
+	 * @param driver The driver to be added
 	 */
 	public void addToPumpQueue(Driver driver){
 		queue.add(driver);
@@ -77,15 +85,14 @@ public class Pump {
 	* Removes a Driver from the Pump's queue, adding to the Pumps unitSpaceAvaiable
 	* according to the Driver's Vehicle's unitSize
 	*/
-	public void removeDriverFromPumpQueue(){
+	public void removeDriver(){
 		unitSpaceAvailable += getFirstDriver().getVehicle().getUnitSize();
 		queue.remove(0);
 	}
 	
 	/**
 	* Returns list of vehicles in the pumps queue
-	* @return
-	* Queue field, containing ArrayList of Drivers
+	* @return Queue field, containing ArrayList of Drivers
 	*/
 	public ArrayList<Driver> getVehicleQueue()
 	{
@@ -94,8 +101,7 @@ public class Pump {
 	
 	/**
 	 * Returns the first driver in the pump queue (the one at the pump itself)
-	 * @return
-	 * First driver in queue
+	 * @return First driver in queue
 	 */
 	public Driver getFirstDriver()
 	{
@@ -105,10 +111,8 @@ public class Pump {
 	
 	/**
 	 * Checks if the vehicle will fit inside the queue
-	 * @param size
-	 * Vehicle size that will be compared against the queue
-	 * @return
-	 * Boolean which is true if vehicle can fit in pump queue, false if not
+	 * @param size Vehicle size that will be compared against the queue
+	 * @return Boolean which is true if vehicle can fit in pump queue, false if not
 	 */
 	public boolean willVehicleFit(double size)
 	{
@@ -119,9 +123,13 @@ public class Pump {
 		return false;
 	}
 	
+	
+	/**
+	 * Returns the amount of space left at the Pump
+	 * @return double of unitSpaceAvailable
+	 */
 	public double getUnitSpaceAvailable(){
 		return unitSpaceAvailable;
-		
 	}
 	
 	public String toString()

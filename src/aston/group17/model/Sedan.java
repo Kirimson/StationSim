@@ -12,7 +12,6 @@ public class Sedan extends Vehicle {
 		rand = new Random();
 	}
 	
-
 	public double getUnitSize() {
 		return UNIT_SIZE;
 	}
@@ -27,15 +26,4 @@ public class Sedan extends Vehicle {
 		return moneySpent;
 	}
 	
-	@Override
-	public boolean willShop(int driverTime) {
-		int chance = rand.nextInt(10)+1;
-		if(driverTime < 60)
-			{
-//				if(chance <= 4){
-				return true;
-//			}
-		}
-		return false;
-	}
 }

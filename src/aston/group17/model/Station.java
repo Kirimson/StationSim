@@ -6,16 +6,18 @@ import java.util.ArrayList;
 public class Station {
 	private Shop shop;
 	private ArrayList<Pump> pumps;
+	private int totalVehicles, totalLostVehicles;
+	private double moneyLost, fuelPrice;
 	
 	/**
-	 * Constructs a new Station class
-	 * @param pAmount
-	 * Amount of pumps the Station will have
-	 * @param tAmount
-	 * Amount of shops the Station will have
+	 * Contains a Shop and an ArrayList of Pumps, manages where Drivers will go
+	 * @param pAmount Amount of pumps the Station will have
+	 * @param tAmount Amount of tills the Shop will have
+	 * @param price Price of fuel at the Station
 	 */
 	public Station(int pAmount, int tAmount, double price)
 	{
+		fuelPrice = price;
 		//create a Shop and create tills inside depending on how many tills were specified in tAmount
 		shop = new Shop(tAmount);
 		
@@ -29,7 +31,8 @@ public class Station {
 	}
 	
 	/**
-	 * Runs act methods for each part of the station, the Shop and Pump
+	 * Runs act methods for each part of the station, the Shop and Pump.
+	 * If Driver is done at the Pump they are added to the Shop
 	 */
 	public void act()
 	{
@@ -51,19 +54,18 @@ public class Station {
 	}
 	
 	/**
-	* Sends customer to the shortest till queue
+	* Adds a Driver to the shortest till queue
+	* @param d Driver to be added to Shop
 	*/
-	public void addDriverToShop(Driver driver){
-		driver.toggleShopping();
-		shop.addNewDriver(driver);
+	public void addDriverToShop(Driver d){
+		d.toggleShopping();
+		shop.addNewDriver(d);
 	}
 	
 	/**
 	 * Returns the shortest pump queue, checks all pumps for the one with the shortest queue, then checks if the vehicle will fit in the shortest queue
-	 * @param v
-	 * a vehicle that will be checked against the queue to see if it can fit in any queue
-	 * @return
-	 * returns the pump object the vehicle will go in to. Returns null if v cannot fit in any pump queue
+	 * @param v Vehicle that will be checked against the queue to see if it can fit in any queue
+	 * @return The pump object the vehicle will go in to. Returns null if v cannot fit in any pump queue
 	 */
 	public Pump getShortestPumpQueue(Vehicle v){
 		Pump shortestPump = pumps.get(0);
@@ -83,10 +85,8 @@ public class Station {
 	
 	/**
 	 * Gets a specified pump
-	 * @param pump
-	 * the pump number you want to return
-	 * @return
-	 * Pump object
+	 * @param pump Pump number you want to return
+	 * @return Pump object
 	 */
 	public Pump getPump(int pump)
 	{
@@ -94,9 +94,8 @@ public class Station {
 	}
 	
 	/**
-	 * Gets the ArrayList of Pump
-	 * @return
-	 * ArrayList of Pump
+	 * Returns the ArrayList of Pumps
+	 * @return ArrayList of Pump
 	 */
 	public ArrayList<Pump> getPumpArray()
 	{
@@ -105,47 +104,74 @@ public class Station {
 	
 	/**
 	 * Adds vehicle to the shortest pump queue.
-	 * @param driver
-	 * the driver to be added to the pump queue
-	 * @return
-	 * a true or false value, depending on whether the driver could join a queue or not
+	 * @param d The driver to be added to the pump queue
+	 * @return True if the Driver joined the Pump queue
 	 */
-	public boolean addDriverToPumpQueue(Driver driver){
-		Pump shortestPump = getShortestPumpQueue(driver.getVehicle());
+	public void addDriverToPumpQueue(Driver d){
+		Pump shortestPump = getShortestPumpQueue(d.getVehicle());
 		
 		if(shortestPump != null)
 		{
-			shortestPump.addToPumpQueue(driver);
-			System.out.println(findVehicle(driver)+" ");
-			return true;
+			shortestPump.addToPumpQueue(d);
+			totalVehicles++;
 		}
-		return false;
+		else
+		{
+			System.out.println("Couldn't Fit in pumps. Driver leaving");
+			moneyLost += (d.getVehicle().getTankSize() - d.getVehicle().getTankFilled()) * fuelPrice;
+			totalLostVehicles++;
+		}
 	}
 	
 	/**
-	 * Gets the Station's Shop
-	 * @return
-	 * Shop
+	 * Gets the Station's Shop object
+	 * @return Shop object
 	 */
 	public Shop getShop()
 	{
 		return shop;
 	}
 	
-	private String findVehicle(Driver d)
+	/**
+	 * Returns the amount of money the Station has lost from Vehicles unable to fit in the Pump queues
+	 * @return Integer for moneyLost
+	 */
+	public double getMoneyLost()
 	{
-		int i = 0;
-		for(Pump p : getPumpArray())
-		{
-			if(p.getVehicleQueue().contains(d))
-			{
-				return "New "+d.getVehicleType()+" driver in pump "+i;
-			}
-			i++;
-		}
-		return "Not in pump";
+		return moneyLost;
 	}
+	
+	/**
+	 * Returns the amount of money gained from the Shop
+	 * @return Double of total money gained from the Shop's Tills
+	 */
 	public double countMoney(){
 		return shop.countMoney();
 	}
+
+	/**
+	 * Returns the amount of money lost from unhappy Drivers
+	 * @return Double of total money lost from lost Driver sales
+	 */
+	public double countLostSales() {
+		return shop.countMoneyLost();
+	}
+
+	/**
+	 * Returns the number of vehicles that left the station due to it being full
+	 * @return Integer of totalLostVehicles
+	 */
+	public int getTotalLostVehicles() {
+		return totalLostVehicles;
+	}
+
+	/**
+	 * Returns the number of vehicles that have entered the Station
+	 * @return Integer of totalVehicles
+	 */
+	public int getTotalVehicles() {
+		return totalVehicles;
+	}
+	
+	
 }

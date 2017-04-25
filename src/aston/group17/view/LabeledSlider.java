@@ -1,6 +1,9 @@
 package aston.group17.view;
 
 import java.awt.*;
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -15,14 +18,22 @@ import javax.swing.event.*;
 public class LabeledSlider extends JComponent {
 	
 	private static final long serialVersionUID = 6511929653284188062L;
-	private String labelString;
+	private String labelLString, labelRString;
 	private JLabel label;
 	private JSlider slider;
+	private int divider;
 	
-	public LabeledSlider(String text, int min, int max, int value) {
+	public LabeledSlider(String lText, String rText, int min, int max, int value, int divider) {
 		this.setDoubleBuffered(true);
-		label = new JLabel(text + value);
-		labelString = new String(text);
+		this.divider = divider;
+		
+		label = new JLabel();
+		labelLString = lText;
+		labelRString = rText;
+		
+		setCustomLabel(value);
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		
 		slider = new JSlider(min, max, value);
 		
 		// Set slider properties
@@ -30,10 +41,9 @@ public class LabeledSlider extends JComponent {
 		slider.setPaintTicks(true);
 		slider.addChangeListener(new SliderListener());
 		
-		this.setLayout(new BorderLayout());
-		this.add(label, BorderLayout.NORTH);
-		this.add(slider, BorderLayout.SOUTH);
-		this.setBorder(BorderFactory.createEtchedBorder());
+		this.setLayout(new GridLayout(1, 1, 10, 10));
+		this.add(label);
+		this.add(slider);
 		
 	}
 	
@@ -51,8 +61,25 @@ public class LabeledSlider extends JComponent {
 		public void stateChanged(ChangeEvent e) {
 			if (!slider.getValueIsAdjusting()) {
 				int number = slider.getValue();
-				label.setText(labelString + number);
+				setCustomLabel(number);
 			}
+		}
+	}
+	
+	public void changeLabels(Hashtable<Integer, JLabel> labelTable)
+	{
+		slider.setLabelTable( labelTable );
+	}
+	
+	private void setCustomLabel(int value)
+	{
+		if(divider != 1)
+		{
+				label.setText(labelLString + (double)value/divider + labelRString);
+		}
+		else
+		{
+				label.setText(labelLString + value + labelRString);
 		}
 	}
 }
