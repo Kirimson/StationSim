@@ -159,13 +159,13 @@ public class Driver {
 	{		
 		if(willShop(totalTime))
 		{
-			System.out.println("Did shop: "+ vehicleType);
+//			System.out.println("Did shop: "+ vehicleType);
 			didShop = true;
 			shoppingTime = vehicle.timeToSpendShopping();
 		}
 		else
 		{
-			System.out.println("Didn't shop: "+vehicleType);
+//			System.out.println("Didn't shop: "+vehicleType);
 			didShop = false;
 			shoppingTime = 0;
 		}
@@ -360,7 +360,7 @@ public class Driver {
 	
 	public void setProbability()
 	{
-		System.out.println("Is Normal");
+//		System.out.println("Is Normal");
 	}
 	
 	public double getProbability()

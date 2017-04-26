@@ -30,7 +30,7 @@ public class Simulator {
 		}
 		
 		station.act();
-		System.out.println();
+//		System.out.println();
 	}
 	
 	private Driver generateDriver(){
@@ -50,8 +50,8 @@ public class Simulator {
 		}else{
 			return tempDriver;
 		}
-		System.out.println("boo2 "+ t);
-		System.out.println("aa: " + new TruckDriver().getAa());
+//		System.out.println("boo2 "+ t);
+//		System.out.println("aa: " + new TruckDriver().getAa());
 		return tempDriver;
 	}
 	

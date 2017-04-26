@@ -19,19 +19,19 @@ public class TruckDriver extends Driver{
 			if(probability != 0.02)
 			{
 				probability = probability * 1.05;
-				System.out.println("increased t");
+//				System.out.println("increased t");
 				aa=aa+5;
 			}
-			System.out.println("no chnage to t");
+//			System.out.println("no chnage to t");
 		}
 		else
 		{
 			probability = probability * 0.8;
 			aa=aa-20;
-			System.out.println("decreased t");
+//			System.out.println("decreased t");
 		}
 
-		System.out.println("woo2 "+probability + " aa: "+aa);
+//		System.out.println("woo2 "+probability + " aa: "+aa);
 	}
 	
 	public void setProbability(double i)
