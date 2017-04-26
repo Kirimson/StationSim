@@ -132,6 +132,9 @@ public class Pump {
 		return unitSpaceAvailable;
 	}
 	
+	/**
+	 * toString method overwriting the original toString
+	 */
 	public String toString()
 	{
 		String list = new String();

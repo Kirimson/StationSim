@@ -35,8 +35,6 @@ public class Till {
 			
 			if(getFirstDriver().isDone()){
 				addMoneyTaken(getFirstDriver().getPumpMoney() + getFirstDriver().getShopMoney());
-								
-				System.out.println("NEW TOTAL MONEY TAKEN: "+moneyTaken);
 				
 				if(drivers.size() - 1 == 0){
 				tillInUse = false;
@@ -124,7 +122,7 @@ public class Till {
 
 	/**
 	 * Returns the size of the Tiil's queue
-	 * @return Int of the Till's queue size
+	 * @return int of the Till's queue size
 	 */
 	public int getQueueLength() {
 		if(!tillInUse)

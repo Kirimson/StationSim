@@ -358,11 +358,19 @@ public class Driver {
 		this.atPump = atPump;
 	}
 	
+	/**
+	 * Used for truckDriver's probability
+	 * CONFUSED
+	 */
 	public void setProbability()
 	{
 		System.out.println("Is Normal");
 	}
 	
+	/**
+	 * Used for truckDriver's probability
+	 * @return always resets probability 
+	 */
 	public double getProbability()
 	{
 		return 0;
