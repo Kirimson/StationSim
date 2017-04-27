@@ -77,7 +77,6 @@ public class Driver {
 				doneRefilling = true;
 				setShopSpendingAmount();
 				setShoppingTime();
-				setProbability();
 			}
 		}
 		incrementTotalTime();
@@ -356,15 +355,6 @@ public class Driver {
 	 */
 	private void setAtPump(boolean atPump) {
 		this.atPump = atPump;
-	}
-	
-	/**
-	 * Used for truckDriver's probability
-	 * CONFUSED
-	 */
-	public void setProbability()
-	{
-//		System.out.println("Is Normal");
 	}
 	
 	/**
