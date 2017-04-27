@@ -82,7 +82,7 @@ public class SimulatorGUI {
 			
 			priceSlider = new LabeledSlider("Price of fuel: £", "", 100, 400, 120, 100);
 			priceSlider.setMajorTickSpacing(100);
-			createSliderLabels(priceSlider, 100, 400, 100, 100, true);
+			priceSlider.createCustomLabel(100, 400, 100, 100, true);
 			
 			periodSlider = new LabeledSlider("Duration: ", " Hours", 1, 8, 4, 1);
 			periodSlider.setMajorTickSpacing(1);
@@ -257,7 +257,7 @@ public class SimulatorGUI {
 		
 			runButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			runSimulation(auto);
+			setUpSimulation(auto);
 			}
 		});
 			
@@ -289,7 +289,7 @@ public class SimulatorGUI {
 	 * Disposes of the parameter window and sets all variables to be used in the Simulator constructor
 	 * Then loops through all 10 runs and finds averages of data.
 	 */
-	private void runSimulation(boolean auto){
+	private void setUpSimulation(boolean auto){
 		startButton.setText("Reset");
 		startButton.setToolTipText("Reset the simualtion");
 		
@@ -309,7 +309,7 @@ public class SimulatorGUI {
 			price = (double)priceSlider.getValue() / 100;
 			trucks = truckBox.isSelected();
 			
-			simulate(p,q,pumps,tills,ticks,price,trucks, false);
+			runSimulation(p,q,pumps,tills,ticks,price,trucks, false);
 		}
 		else
 		{
@@ -334,8 +334,7 @@ public class SimulatorGUI {
 								{
 									trucks = true;
 								}
-								simulate(p,q,pumps,tills,1440,price,trucks, true);
-								
+								runSimulation(p,q,pumps,tills,1440,price,trucks, true);
 							}
 						}
 					}
@@ -344,29 +343,28 @@ public class SimulatorGUI {
 		}
 	}
 	
-	private void simulate(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
-	//TODO make only 10 seeds for each run configuration
-		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
+
+	private void runSimulation(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
+		for(int i = 0; i < 10; i++)
+		{
 			simulator = new Simulator (p , q, pumps, tills, price, trucks);
-			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
-			{
-				simulator.simulate();
-			}
-			simulator.resetTruck();
+			simulator.simulate(p,q,pumps,tills,1440,price,trucks, true);
+			
 			if(!auto)
 			{
 				listDataToLog(i);
 				sysoutData();
 			}
+			
 			setRunMoney(i);
+			
+			log.append(outputRunConfig(pumps, tills, p, q, price, trucks));
+			System.out.println(outputRunConfig(pumps, tills, p, q, price, trucks));
+			findAverages();
 		}
-		log.append(outputRunConfig(pumps, tills, p, q, price, trucks));
-		System.out.println(outputRunConfig(pumps, tills, p, q, price, trucks));
-		findAverages();
 	}
 
-	private void sysoutData()
-	{
+	private void sysoutData() {
 		System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
 		System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
 		System.out.println("Money Lost in Sales: £" + df.format(simulator.countLostSales()));
@@ -456,24 +454,6 @@ public class SimulatorGUI {
 		moneyTakenArray[i] = simulator.countTakenMoney();
 		moneyLostArray[i] = simulator.countLostMoney();
 		moneyLostSalesArray[i] = simulator.countLostSales();
-	}
-	
-	private void createSliderLabels(LabeledSlider slider, int min, int max, int tick, int divider, boolean beDouble)
-	{
-		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		
-		for(int i = min; i <= max; i=i+tick)
-		{
-			if(beDouble)
-			{
-				labelTable.put(new Integer(i), new JLabel(String.valueOf((double)i/divider)));
-			}
-			else
-			{
-				labelTable.put(new Integer(i), new JLabel(String.valueOf(i/divider)));
-			}
-		}
-		slider.changeLabels(labelTable);
 	}
 
 }

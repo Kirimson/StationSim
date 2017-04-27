@@ -21,22 +21,25 @@ public class Simulator {
 		station = new Station(pumps, tills, price);
 		rnd = new Random();
 	}
-	
-	public void simulate()
-	{
-		newDriver = generateDriver();
-		if(newDriver != null){
-			station.addDriverToPumpQueue(newDriver);
+
+	public void simulate(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
+		//TODO make only 10 seeds for each run configuration
+		for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
+		{
+			newDriver = generateDriver();
+			if(newDriver != null){
+				station.addDriverToPumpQueue(newDriver);
+			}
+			
+			station.act();
 		}
+		resetTruck();
 		
-		station.act();
-//		System.out.println();
-	}
+		}
 	
 	private Driver generateDriver(){
 		Driver tempDriver = null;
 		double random = rnd.nextDouble();
-//		System.out.println(random);
 		t = new TruckDriver().getProbability();
 		
 		if(random <= p){
@@ -50,8 +53,6 @@ public class Simulator {
 		}else{
 			return tempDriver;
 		}
-//		System.out.println("boo2 "+ t);
-//		System.out.println("aa: " + new TruckDriver().getAa());
 		return tempDriver;
 	}
 	

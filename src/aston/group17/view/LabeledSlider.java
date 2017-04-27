@@ -66,8 +66,21 @@ public class LabeledSlider extends JComponent {
 		}
 	}
 	
-	public void changeLabels(Hashtable<Integer, JLabel> labelTable)
+	public void createCustomLabel(int min, int max, int tick, int divider, boolean beDouble)
 	{
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		
+		for(int i = min; i <= max; i=i+tick)
+		{
+			if(beDouble)
+			{
+				labelTable.put(new Integer(i), new JLabel(String.valueOf((double)i/divider)));
+			}
+			else
+			{
+				labelTable.put(new Integer(i), new JLabel(String.valueOf(i/divider)));
+			}
+		}
 		slider.setLabelTable( labelTable );
 	}
 	
