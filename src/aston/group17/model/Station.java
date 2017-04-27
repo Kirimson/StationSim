@@ -105,7 +105,6 @@ public class Station {
 	/**
 	 * Adds vehicle to the shortest pump queue.
 	 * @param d The driver to be added to the pump queue
-	 * @return True if the Driver joined the Pump queue
 	 */
 	public void addDriverToPumpQueue(Driver d){
 		Pump shortestPump = getShortestPumpQueue(d.getVehicle());
