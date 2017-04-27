@@ -44,7 +44,7 @@ public class Pump {
 		else if(getFirstDriver().isDone())
 		{
 			removeDriver();
-			System.out.println("Driver is leaving");
+//			System.out.println("Driver is leaving");
 		}
 	}
 	

@@ -4,6 +4,7 @@ import aston.group17.simulator.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.*;
@@ -26,12 +27,14 @@ public class SimulatorGUI {
 	
 	//mainframe
 	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
-	private JButton startButton = new JButton();
-	private JButton quitButton = new JButton();
+	private JButton startButton = new JButton("Start");
+	private JButton autoButton = new JButton("Auto Run");
+	private JButton quitButton = new JButton("Quit");
 	
 	//log fields
 	private DecimalFormat df = new DecimalFormat("####0.00");
 	private double[] moneyTakenArray, moneyLostArray, moneyLostSalesArray;
+	private ArrayList<Double> configNetIncome = new ArrayList<Double>();
 	
 	public static void main(String[] args)
 	{
@@ -95,11 +98,9 @@ public class SimulatorGUI {
 //		 Step 2: Set the properties of the components
 			
 			//mainframe
-			startButton.setText("Start");
-			startButton.setToolTipText("Start the simulation");
-			quitButton.setText("Quit");
+			startButton.setToolTipText("Start the simulation using custom parameters");
 			quitButton.setToolTipText("Quit application");
-			
+			autoButton.setToolTipText("Start the simulation with preset parameters to find perfect configuration");
 //		 Step 3: Create containers to hold the components
 			
 			//mainframe
@@ -128,6 +129,7 @@ public class SimulatorGUI {
 			
 			//mainframe
 			buttons.add(startButton);
+			buttons.add(autoButton);
 			buttons.add(quitButton);
 			firstFrame.add(buttons, BorderLayout.SOUTH);
 			firstFrame.add(actionList, BorderLayout.CENTER);
@@ -149,7 +151,13 @@ public class SimulatorGUI {
 				
 			startButton.addActionListener(new ActionListener() { 
 				public void actionPerformed(ActionEvent e) {
-				setParameters();
+				setParameters(false);
+				}
+			});
+			
+			autoButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setParameters(true);
 				}
 			});
 			
@@ -162,9 +170,9 @@ public class SimulatorGUI {
 	 * Creates and displays the set parameter window,
 	 * where all simulation parameters will be set by the user
 	 */
-	private void setParameters(){
+	private void setParameters(boolean auto){
 		
-		final int blankSpace = 6;  // blank at edge of panels
+		final int blankSpace = 2;  // blank at edge of panels
 		log.setText("");
 //	Step 1: create the components for the
 		
@@ -194,7 +202,7 @@ public class SimulatorGUI {
 //	 Step 4: Specify LayoutManagers
 		menuFrame.setLayout(new BorderLayout());
 		((JPanel)menuFrame.getContentPane()).setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
-		menuFrame.setPreferredSize(new Dimension(375,400));
+//		menuFrame.setPreferredSize(new Dimension(375,400));
 		
 		
 		buttons.setLayout(new FlowLayout());
@@ -209,24 +217,25 @@ public class SimulatorGUI {
 		buttons.add(runButton);
 		buttons.add(closeWindowButton);
 		
-		combos.add(pLabel);
-		combos.add(pChoice);
-		
-		combos.add(qLabel);
-		combos.add(qChoice);
-				
-		combos.add(pumpLabel);
-		combos.add(pumpChoice);
-		
-		combos.add(tillLabel);
-		combos.add(tillChoice);
-		
-		combos.add(truckLabel);
-		combos.add(truckBox);
-		
+		if(!auto)
+		{
+			combos.add(pLabel);
+			combos.add(pChoice);
+			
+			combos.add(qLabel);
+			combos.add(qChoice);
+					
+			combos.add(pumpLabel);
+			combos.add(pumpChoice);
+			
+			combos.add(tillLabel);
+			combos.add(tillChoice);
+			
+			combos.add(truckLabel);
+			combos.add(truckBox);
+			sliders.add(periodSlider);
+		}
 		sliders.add(priceSlider);
-		
-		sliders.add(periodSlider);
 		
 		menuFrame.add(combos, BorderLayout.NORTH);
 		menuFrame.add(sliders, BorderLayout.CENTER);
@@ -248,7 +257,7 @@ public class SimulatorGUI {
 		
 			runButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			runSimulation();
+			runSimulation(auto);
 			}
 		});
 			
@@ -280,45 +289,89 @@ public class SimulatorGUI {
 	 * Disposes of the parameter window and sets all variables to be used in the Simulator constructor
 	 * Then loops through all 10 runs and finds averages of data.
 	 */
-	private void runSimulation(){
+	private void runSimulation(boolean auto){
 		startButton.setText("Reset");
 		startButton.setToolTipText("Reset the simualtion");
 		
-		double p = (Double)pChoice.getSelectedItem();
-		double q = (Double)qChoice.getSelectedItem();
-		double price = (double)priceSlider.getValue() / 100;
-		int pumps = (Integer)pumpChoice.getSelectedItem();
-		int tills = (Integer)tillChoice.getSelectedItem();
-		int ticks = periodSlider.getValue()*360;
-		boolean trucks = truckBox.isSelected();
+		double p, q, price;
+		int pumps, tills, ticks;
+		boolean trucks;
 		
 		closeWindow(menuFrame);
-		
+		if(!auto)
+		{
+			
+			p = (Double)pChoice.getSelectedItem();
+			q = (Double)qChoice.getSelectedItem();
+			pumps = (Integer)pumpChoice.getSelectedItem();
+			tills = (Integer)tillChoice.getSelectedItem();
+			ticks = periodSlider.getValue()*360;
+			price = (double)priceSlider.getValue() / 100;
+			trucks = truckBox.isSelected();
+			
+			simulate(p,q,pumps,tills,ticks,price,trucks, false);
+		}
+		else
+		{
+			price = (double)priceSlider.getValue() / 100;
+			for(p = 0.01; p <=0.05; p = p + 0.01)
+			{
+				for(q = 0.01; q <=0.05; q = q + 0.01)
+				{
+					for(pumps = 1; pumps <= 3; pumps++)
+					{
+						if(pumps==3){pumps=4;};
+						for(tills = 1; tills <= 3; tills++)
+						{
+							if(tills==3){tills=4;};
+							for(int tAllowed = 0; tAllowed <= 1; tAllowed++)
+							{
+								if(tAllowed == 0)
+								{
+									trucks = false;
+								}
+								else
+								{
+									trucks = true;
+								}
+								simulate(p,q,pumps,tills,1440,price,trucks, true);
+								
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void simulate(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
+	//TODO make only 10 seeds for each run configuration
 		for(int i = 0; i < 10; i++){ //To simulate the 10 runs through
-			System.out.println("Run: " + (i + 1));
 			simulator = new Simulator (p , q, pumps, tills, price, trucks);
 			for(int k = 0; k < ticks; k++) //To simulate the amount of ticks
 			{
-				System.out.println("\nStep: "+ k +"\n");
-			
 				simulator.simulate();
-			
-				//console log. to be removed
-				System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
-				System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
-				System.out.println("Money Lost in Sales: £" + df.format(simulator.countLostSales()));
 			}
 			simulator.resetTruck();
-			//lists the currents run data to the GUI's log
-			listDataToLog(i);
-			
-			//set money taken/lost for this run
+			if(!auto)
+			{
+				listDataToLog(i);
+				sysoutData();
+			}
 			setRunMoney(i);
 		}
-		
-		outputRunConfig(pumps, tills, p, q, price);
-
+		log.append(outputRunConfig(pumps, tills, p, q, price, trucks));
+		System.out.println(outputRunConfig(pumps, tills, p, q, price, trucks));
 		findAverages();
+	}
+
+	private void sysoutData()
+	{
+		System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
+		System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
+		System.out.println("Money Lost in Sales: £" + df.format(simulator.countLostSales()));
+		System.out.println("");
+		System.out.println("Net Income: £"+ df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales())));
 	}
 	
 	/**
@@ -329,36 +382,49 @@ public class SimulatorGUI {
 	 * @param q
 	 * @param price
 	 */
-	private void outputRunConfig(int pumps, int tills, double p, double q, double price) {
+	private String outputRunConfig(int pumps, int tills, double p, double q, double price, boolean trucks) {
 		//appends the configuration of the ten runs to the GUI's log
-		log.append("Configuration:\n");
-		log.append("Pumps: "+pumps+"\n");
-		log.append("Tills: "+tills+"\n");
-		log.append("P: "+p+"\n");
-		log.append("Q: "+q+"\n");
-		log.append("Price: £"+df.format(price)+"\n");
-		log.append("\n");
+		StringBuffer sb = new StringBuffer();
+		sb.append("Configuration:\n");
+		sb.append("Pumps: "+pumps+"\n");
+		sb.append("Tills: "+tills+"\n");
+		sb.append("P: "+p+"\n");
+		sb.append("Q: "+q+"\n");
+		sb.append("Price: £"+df.format(price)+"\n");
+		sb.append("Trucks allowed: "+trucks+"\n");
+		sb.append("\n");
+		return sb.toString();
 	}
 	/**
 	 * finds averages of all data from all 10 runs and outputs to the GUI's log
 	 */
 	private void findAverages() {
-		double avgTakenMoney = 0.0;
-		double avgLostMoney = 0.0;
-		double avgLostSalesMoney = 0.0;
+		double totalMoneyTaken = 0.0;
+		double totalLostMoney = 0.0;
+		double totalLostSalesMoney = 0.0;
 		
 		for(int i = 0; i < 10; i++)
 		{
-			avgTakenMoney += moneyTakenArray[i];
-			avgLostMoney += moneyLostArray[i];
-			avgLostSalesMoney += moneyLostSalesArray[i];
+			totalMoneyTaken += moneyTakenArray[i];
+			totalLostMoney += moneyLostArray[i];
+			totalLostSalesMoney += moneyLostSalesArray[i];
 		}
 		
+		double avgMoneyLost = (totalLostMoney+totalLostSalesMoney)/10;
+		
+		double avgMoneyTaken = totalMoneyTaken/10;
+		
 		//appends the averages for money lost and money gained to the GUI's log
-		log.append("Money Taken average: £"+df.format((avgTakenMoney/10))+"\n");
-		log.append("Money Lost average: £"+df.format((avgLostMoney/10))+"\n");
-		log.append("Money Lost in Sales average: £" + df.format((avgLostSalesMoney/10))+"\n");
-		log.append("Total Money Lost average: £" + df.format((avgLostSalesMoney/10)+(avgLostMoney/10))+"\n");
+		log.append("Money Lost average: £"+df.format((totalLostMoney/10))+"\n");
+		log.append("Money Lost in Sales average: £" + df.format((totalLostSalesMoney/10))+"\n");
+		log.append("\n");
+		log.append("Total Money Lost average: £" + df.format(avgMoneyLost)+"\n");
+		log.append("Money Taken average: £"+df.format(avgMoneyTaken)+"\n");
+		log.append("\n");
+		log.append("Total Net Income average: £"+df.format(avgMoneyTaken - avgMoneyLost)+"\n");
+		log.append("-------------------------------------------------------------------------");
+		log.append("\n");
+		configNetIncome.add(avgMoneyTaken - avgMoneyLost);
 	}
 
 	/**
@@ -374,6 +440,7 @@ public class SimulatorGUI {
 		log.append("Money Lost in Sales: £" + df.format(simulator.countLostSales())+"\n");
 		log.append("Total money lost: £"+ df.format(simulator.countLostMoney() + simulator.countLostSales())+"\n");
 		log.append("\n");
+		log.append("Net Income: £" + df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales()))+"\n");
 		
 		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
 		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");

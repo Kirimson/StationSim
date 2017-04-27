@@ -27,6 +27,7 @@ public class TruckDriver extends Driver{
 		{
 			probability = probability * 0.8;
 		}
+		
 	}
 	
 	/**
@@ -36,5 +37,5 @@ public class TruckDriver extends Driver{
 	public void setProbability(double resetValue)
 	{
 		probability = resetValue;
-		}
+	}
 }

@@ -30,7 +30,7 @@ public class Simulator {
 		}
 		
 		station.act();
-		System.out.println();
+//		System.out.println();
 	}
 	
 	private Driver generateDriver(){
