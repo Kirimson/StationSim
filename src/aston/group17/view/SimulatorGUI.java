@@ -5,7 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Hashtable;
+
+import java.io.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -15,6 +16,7 @@ public class SimulatorGUI {
 	private JFrame menuFrame;
 	private JTextArea log;
 	private Simulator simulator;
+	private double currentNetIncome;
 	
 	//parameter
 	private LabeledSlider priceSlider;
@@ -24,6 +26,13 @@ public class SimulatorGUI {
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodSlider;
 	private JCheckBox truckBox = new JCheckBox();
+	
+	
+	//Files
+	private JTextArea fileText = new JTextArea();
+	private JButton folderButton = new JButton("Select Folder");
+	private JFileChooser folderSelector = new JFileChooser();
+	private File outputFolder;
 	
 	//mainframe
 	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
@@ -80,7 +89,7 @@ public class SimulatorGUI {
 			qChoice.addItem(0.04);
 			qChoice.addItem(0.05);
 			
-			priceSlider = new LabeledSlider("Price of fuel: Â£", "", 100, 400, 120, 100);
+			priceSlider = new LabeledSlider("Price of fuel: £", "", 100, 400, 120, 100);
 			priceSlider.setMajorTickSpacing(100);
 			priceSlider.createCustomLabel(100, 400, 100, 100, true);
 			
@@ -172,7 +181,7 @@ public class SimulatorGUI {
 	 */
 	private void setParameters(boolean auto){
 		
-		final int blankSpace = 2;  // blank at edge of panels
+		final int blankSpace = 2;
 		log.setText("");
 //	Step 1: create the components for the
 		
@@ -202,8 +211,6 @@ public class SimulatorGUI {
 //	 Step 4: Specify LayoutManagers
 		menuFrame.setLayout(new BorderLayout());
 		((JPanel)menuFrame.getContentPane()).setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
-//		menuFrame.setPreferredSize(new Dimension(375,400));
-		
 		
 		buttons.setLayout(new FlowLayout());
 		buttons.setBorder(new EmptyBorder(blankSpace, blankSpace, blankSpace, blankSpace));
@@ -233,11 +240,30 @@ public class SimulatorGUI {
 			
 			combos.add(truckLabel);
 			combos.add(truckBox);
+			menuFrame.add(combos, BorderLayout.NORTH);
+			
 			sliders.add(periodSlider);
 		}
+		else
+		{
+			JPanel files = new JPanel();
+			files.setLayout(new FlowLayout());
+			
+			fileText.setEditable(false);
+			fileText.setBorder(new EtchedBorder());
+			fileText.setPreferredSize(new Dimension(300,24));
+			
+			files.add(new JLabel("Selected Folder: "));
+			files.add(fileText);
+			files.add(folderButton);
+			
+			menuFrame.add(files, BorderLayout.NORTH);
+			
+			outputFolder = new File("."); //new folder at programs root folder
+		}
+		
 		sliders.add(priceSlider);
 		
-		menuFrame.add(combos, BorderLayout.NORTH);
 		menuFrame.add(sliders, BorderLayout.CENTER);
 		menuFrame.add(buttons, BorderLayout.SOUTH);
 	
@@ -260,6 +286,23 @@ public class SimulatorGUI {
 			setUpSimulation(auto);
 			}
 		});
+			
+			folderButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JFrame folderSelectFrame = new JFrame();
+					
+					folderSelectFrame.setLayout(new FlowLayout());
+					
+					folderSelector.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					int result = folderSelector.showOpenDialog(folderSelectFrame);
+					if(result == JFileChooser.APPROVE_OPTION)
+					{
+						outputFolder = folderSelector.getSelectedFile();
+						System.out.println(outputFolder.getAbsolutePath());
+						fileText.setText(outputFolder.getAbsolutePath());
+					}
+				}
+			});
 			
 //	Step 7: Display GUI
 		menuFrame.pack();
@@ -314,6 +357,9 @@ public class SimulatorGUI {
 		else
 		{
 			price = (double)priceSlider.getValue() / 100;
+			String bestConfig = "";
+			double bestNetIncome = 0.0;
+			
 			for(p = 0.01; p <=0.05; p = p + 0.01)
 			{
 				for(q = 0.01; q <=0.05; q = q + 0.01)
@@ -334,18 +380,67 @@ public class SimulatorGUI {
 								{
 									trucks = true;
 								}
+								
 								runSimulation(p,q,pumps,tills,1440,price,trucks, true);
+								
+								if(currentNetIncome > bestNetIncome)
+								{
+									bestNetIncome = currentNetIncome;
+									bestConfig = outputRunConfig(pumps, tills, p, q, price, trucks);
+								}
 							}
 						}
 					}
 				}
+			}
+			
+			System.out.println("Best config: " + bestConfig);
+			System.out.println("Net Income: £"+df.format(bestNetIncome));
+			
+			log.append("Best config: " + bestConfig);
+			log.append("Net Income: £"+df.format(bestNetIncome));
+			
+			File outputFile = new File(outputFolder, "output.txt");
+			
+			boolean fileWritten = false;
+			
+			try{
+				fileWritten = outputFile.createNewFile();
+			} catch(IOException e) {
+				System.out.println("Error writing file.");
+			}
+			
+			if(fileWritten)
+			{
+				try{
+				    PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
+				    writer.println(bestConfig);
+				    writer.println("Net Income: £"+df.format(bestNetIncome));
+				    writer.close();
+				} catch (IOException e) {
+				   System.out.println("Error writing to file");
+				}
+			}
+			else
+			{
+				System.out.println("Did not write to file. File already exists");
 			}
 		}
 	}
 	
 
 	private void runSimulation(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
-		for(int i = 0; i < 10; i++)
+		int runs = 0;
+		if(auto)
+		{
+			runs = 10;
+		}
+		else
+		{
+			runs = 1;
+		}
+		
+		for(int i = 0; i < runs; i++)
 		{
 			simulator = new Simulator (p , q, pumps, tills, price, trucks);
 			simulator.simulate(p,q,pumps,tills,1440,price,trucks, true);
@@ -354,22 +449,27 @@ public class SimulatorGUI {
 			{
 				listDataToLog(i);
 				sysoutData();
+				log.append(outputRunConfig(pumps, tills, p, q, price, trucks));
+				
 			}
 			
+			if(auto)
+			{
+				findAverages();
+			}
 			setRunMoney(i);
 			
-			log.append(outputRunConfig(pumps, tills, p, q, price, trucks));
 			System.out.println(outputRunConfig(pumps, tills, p, q, price, trucks));
-			findAverages();
+			
 		}
 	}
 
 	private void sysoutData() {
-		System.out.println("Money Taken: Â£" + df.format(simulator.countTakenMoney()));
-		System.out.println("Money Lost: Â£" + df.format(simulator.countLostMoney()));
-		System.out.println("Money Lost in Sales: Â£" + df.format(simulator.countLostSales()));
+		System.out.println("Money Taken: £" + df.format(simulator.countTakenMoney()));
+		System.out.println("Money Lost: £" + df.format(simulator.countLostMoney()));
+		System.out.println("Money Lost in Sales: £" + df.format(simulator.countLostSales()));
 		System.out.println("");
-		System.out.println("Net Income: Â£"+ df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales())));
+		System.out.println("Net Income: £"+ df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales())));
 	}
 	
 	/**
@@ -383,14 +483,14 @@ public class SimulatorGUI {
 	private String outputRunConfig(int pumps, int tills, double p, double q, double price, boolean trucks) {
 		//appends the configuration of the ten runs to the GUI's log
 		StringBuffer sb = new StringBuffer();
-		sb.append("Configuration:\n");
-		sb.append("Pumps: "+pumps+"\n");
-		sb.append("Tills: "+tills+"\n");
-		sb.append("P: "+p+"\n");
-		sb.append("Q: "+q+"\n");
-		sb.append("Price: Â£"+df.format(price)+"\n");
-		sb.append("Trucks allowed: "+trucks+"\n");
-		sb.append("\n");
+		sb.append("Configuration:"+System.lineSeparator());
+		sb.append("Pumps: "+pumps+System.lineSeparator());
+		sb.append("Tills: "+tills+System.lineSeparator());
+		sb.append("P: "+p+System.lineSeparator());
+		sb.append("Q: "+q+System.lineSeparator());
+		sb.append("Price: £"+df.format(price)+System.lineSeparator());
+		sb.append("Trucks allowed: "+trucks+System.lineSeparator());
+		sb.append(System.lineSeparator());
 		return sb.toString();
 	}
 	/**
@@ -411,18 +511,8 @@ public class SimulatorGUI {
 		double avgMoneyLost = (totalLostMoney+totalLostSalesMoney)/10;
 		
 		double avgMoneyTaken = totalMoneyTaken/10;
-		
-		//appends the averages for money lost and money gained to the GUI's log
-		log.append("Money Lost average: Â£"+df.format((totalLostMoney/10))+"\n");
-		log.append("Money Lost in Sales average: Â£" + df.format((totalLostSalesMoney/10))+"\n");
-		log.append("\n");
-		log.append("Total Money Lost average: Â£" + df.format(avgMoneyLost)+"\n");
-		log.append("Money Taken average: Â£"+df.format(avgMoneyTaken)+"\n");
-		log.append("\n");
-		log.append("Total Net Income average: Â£"+df.format(avgMoneyTaken - avgMoneyLost)+"\n");
-		log.append("-------------------------------------------------------------------------");
-		log.append("\n");
-		configNetIncome.add(avgMoneyTaken - avgMoneyLost);
+
+		currentNetIncome = avgMoneyTaken - avgMoneyLost;
 	}
 
 	/**
@@ -433,12 +523,12 @@ public class SimulatorGUI {
 	private void listDataToLog(int i) {
 		//list the data of each run to the log
 		log.append("Run: "+(i+1)+"\n");
-		log.append("Money Taken: Â£" + df.format(simulator.countTakenMoney())+ "\n");
-		log.append("Money Lost: Â£" + df.format(simulator.countLostMoney())+ "\n");
-		log.append("Money Lost in Sales: Â£" + df.format(simulator.countLostSales())+"\n");
-		log.append("Total money lost: Â£"+ df.format(simulator.countLostMoney() + simulator.countLostSales())+"\n");
+		log.append("Money Taken: £" + df.format(simulator.countTakenMoney())+ "\n");
+		log.append("Money Lost: £" + df.format(simulator.countLostMoney())+ "\n");
+		log.append("Money Lost in Sales: £" + df.format(simulator.countLostSales())+"\n");
+		log.append("Total money lost: £"+ df.format(simulator.countLostMoney() + simulator.countLostSales())+"\n");
 		log.append("\n");
-		log.append("Net Income: Â£" + df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales()))+"\n");
+		log.append("Net Income: £" + df.format(simulator.countTakenMoney() - (simulator.countLostMoney() + simulator.countLostSales()))+"\n");
 		
 		log.append("Total Vehicles: "+simulator.getTotalVehicles()+"\n");
 		log.append("Total Lost Vehicles: "+simulator.getTotalLostVehicles()+"\n");

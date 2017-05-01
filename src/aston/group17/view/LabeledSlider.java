@@ -1,7 +1,6 @@
 package aston.group17.view;
 
 import java.awt.*;
-import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.swing.*;
