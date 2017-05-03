@@ -6,10 +6,10 @@ class Truck extends Vehicle{
 	private static final double UNIT_SIZE = 2.0;
 	private Random rand;
 	
-	public Truck(){
-		super(10, 30);
+	public Truck(int globalSeed){
+		super(10, 30, globalSeed);
 		vehicleType = "Truck";
-		rand = new Random();
+		rand = new Random(globalSeed);
 	}
 
 	public double getUnitSize() {

@@ -4,7 +4,7 @@ package aston.group17.model;
 import java.util.ArrayList;
 
 /**
- * @author kieran
+ * @author Kieran Gates
  *
  */
 public class Pump {
@@ -34,6 +34,7 @@ public class Pump {
 	 */
 	public void act()
 	{
+		System.out.println(toString());
 		if(getFirstDriver().isAtPump())
 		{
 			if(!getFirstDriver().isDoneRefilling())
@@ -44,7 +45,6 @@ public class Pump {
 		else if(getFirstDriver().isDone())
 		{
 			removeDriver();
-//			System.out.println("Driver is leaving");
 		}
 	}
 	
@@ -121,15 +121,6 @@ public class Pump {
 			return true;
 		}
 		return false;
-	}
-	
-	
-	/**
-	 * Returns the amount of space left at the Pump
-	 * @return double of unitSpaceAvailable
-	 */
-	public double getUnitSpaceAvailable(){
-		return unitSpaceAvailable;
 	}
 	
 	/**

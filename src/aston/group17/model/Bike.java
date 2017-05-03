@@ -7,8 +7,8 @@ public class Bike extends Vehicle {
 	/**
 	 * Constructs a new Bike class, with a tank of 5 gallons
 	 */
-	public Bike(){
-		super(1,5);
+	public Bike(int globalSeed){
+		super(1,5, globalSeed);
 		vehicleType = "Bike";
 	}
 

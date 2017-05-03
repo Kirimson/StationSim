@@ -4,7 +4,7 @@ import aston.group17.simulator.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-
+import java.util.Random;
 import java.io.*;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ public class SimulatorGUI {
 	private JTextArea log;
 	private Simulator simulator;
 	private double currentNetIncome;
-	
+	private int seed;
 	//parameter
 	private LabeledSlider priceSlider;
 	private JComboBox<Double> pChoice = new JComboBox<Double>();
@@ -288,7 +288,36 @@ public class SimulatorGUI {
 		
 			runButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
-			setUpSimulation(auto);
+				
+//				boolean isNumber = true;
+//				
+//				try
+//				{
+//					Integer.parseInt(seedText.getText());
+//				}
+//				catch (NumberFormatException e2)
+//				{
+//					isNumber=false;
+//				}
+//				
+//				if(seedText.getText() != "")
+//				{
+//					if(!isNumber)
+//					{
+//						seedText.setText("");
+//						JOptionPane.showMessageDialog(menuFrame, "Seed needs to be an int");
+//					}
+//					else
+//					{
+//						if(seedText.getText() == ""){seedText.setText("1");}
+						seedText.setText("1");
+						setUpSimulation(auto);
+//					}
+//				}
+//				else
+//				{
+//					seedText.setText(new Random().nextInt()+"");
+//				}
 			}
 		});
 			
@@ -351,9 +380,9 @@ public class SimulatorGUI {
 		startButton.setToolTipText("Reset the simualtion");
 		
 		double p, q, price;
-		int pumps, tills, ticks;
+		int pumps=0, tills=0, ticks;
 		boolean trucks;
-		
+		int longg = 0;
 		closeWindow(menuFrame);
 		if(!auto)
 		{
@@ -383,61 +412,52 @@ public class SimulatorGUI {
 				System.out.println("Error writing file.");
 			}
 			
-			for(p = 0.01; p <=0.05; p = p + 0.01)
+			for(pumps = 1; pumps <= 3; pumps++)
 			{
-				for(q = 0.01; q <=0.05; q = q + 0.01)
+				if(pumps==3){pumps=4;};
+				for(tills = 1; tills <=3; tills++)
 				{
-					for(pumps = 1; pumps <= 3; pumps++)
+					if(tills==3){tills=4;};
+					for(p = 0.01; p <= 0.05; p = p + 0.01)
 					{
-						if(pumps==3){pumps=4;};
-						for(tills = 1; tills <= 3; tills++)
+						for(q = 0.01; q <= 0.05; q = q + 0.01)
 						{
-							if(tills==3){tills=4;};
 							for(int tAllowed = 0; tAllowed <= 1; tAllowed++)
 							{
 								if(tAllowed == 0)
-								{
-									trucks = false;
-								}
-								else
-								{
-									trucks = true;
-								}
-								
+								{trucks = false;}else{trucks = true;}
 								runSimulation(p,q,pumps,tills,1440,price,trucks, true);
-								
 								if(currentNetIncome > bestNetIncome)
 								{
 									bestNetIncome = currentNetIncome;
 									bestConfig = outputRunConfig(pumps, tills, p, q, price, trucks);
 								}
 							}
-							System.out.println("Best config for pumps: "+pumps+" tills: "+tills+": " + bestConfig);
-							System.out.println("Net Income: \u00A3"+df.format(bestNetIncome));
-							
-							log.append("Best config for pumps: "+pumps+" tills: "+tills+": " +System.lineSeparator() + bestConfig);
-							log.append("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
-							log.append("--------------------------------------------------------------------"+System.lineSeparator());
-							
-							if(fileWritten)
-							{
-								try{
-								    PrintWriter writer = new PrintWriter(new FileOutputStream(outputFile, true));
-								    writer.append("Best config for pumps: "+pumps+" tills: "+tills+": " +System.lineSeparator() + bestConfig);
-								    writer.append("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
-								    writer.append("--------------------------------"+System.lineSeparator());
-								    writer.close();
-								} catch (IOException e) {
-								   System.out.println("Error writing to file");
-								}
-							}
-							else
-							{
-								System.out.println("Did not write to file. File already exists");
-							}
-							bestNetIncome = 0.0;
 						}
 					}
+					log.append("pumps: "+pumps+" tills: "+tills+System.lineSeparator()+System.lineSeparator());
+					log.append("Best config for pumps: "+pumps+" tills: "+tills+": " +System.lineSeparator() + bestConfig);
+					log.append("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
+					log.append("--------------------------------------------------------------------"+System.lineSeparator());
+					
+					if(fileWritten)
+					{
+						try{
+						    PrintWriter writer = new PrintWriter(new FileOutputStream(outputFile, true));
+						    writer.append("Best config for pumps: "+pumps+" tills: "+tills+": " +System.lineSeparator() + bestConfig);
+						    writer.append("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
+						    writer.append(System.lineSeparator());
+						    writer.append("--------------------------------"+System.lineSeparator());
+						    writer.close();
+						} catch (IOException e) {
+						   System.out.println("Error writing to file");
+						}
+					}
+					else
+					{
+						System.out.println("Did not write to file. File already exists");
+					}
+					bestNetIncome = 0.0;
 				}
 			}
 		}
@@ -456,7 +476,16 @@ public class SimulatorGUI {
 		
 		for(int i = 0; i < runs; i++)
 		{
-			simulator = new Simulator (p , q, pumps, tills, price, trucks);
+			
+			if(auto)
+			{
+				seed = i;
+			}
+			else
+			{
+				seed = Integer.parseInt(seedText.getText());
+			}
+			simulator = new Simulator (p , q, pumps, tills, price, trucks, seed);
 			simulator.simulate(p,q,pumps,tills,1440,price,trucks, true);
 			
 			if(!auto)

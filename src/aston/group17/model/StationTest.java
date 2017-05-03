@@ -15,9 +15,10 @@ public class StationTest {
 
 	@Test
 	public void testJoinQueue() {
+		int globalSeed = 0;
 		Station s = new Station(3, 3, 1.2);
 		
-		Driver carDriver = new Driver("Car");
+		Driver carDriver = new Driver("Car", globalSeed);
 		
 		s.addDriverToPumpQueue(carDriver);
 		
@@ -27,14 +28,11 @@ public class StationTest {
 		System.out.println("v1:"+driverQueue1.get(0).getVehicle().toString());
 		
 		
-		Driver sedanDriver = new Driver("Sedan");
+		Driver sedanDriver = new Driver("Sedan", globalSeed);
 		
 		s.addDriverToPumpQueue(sedanDriver);
 		
 		ArrayList<Driver> DriverQueue2 = s.getPump(1).getVehicleQueue();
-		System.out.println();
-		System.out.println("c2:"+sedanDriver.getVehicle().toString());
-		System.out.println("v2:"+DriverQueue2.get(0).getVehicle().toString());
 		
 		if(!driverQueue1.get(0).getVehicle().toString().equals(carDriver.getVehicle().toString()))
 		{
@@ -49,45 +47,16 @@ public class StationTest {
 	}
 	
 	@Test
-	public void testFillTank() {
-		Station s = new Station(1, 3, 1.2);
-		
-		Driver carDriver = new Driver("Car");
-		
-		s.addDriverToPumpQueue(carDriver);
-		
-		Driver vp1 = s.getPump(0).getFirstDriver();
-		
-//		System.out.println(vp1.toString());
-		
-		while(s.getPump(0).getFirstDriver().getVehicle().getTankFilled() < s.getPump(0).getFirstDriver().getVehicle().getTankSize())
-		{
-			s.act();
-//			System.out.println(s.getPump(0).getFirstDriver().toString());
-		}
-		
-		vp1 = s.getPump(0).getFirstDriver();
-		
-//		System.out.println(vp1.toString());
-		
-//		System.out.println("\n");
-		
-		if(vp1.getVehicle().getTankFilled() != vp1.getVehicle().getTankSize())
-		{
-			fail();
-		}
-	}
-	
-	@Test
 	public void testFullQueue()
 	{
+		int globalSeed = 0;
 		Station s = new Station(1, 1, 1.2);
 
 		ArrayList<Driver> carDrivers = new ArrayList<Driver>();
 		
 		for(int i = 0; i < 4; i++)
 		{
-			carDrivers.add(new Driver("Car"));
+			carDrivers.add(new Driver("Car", globalSeed));
 		}
 		
 		for(Driver d: carDrivers)
@@ -99,13 +68,14 @@ public class StationTest {
 	@Test
 	public void testMultiplePumpFull()
 	{
+		int globalSeed = 0;
 		Station s = new Station(2, 1, 1.2);
 		
 		ArrayList<Driver> sedanDrivers = new ArrayList<Driver>();
 		
 		for(int i = 0; i < 5; i++)
 		{
-			sedanDrivers.add(new Driver("Sedan"));
+			sedanDrivers.add(new Driver("Sedan", globalSeed));
 		}
 		
 		for(Driver d: sedanDrivers)

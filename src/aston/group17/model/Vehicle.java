@@ -17,14 +17,14 @@ public abstract class Vehicle {
 	 * @param minTank
 	 * minimum size of Vehicle tank
 	 */
-	public Vehicle(int range, int minTank)
+	public Vehicle(int range, int minTank, int globalSeed)
 	{
 		/*
 		*Example: smallCar| range = 3 & minTank = 7
 		*Generates random number from 0-2 (3 possible values) adds minTank(7) to it
 		*Lowest possible value 7(0+7) highest possible value 9(2+7)
 		*/
-		rand = new Random();
+		rand = new Random(globalSeed);
 		tankSize = rand.nextInt(range) + minTank;
 		
 		/*

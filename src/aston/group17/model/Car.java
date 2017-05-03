@@ -6,11 +6,11 @@ public class Car extends Vehicle {
 	private static final double UNIT_SIZE = 1.0;
 	private Random rand;
 
-	public Car()
+	public Car(int globalSeed)
 	{
-		super(3, 7);
+		super(3, 7, globalSeed);
 		vehicleType = "Car";
-		rand = new Random();
+		rand = new Random(globalSeed);
 	}
 	
 	public double getUnitSize() {

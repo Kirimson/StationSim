@@ -3,9 +3,9 @@ package aston.group17.model;
 public class TruckDriver extends Driver{
 	
 	private static double probability = 0.02;
-	public TruckDriver()
+	public TruckDriver(int globalSeed)
 	{
-		super("Truck");
+		super("Truck", globalSeed);
 	}
 
 	public double getProbability() {

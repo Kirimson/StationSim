@@ -19,7 +19,7 @@ public class Driver {
 	 * A Driver has-a Vehicle
 	 * @param type Type of vehicle the Driver owns. Legal values are: "Car", "Sedan", "Bike", "Truck"
 	 */
-	public Driver(String type)
+	public Driver(String type, int globalSeed)
 	{
 		tillNumber = -1;
 		tillTime = 0;
@@ -29,27 +29,27 @@ public class Driver {
 		shopping = false;
 		wait = true;
 		setAtPump(true);
-		rnd = new Random();
+		rnd = new Random(globalSeed);
 		
 		switch(type){
 			case "Car":
-				vehicle = new Car();
+				vehicle = new Car(globalSeed);
 				vehicleType = "Car";
 				break;
 			case "Sedan":
-				vehicle = new Sedan();
+				vehicle = new Sedan(globalSeed);
 				vehicleType = "Sedan";
 				break;
 			case "Truck":
-				vehicle = new Truck();
+				vehicle = new Truck(globalSeed);
 				vehicleType = "Truck";
 				break;
 			case "Bike":
-				vehicle = new Bike();
+				vehicle = new Bike(globalSeed);
 				vehicleType = "Bike";
 				break;
 			default:
-				vehicle = new Car();
+				vehicle = new Car(globalSeed);
 				vehicleType = "Car";
 		}
 	}

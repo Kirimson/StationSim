@@ -10,16 +10,17 @@ public class Simulator {
 	private Random rnd;
 	private Driver newDriver;
 	private boolean trucks;
+	public static int globalSeed;
 	
-	public Simulator(double p, double q, int pumps, int tills, double price, boolean trucks)
+	public Simulator(double p, double q, int pumps, int tills, double price, boolean trucks, int seed)
 	{
 		t = 0.02;
 		this.p = p;
 		this.q = q;
 		this.trucks = trucks;
-		
+		globalSeed = seed;
 		station = new Station(pumps, tills, price);
-		rnd = new Random();
+		rnd = new Random(globalSeed);
 	}
 
 	public void simulate(double p, double q, int pumps, int tills, int ticks, double price, boolean trucks, boolean auto) {
@@ -40,16 +41,16 @@ public class Simulator {
 	private Driver generateDriver(){
 		Driver tempDriver = null;
 		double random = rnd.nextDouble();
-		t = new TruckDriver().getProbability();
+		t = new TruckDriver(globalSeed).getProbability();
 		
 		if(random <= p){
-			tempDriver = new Driver("Car");
+			tempDriver = new Driver("Car", globalSeed);
 		}else if(random <= 2*p){
-			tempDriver = new Driver("Bike");
+			tempDriver = new Driver("Bike", globalSeed);
 		}else if(random <= 2*p + q){
-			tempDriver = new Driver("Sedan");
+			tempDriver = new Driver("Sedan", globalSeed);
 		}else if(random <= 2*p + q + t && trucks){
-			tempDriver = new TruckDriver();
+			tempDriver = new TruckDriver(globalSeed);
 		}else{
 			return tempDriver;
 		}
@@ -79,6 +80,6 @@ public class Simulator {
 	}
 
 	public void resetTruck() {
-		new TruckDriver().setProbability(0.02);
+		new TruckDriver(globalSeed).setProbability(0.02);
 	}
 }

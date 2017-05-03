@@ -6,10 +6,10 @@ public class Sedan extends Vehicle {
 	private static final double UNIT_SIZE = 1.5;
 	private Random rand;
 
-	public Sedan(){
-		super(7, 12);
+	public Sedan(int globalSeed){
+		super(7, 12, globalSeed);
 		vehicleType = "Sedan";
-		rand = new Random();
+		rand = new Random(globalSeed);
 	}
 	
 	public double getUnitSize() {
