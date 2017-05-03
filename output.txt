@@ -1,1 +1,10 @@
-The first line
+Configuration:
+Pumps: 4
+Tills: 4
+P: 0.05
+Q: 0.05
+Price: £1.20
+Trucks allowed: false
+
+
+Net Income: £1231.22
