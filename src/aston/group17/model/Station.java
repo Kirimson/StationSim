@@ -1,8 +1,14 @@
 package aston.group17.model;
 
 import java.util.ArrayList;
-
-
+/**
+ * The Station handles the initial entrance of a Driver and contains both the Shop and Pumps.
+ * Adds the Driver to the shortest pump and moves them to the shop when necessary
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * @author Zak Hirsi
+ *
+ */
 public class Station {
 	private Shop shop;
 	private ArrayList<Pump> pumps;
@@ -40,14 +46,12 @@ public class Station {
 		
 		for(Pump p : pumps)
 		{
-//			System.out.println(p.toString());
 			if(p.getFirstDriver() != null)
 			{		
 				if(p.getFirstDriver().isDoneRefilling() && p.getFirstDriver().isAtPump())
 				{
 					addDriverToShop(p.getFirstDriver());
 				}
-				
 				p.act();
 			}
 		}

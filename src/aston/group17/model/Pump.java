@@ -1,10 +1,14 @@
 package aston.group17.model;
 
-
 import java.util.ArrayList;
 
 /**
+ * A Pump which contains a queue of Drivers, belongs to a Station instance and allows Driver to refill their Vehicle
  * @author Kieran Gates
+ * @author Mitch Feaver
+ * @author Zak Hersi
+ * 
+ * @version 2017.5.3
  *
  */
 public class Pump {
@@ -34,7 +38,6 @@ public class Pump {
 	 */
 	public void act()
 	{
-		System.out.println(toString());
 		if(getFirstDriver().isAtPump())
 		{
 			if(!getFirstDriver().isDoneRefilling())

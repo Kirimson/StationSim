@@ -3,7 +3,14 @@ import aston.group17.model.*;
 
 
 import java.util.Random;
-
+/**
+ * Creates a station with the correct parameters entered by the user and will run the simulation, keeping total of all money gained and lost
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * 
+ * @version 2017.5.3
+ *
+ */
 public class Simulator {
 	private double t, p, q;
 	private Station station;

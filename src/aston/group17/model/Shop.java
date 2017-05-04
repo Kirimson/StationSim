@@ -1,7 +1,14 @@
 package aston.group17.model;
 
 import java.util.ArrayList;
-
+/**
+ * A Shop which handles shopping Drivers, if they are going to shop, and sends Drivers to the Till when they are done shopping
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * 
+ * @version 2017.4.25
+ *
+ */
 public class Shop {
 	private ArrayList<Driver> shoppingDrivers;
 	private ArrayList<Till> tills;

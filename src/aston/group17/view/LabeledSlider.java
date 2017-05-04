@@ -7,10 +7,12 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 /**
- * Enhanced version of standard Swing JSlider widget
+ * Enhanced version of standard Swing JSlider widget.
+ * Edited by Kieran Gates to improve labels and add floating point support
  *
  * @author Ian T. Nabney
- * @version 13/03/2005
+ * @author Kieran Gates
+ * @version 2017.5.1
  */
 
 

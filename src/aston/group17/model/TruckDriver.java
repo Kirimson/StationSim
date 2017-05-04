@@ -1,5 +1,13 @@
 package aston.group17.model;
 
+/**
+ * A Driver for the Truck class, sub class of Driver. Adds functionality for changing probability for all TruckDrivers
+ * 
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * 
+ * @version 2017.5.3
+ */
 public class TruckDriver extends Driver{
 	
 	private static double probability = 0.02;
@@ -13,7 +21,7 @@ public class TruckDriver extends Driver{
 	}
 
 	/**
-	 * Sets the probability for future truckDrivers arriving depending on time spent
+	 * Sets the probability for future truckDrivers arriving depending on time spent, by changing the static probability field
 	 */
 	public void setProbability() {
 		if(totalTime <= 48)
@@ -31,7 +39,7 @@ public class TruckDriver extends Driver{
 	}
 	
 	/**
-	 * Set the value of truckDriver's probability to its original
+	 * Set the value of truckDriver's probability 
 	 * @param resetValue the value 
 	 */
 	public void setProbability(double resetValue)

@@ -4,11 +4,19 @@ import aston.group17.simulator.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-import java.util.Random;
 import java.io.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
+/**
+ * The GUI which will be interacted by the User to use the simulation
+ * @author Zak Hirsi
+ * @author Mitch Feaver
+ * @author Kieran Gates
+ *
+ *@version 2017.5.4
+ */
 
 public class SimulatorGUI {
 	
@@ -25,7 +33,7 @@ public class SimulatorGUI {
 	private JComboBox<Integer> tillChoice = new JComboBox<Integer>();
 	private LabeledSlider periodSlider;
 	private JCheckBox truckBox = new JCheckBox();
-	private JTextArea seedText = new JTextArea();
+	private JTextArea seedText = new JTextArea("1");
 	
 	//Files
 	private JTextArea fileText = new JTextArea();
@@ -34,7 +42,7 @@ public class SimulatorGUI {
 	private File outputFolder;
 	
 	//mainframe
-	private final JLabel titleLabel = new JLabel("Group 17. Kieran, Mitchell, Zak, Harleen and Mo");
+	private final JLabel titleLabel = new JLabel("Group 17: Kieran, Mitchell, Zak, Harleen and Mo");
 	private JButton startButton = new JButton("Start");
 	private JButton autoButton = new JButton("Auto Run");
 	private JButton quitButton = new JButton("Quit");
@@ -56,8 +64,6 @@ public class SimulatorGUI {
 	public SimulatorGUI() {
 		
 		JFrame firstFrame = new JFrame();
-		
-//		firstFrame.getRootPane().setDefaultButton(startButton);
 		
 		final int blankSpace = 6;  // blank at edge of panels
 		
@@ -289,35 +295,29 @@ public class SimulatorGUI {
 			runButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				
-//				boolean isNumber = true;
-//				
-//				try
-//				{
-//					Integer.parseInt(seedText.getText());
-//				}
-//				catch (NumberFormatException e2)
-//				{
-//					isNumber=false;
-//				}
-//				
-//				if(seedText.getText() != "")
-//				{
-//					if(!isNumber)
-//					{
-//						seedText.setText("");
-//						JOptionPane.showMessageDialog(menuFrame, "Seed needs to be an int");
-//					}
-//					else
-//					{
-//						if(seedText.getText() == ""){seedText.setText("1");}
+				boolean isNumber = true;
+				
+				try
+				{
+					Integer.parseInt(seedText.getText());
+				}
+				catch (NumberFormatException e2)
+				{
+					isNumber=false;
+				}
+				
+					if(!isNumber)
+					{
+						seedText.setText("");
+						JOptionPane.showMessageDialog(menuFrame, "Seed needs to be an int");
+					}
+					else
+					{
+						if(seedText.getText() == ""){seedText.setText("1");}
 						seedText.setText("1");
 						setUpSimulation(auto);
-//					}
-//				}
-//				else
-//				{
-//					seedText.setText(new Random().nextInt()+"");
-//				}
+					}
+
 			}
 		});
 			
@@ -330,7 +330,7 @@ public class SimulatorGUI {
 					{
 						if(new File(folderSelector.getSelectedFile()+"/output.txt").exists())
 						{
-							int response = JOptionPane.showConfirmDialog(menuFrame, "Output.txt file already exists in this directory, do you want to replace it?",
+							int response = JOptionPane.showConfirmDialog(new JFrame(), "Output.txt file already exists in this directory, do you want to replace it?",
 									"File Already Exists", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 							if(response == JOptionPane.YES_OPTION)
 							{
@@ -382,7 +382,6 @@ public class SimulatorGUI {
 		double p, q, price;
 		int pumps=0, tills=0, ticks;
 		boolean trucks;
-		int longg = 0;
 		closeWindow(menuFrame);
 		if(!auto)
 		{

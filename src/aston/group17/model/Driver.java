@@ -1,6 +1,14 @@
 package aston.group17.model;
 import java.util.Random;
-
+/**
+ * A Driver, who will join the Pump, Till and Shop and initally managed by the Station. Spends money according to their Vehicle
+ * 
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * @author Zak Hirsi
+ *
+ * @version 2017.5.3
+ */
 public class Driver {
 
 	private boolean shopping, wait, done, doneRefilling, didShop, atPump;
@@ -18,6 +26,7 @@ public class Driver {
 	 * A Driver who will interact with the Station and it's children objects and spend money at the Station.
 	 * A Driver has-a Vehicle
 	 * @param type Type of vehicle the Driver owns. Legal values are: "Car", "Sedan", "Bike", "Truck"
+	 * @param globalSeed set seed to be used by the Random in the Driver
 	 */
 	public Driver(String type, int globalSeed)
 	{

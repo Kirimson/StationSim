@@ -1,7 +1,15 @@
 package aston.group17.model;
 
 import java.util.Random;
-
+/**
+ * A Vehicle belonging to a Driver, interacted with by the Driver, filling the tank of the Vehicle
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ * @author Zak Hirsi
+ * 
+ * @version 2017.5.3
+ *
+ */
 public abstract class Vehicle {
 	
 	protected int tankSize;
@@ -12,10 +20,9 @@ public abstract class Vehicle {
 	/**
 	 * A Vehicle with a tankSize, amountFilled on creation. Will be filled at the Pump.
 	 * A Driver has-a Vehicle
-	 * @param range
-	 * range from minimum value to max value (inclusive)
-	 * @param minTank
-	 * minimum size of Vehicle tank
+	 * @param range range from minimum value to max value (inclusive)
+	 * @param minTank minimum size of Vehicle tank
+	 * @param globalSeed set seed to be used by the Random in the Vehicle
 	 */
 	public Vehicle(int range, int minTank, int globalSeed)
 	{

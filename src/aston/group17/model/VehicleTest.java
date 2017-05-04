@@ -4,7 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * JUnit test case for Vehciles, tests filling the tank, checking the tankSize and the filled amount
+ * @author Kieran Gates
+ * 
+ * @version 2017.5.3
+ *
+ */
 public class VehicleTest {
 
 	@Before

@@ -1,6 +1,13 @@
 package aston.group17.model;
 import java.util.Random;
-
+/**
+ * A Sedan vehicle, child class of Vehicle
+ * 
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ *
+ * @version 2017.4.28
+ */
 public class Sedan extends Vehicle {
 
 	private static final double UNIT_SIZE = 1.5;

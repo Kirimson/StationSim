@@ -6,7 +6,12 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * JUnit test for the Station class. Tests new Drivers joining the Station, depending on different pump amounts and checking if Vehicles are in the Station
+ * @author Kieran Gates
+ *
+ *@version 2017.5.4
+ */
 public class StationTest {
 
 	@Before

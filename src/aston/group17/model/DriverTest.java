@@ -4,7 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * JUnit test case for Driver class. Tests their Vehicle's unitSize, refilling the Vehicle, and if they are done or shopping
+ * @author Kieran Gates
+ *
+ *@version 2017.5.4
+ */
 public class DriverTest {
 
 	@Before
@@ -13,8 +18,6 @@ public class DriverTest {
 	
 	@Test
 	public void testVehicleUnitSize() {
-		//TODO add testing code that better tests a driver
-		
 		Driver carDriver = new Driver("Car",0);
 		assertEquals(1.0 ,carDriver.getVehicle().getUnitSize(), 0.01);
 
@@ -41,29 +44,41 @@ public class DriverTest {
 	}
 	
 	@Test
-	public void testStillShoppingBike()
+	public void testDone()
 	{
 		Driver bikeDriver = new Driver("Car", 0);
+		Station station = new Station(1,1, 1.2);
+		station.addDriverToPumpQueue(bikeDriver);
+		
 		int bound = bikeDriver.getVehicle().getTankSize() - bikeDriver.getVehicle().getTankFilled() + 2;
 		for(int i = 0; i < bound; i++)
 		{
-			bikeDriver.act(1.2);
+			station.act();
+		}
+		
+		for(int k=0;k<35;k++)
+		{
+			station.act();
 		}
 		bikeDriver.act();
 		assertEquals(true, bikeDriver.isDone());
 	}
 	
 	@Test
-	public void testStillShoppingCar()
+	public void testStillShopping()
 	{
 		Driver carDriver = new Driver("Car", 0);
-		int bound = carDriver.getVehicle().getTankSize() - carDriver.getVehicle().getTankFilled() + 2;
+		Station station = new Station(1,1, 1.2);
+		station.addDriverToPumpQueue(carDriver);
+		
+		int bound = carDriver.getVehicle().getTankSize() - carDriver.getVehicle().getTankFilled() + 3;
 		for(int i = 0; i < bound; i++)
 		{
-			carDriver.act(1.2);
+			station.act();
 		}
+		
 		carDriver.act();
-		assertEquals(true, carDriver.isDone());
+		assertEquals(true, carDriver.isAtShop());
 	}
 	
 }

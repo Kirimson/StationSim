@@ -2,15 +2,14 @@ package aston.group17.model;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * JUnit test case for Pump class. Filling the pump queue, removing Drivers and testing if a Diver will fit
+ * @author Kieran Gates
+ *
+ *@version 2017.5.4
+ */
 public class PumpTest {
-	
-	@Before
-	public void setUp() throws Exception {
-		
-	}
 	
 	@Test
 	public void testFillQueue()
@@ -22,11 +21,11 @@ public class PumpTest {
 		Pump pump = new Pump(1.2, 1);
 		
 		pump.addToPumpQueue(carDriver1);
-		assertEquals(pump.getQueueFree(), 2.0, 0.01);
+		assertEquals(2.0, pump.getQueueFree(), 0.01);
 		pump.addToPumpQueue(carDriver2);
-		assertEquals(pump.getQueueFree(), 1.0, 0.01);
+		assertEquals(1.0, pump.getQueueFree(), 0.01);
 		pump.addToPumpQueue(carDriver3);
-		assertEquals(pump.getQueueFree(), 0.0, 0.01);
+		assertEquals(0.0, pump.getQueueFree(), 0.01);
 	}
 	
 	@Test

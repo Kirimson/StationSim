@@ -1,6 +1,13 @@
 package aston.group17.model;
 import java.util.Random;
-
+/**
+ * A Car vehicle, child class of Vehicle
+ * 
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ *
+ * @version 2017.4.28
+ */
 public class Car extends Vehicle {
 
 	private static final double UNIT_SIZE = 1.0;

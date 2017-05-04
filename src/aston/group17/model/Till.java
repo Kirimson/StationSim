@@ -1,7 +1,13 @@
 package aston.group17.model;
 
 import java.util.ArrayList;
-
+/**
+ * The Till class contains a queue of Drivers and will keep track of money gained and lost
+ * @author Kieran Gates
+ * @author Mitch Feaver
+ *
+ * @version 2017.4.25
+ */
 public class Till {
 	private double moneyTaken;
 	private double moneyLost;
@@ -119,6 +125,8 @@ public class Till {
 	{
 		moneyTaken += money;
 	}
+	
+	
 
 	/**
 	 * Returns the size of the Tiil's queue
