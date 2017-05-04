@@ -439,6 +439,12 @@ public class SimulatorGUI {
 					log.append("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
 					log.append("--------------------------------------------------------------------"+System.lineSeparator());
 					
+					System.out.println("pumps: "+pumps+" tills: "+tills+System.lineSeparator()+System.lineSeparator());
+					System.out.println("Best config for pumps: "+pumps+" tills: "+tills+": " +System.lineSeparator() + bestConfig);
+					System.out.println("Net Income: \u00A3"+df.format(bestNetIncome)+System.lineSeparator());
+					findAverages(true);
+					System.out.println("--------------------------------------------------------------------"+System.lineSeparator());
+					
 					if(fileWritten)
 					{
 						try{
@@ -497,11 +503,9 @@ public class SimulatorGUI {
 			
 			if(auto)
 			{
-				findAverages();
+				findAverages(false);
 			}
 			setRunMoney(i);
-			
-			System.out.println(outputRunConfig(pumps, tills, p, q, price, trucks));
 			
 		}
 	}
@@ -538,7 +542,7 @@ public class SimulatorGUI {
 	/**
 	 * finds averages of all data from all 10 runs and outputs to the GUI's log
 	 */
-	private void findAverages() {
+	private void findAverages(boolean output) {
 		double totalMoneyTaken = 0.0;
 		double totalLostMoney = 0.0;
 		double totalLostSalesMoney = 0.0;
@@ -553,7 +557,13 @@ public class SimulatorGUI {
 		double avgMoneyLost = (totalLostMoney+totalLostSalesMoney)/10;
 		
 		double avgMoneyTaken = totalMoneyTaken/10;
-
+		
+		if(output)
+		{
+			System.out.println("Average money Taken: "+ df.format(avgMoneyTaken));
+			System.out.println("Average money Taken: "+ df.format(totalLostMoney/10));
+			System.out.println("Average money Lost in Sales: "+ df.format(totalLostSalesMoney/10));
+		}
 		currentNetIncome = avgMoneyTaken - avgMoneyLost;
 	}
 
